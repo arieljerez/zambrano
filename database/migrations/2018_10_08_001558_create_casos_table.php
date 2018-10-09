@@ -15,6 +15,10 @@ class CreateCasosTable extends Migration
     {
         Schema::create('casos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('medico_id');
+            $table->integer('paciente_id');
+            $table->json('diabetologico');
+            $table->json('oftalmologico');
             $table->timestamps();
         });
     }

@@ -15,6 +15,11 @@ class CreateMedicosTable extends Migration
     {
         Schema::create('medicos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('usuario_id');
+            $table->string('dni');
+            $table->string('matricula');
+            $table->string('apellidos')->required();
+            $table->string('nombres')->required();
             $table->timestamps();
         });
     }
