@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Caso;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class CasoController extends Controller
 {
@@ -15,7 +14,8 @@ class CasoController extends Controller
      */
     public function index()
     {
-        return view('casos.index');
+        $casos = Caso::all();
+        return view('casos.index',compact('casos'));
     }
 
     /**
@@ -25,7 +25,10 @@ class CasoController extends Controller
      */
     public function create()
     {
-        return view('casos.create');
+        $caso = new Caso();
+        $diabetologico =  "{ \"medico\": {\"medico\": \"\"}, \"contacto\": \"lhkjh\", \"paciente\": {\"dni\": null, \"edad\": null, \"sexo\": null, \"fecha\": null, \"nombres\": \"jkhxcvbxcv\", \"telefono\": null, \"apellidos\": \"cvbxcvb\", \"domicilio\": null, \"telefono_familiar\": null}, \"servicio\": \"kj\", \"nacimiento\": \"2018-10-31\"}";
+        $caso->diabetologico = json_decode($diabetologico);
+         return view('casos.create',compact('caso'));
     }
 
     /**
@@ -60,7 +63,8 @@ class CasoController extends Controller
      */
     public function edit(Caso $caso)
     {
-        //
+        $caso->diabetologico = json_decode($caso->diabetologico);
+        return view('casos.edit',compact('caso'));
     }
 
     /**
