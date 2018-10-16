@@ -26,16 +26,16 @@
                         <thead>
                           <tr>
                             <th> Caso</th>
-                            <th> Diabetologico </th>
+                            <th> Fecha </th>
+                            <th> Paciente </th>
                           </tr>
                         </thead>
                         <tbody>
                           @foreach ($casos as $caso)
                           <tr>
                             <td>      {{ $caso->id }}       </td>
-                            <td>
-                              {{ print_r( json_decode( $caso->diabetologico)) }}
-                            </td>
+                            <td>      {{ $caso->fecha }}    </td>
+                            <td>      {{ $caso->paciente }}    </td>
                           </tr>
                           @endforeach
                         </tbody>

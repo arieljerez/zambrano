@@ -14,7 +14,10 @@ class CasoController extends Controller
      */
     public function index()
     {
-        $casos = Caso::all();
+        $casos = \DB::Table('casos')
+            ->join('pacientes','pacientes.id','=','casos.paciente_id')
+            ->join('medicos','medicos.id','casos.medico_id')
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
         return view('casos.index',compact('casos'));
     }
 
