@@ -16,9 +16,6 @@
 
                        {!! Form::model($caso, ['route' => ['casos.store', $caso], 'aria-label' => __('Nuevo Caso')])  !!}
 
-
-
-
                         <div class="row">
                             <div class="col-2">
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -37,13 +34,15 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-4">
+                        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> {{ __('Crear') }}
                                 </button>
                                 <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
+                                <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-down"></i> PDF Diabetologico</a>
+                                <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-down"></i> PDF Oftaltologico</a>
                             </div>
                         </div>
                         {!! Form::Close() !!}
