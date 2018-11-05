@@ -1,0 +1,8 @@
+login
+ - dni
+ - matricula
+ - password = matricula
+
+ Medico
+ si no existe
+ : grabar nombres apellidos

@@ -17,9 +17,14 @@ class CreateUsuariosTable extends Migration
             $table->increments('id');
             $table->string('dni');
             $table->string('matricula');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            //$table->string('email')->unique();
+            //$table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('apellidos')->required();
+            $table->string('nombres')->required();
+
+            $table->enum('rol',['diabetologo','oftalmologo','Auditor'])->required();
             $table->rememberToken();
             $table->timestamps();
         });

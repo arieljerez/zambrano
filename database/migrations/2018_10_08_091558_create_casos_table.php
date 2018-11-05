@@ -15,12 +15,20 @@ class CreateCasosTable extends Migration
     {
         Schema::create('casos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('medico_id');
-            $table->integer('paciente_id');
+            $table->unsignedInteger('diabetologo_id')->nullable();
+            $table->unsignedInteger('oftalmologo_id')->nullable();
+            $table->unsignedInteger('paciente_id');
             $table->json('diabetologico');
             $table->json('oftalmologico');
+            $table->json('paciente');
             $table->timestamps();
+
+            $table->foreign('diabetologo_id')->references('id')->on('usuarios');
+            $table->foreign('oftalmologo_id')->references('id')->on('usuarios');
+            $table->foreign('paciente_id')->references('id')->on('pacientes');
         });
+
+
     }
 
     /**

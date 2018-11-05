@@ -26,21 +26,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Matricula') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="matricula" type="text" class="form-control{{ $errors->has('matricula') ? ' is-invalid' : '' }}" name="dni" value="{{ old('matricula') }}" required autofocus>
-
-                                @if ($errors->has('matricula'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('matricula') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Matricula') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>

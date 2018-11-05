@@ -21,7 +21,7 @@ class CreatePacientesTable extends Migration
             $table->date('fecha_nacimiento')->required();
             $table->string('domicilio')->required();
             $table->string('telefono')->required();
-            $table->string('telefono_2')->required();
+            $table->string('telefono_familiar')->required();
             $table->enum('sexo',['M','F'])->required();
 
             $table->timestamps();

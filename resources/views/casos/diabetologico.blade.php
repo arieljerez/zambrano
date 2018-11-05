@@ -5,75 +5,79 @@
 
         <div class="form-group row">
             <div class="col-md-12">
-                {!! Form::text('medico[medico]', $caso->diabetologico->medico->medico, ['class' => 'form-control']) !!}
+                {!! Form::text('diabetologico[medico]',  $diabetologico->medico, ['class' => 'form-control'. ($errors->has('diabetologico.medico') ? ' is-invalid' : '') ]) !!}
             </div>
-            <label for="medico" class="col-sm-4 col-form-label text-md-left">{{ __('Médico de Cabecera') }}</label>
-            @if ($errors->has('medico[medico]'))
+            <label for="diabetologico[medico]" class="col-sm-4 col-form-label text-md-left">{{ __('Médico de Cabecera') }}</label>
+            @if ($errors->has('diabetologico[medico]'))
                 <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('medico[medico]') }}</strong>
+                    <strong>{{ $errors->first('diabetologico[medico]') }}</strong>
                 </span>
             @endif
         </div>
 
         <div class="row">
             <div class="form-group col-md-6">
-            <input type="text" name="servicio" class="form-control"/>
-            <label for="servicio" class="col-form-label text-md-left">{{ __('Servicio') }}</label>
-            @if ($errors->has('servicio'))
+            <input type="text" name="diabetologico[servicio]" class="form-control{{ $errors->has('diabetologico.servicio') ? ' is-invalid' : '' }}" value="{{ old('diabetologico.servicio', $diabetologico->servicio )}}"/>
+            <label for="diabetologico[servicio]" class="col-form-label text-md-left">{{ __('Servicio') }}</label>
+            @if ($errors->has('diabetologico.servicio'))
                <span class="invalid-feedback" role="alert">
-                   <strong>{{ $errors->first('servicio') }}</strong>
+                   <strong>{{ $errors->first('diabetologico.servicio') }}</strong>
                </span>
             @endif
             </div>
 
             <div class="form-group col-md-6">
-            <input type="text" name="contacto" class="form-control"/>
-            <label for="contacto" class="col-form-label text-md-left">{{ __('Contacto') }}</label>
-            @if ($errors->has('contacto'))
+            <input type="text" name="diabetologico[contacto]" class="form-control{{ $errors->has('diabetologico.contacto') ? ' is-invalid' : '' }}" value="{{ old('diabetologico.servicio', $diabetologico->contacto )}}"/>
+            <label for="diabetologico[contacto]" class="col-form-label text-md-left">{{ __('Contacto') }}</label>
+            @if ($errors->has('diabetologico.contacto'))
               <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('contacto') }}</strong>
+                  <strong>{{ $errors->first('diabetologico.contacto') }}</strong>
               </span>
             @endif
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-md-12">
+                TIPO DE DM
+            </div>
+        </div>
         <div class="row">
             <div class="form-group col-md-2">
-                <input type="checkbox" name="dm_1" class="form-control"/>
-                <label for="dm_1" class="col-form-label text-md-left">{{ __('1') }}</label>
-                @if ($errors->has('dm_1'))
+                <input type="radio" name="diabetologico[dm]" class="form-control" value="1" {{ old('diabetologico.dm', $diabetologico->dm ) == 1 ? 'checked': '' }} />
+                <label for="diabetologico[dm]" class="col-form-label text-md-left">{{ __('1') }}</label>
+                @if ($errors->has('diabetologico.dm'))
                     <span class="invalid-feedback" role="alert">
-                   <strong>{{ $errors->first('dm_1') }}</strong>
+                   <strong>{{ $errors->first('diabetologico.dm') }}</strong>
                </span>
                 @endif
             </div>
 
             <div class="form-group col-md-2">
-                <input type="checkbox" name="dm_2" class="form-control"/>
-                <label for="dm_2" class="col-form-label text-md-left">{{ __('2 Insulinotratado') }}</label>
-                @if ($errors->has('dm_2'))
+                <input type="radio" name="diabetologico[dm]" class="form-control" value="2" {{ old('diabetologico.dm', $diabetologico->dm ) == 2 ? 'checked': '' }}/>
+                <label for="diabetologico[dm]" class="col-form-label text-md-left">{{ __('2 Insulinotratado') }}</label>
+                @if ($errors->has('diabetologico.dm'))
                     <span class="invalid-feedback" role="alert">
-                   <strong>{{ $errors->first('dm_2') }}</strong>
+                   <strong>{{ $errors->first('diabetologico.dm') }}</strong>
                </span>
                 @endif
             </div>
 
             <div class="form-group col-md-3">
-                <input type="checkbox" name="dm_2no" class="form-control"/>
-                <label for="dm_2no" class="col-form-label text-md-left">{{ __('2 no Insulinotratado') }}</label>
-                @if ($errors->has('dm_2no'))
+                <input type="radio" name="diabetologico[dm]" class="form-control" value="3" {{ old('diabetologico.dm', $diabetologico->dm ) == 3 ? 'checked': '' }}/>
+                <label for="diabetologico[dm]" class="col-form-label text-md-left">{{ __('2 no Insulinotratado') }}</label>
+                @if ($errors->has('diabetologico.dm'))
                     <span class="invalid-feedback" role="alert">
-                   <strong>{{ $errors->first('dm_2no') }}</strong>
+                   <strong>{{ $errors->first('diabetologico.dm') }}</strong>
                </span>
                 @endif
             </div>
 
             <div class="form-group col-md-5">
-                <input type="text" name="edad_al_diagnostico" class="form-control"/>
-                <label for="edad_al_diagnostico" class="col-form-label text-md-left">{{ __('Edad al Diagnostico') }}</label>
-                @if ($errors->has('edad_al_diagnostico'))
+                <input type="text" name="diabetologico[edad_al_diagnostico]" class="form-control"  value="{{old('diabetologico.edad_al_diagnostico', $diabetologico->edad_al_diagnostico) }}")/>
+                <label for="diabetologico[edad_al_diagnostico]" class="col-form-label text-md-left">{{ __('Edad al Diagnostico') }}</label>
+                @if ($errors->has('diabetologico.edad_al_diagnostico'))
                     <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('edad_al_diagnostico') }}</strong>
+                  <strong>{{ $errors->first('diabetologico.edad_al_diagnostico') }}</strong>
               </span>
                 @endif
             </div>
@@ -83,31 +87,31 @@
         <div class="row">
 
             <div class="form-group col-md-3">
-                <input type="text" name="peso" class="form-control"/>
-                <label for="peso" class="col-form-label text-md-left">{{ __('Peso') }}</label>
-                @if ($errors->has('peso'))
+                <input type="text" name="diabetologico[peso]" class="form-control" value="{{old('diabetologico.peso', $diabetologico->peso) }}"/>
+                <label for="diabetologico[peso]" class="col-form-label text-md-left">{{ __('Peso') }}</label>
+                @if ($errors->has('diabetologico.peso'))
                     <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('peso') }}</strong>
+                  <strong>{{ $errors->first('diabetologico.peso') }}</strong>
               </span>
                 @endif
             </div>
 
             <div class="form-group col-md-3">
-                <input type="text" name="talla" class="form-control"/>
-                <label for="talla" class="col-form-label text-md-left">{{ __('Talla') }}</label>
-                @if ($errors->has('talla'))
+                <input type="text" name="diabetologico[talla]" class="form-control" value="{{old('diabetologico.talla', $diabetologico->talla) }}"/>
+                <label for="diabetologico[talla]" class="col-form-label text-md-left">{{ __('Talla') }}</label>
+                @if ($errors->has('diabetologico.talla'))
                     <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('talla') }}</strong>
+                  <strong>{{ $errors->first('diabetologico.talla') }}</strong>
               </span>
                 @endif
             </div>
 
             <div class="form-group col-md-3">
-                <input type="text" name="presion" class="form-control"/>
-                <label for="presion" class="col-form-label text-md-left">{{ __('Presión Arterial') }}</label>
-                @if ($errors->has('presion'))
+                <input type="text" name="diabetologico[presion]" class="form-control" value="{{old('diabetologico.presion', $diabetologico->presion) }}"/>
+                <label for="diabetologico[presion]" class="col-form-label text-md-left">{{ __('Presión Arterial') }}</label>
+                @if ($errors->has('diabetologico.presion'))
                     <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('presion') }}</strong>
+                  <strong>{{ $errors->first('diabetologico.presion') }}</strong>
               </span>
                 @endif
             </div>
@@ -116,21 +120,21 @@
         <div class="row">
 
             <div class="form-group col-md-6">
-                <input type="text" name="peso" class="form-control"/>
-                <label for="hemoglobina" class="col-form-label text-md-left">{{ __('HEMOGLOBINA GLICOSILADA A') }}</label>
-                @if ($errors->has('hemoglobina'))
+                <input type="text" name="diabetologico[hemoglobina]" class="form-control" value="{{old('diabetologico.hemoglobina',$diabetologico->hemoglobina) }}"/>
+                <label for="diabetologico[hemoglobina]" class="col-form-label text-md-left">{{ __('HEMOGLOBINA GLICOSILADA A') }}</label>
+                @if ($errors->has('diabetologico.hemoglobina'))
                     <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('hemoglobina') }}</strong>
+                  <strong>{{ $errors->first('diabetologico.hemoglobina') }}</strong>
               </span>
                 @endif
             </div>
 
             <div class="form-group col-md-3">
-                <input type="text" name="vr" class="form-control"/>
-                <label for="vr" class="col-form-label text-md-left">{{ __('(VR)') }}</label>
-                @if ($errors->has('vr'))
+                <input type="text" name="diabetologico[vr]" class="form-control" value="{{old('diabetologico.vr',$diabetologico->vr) }}"/>
+                <label for="diabetologico[vr]" class="col-form-label text-md-left">{{ __('(VR)') }}</label>
+                @if ($errors->has('diabetologico.vr'))
                     <span class="invalid-feedback" role="alert">
-                  <strong>{{ $errors->first('vr') }}</strong>
+                  <strong>{{ $errors->first('diabetologico.vr') }}</strong>
               </span>
                 @endif
             </div>
@@ -163,118 +167,50 @@
             </div>
         </div>
 
+        @php
+          $opciones = [
+              ['label'=> 'Nefropatia','nombre'=> 'diabetologico[nefropatia]', 'propiedad' => 'nefropatia', 'session' => 'diabetologico.nefropatia', 'valor' => $diabetologico->nefropatia ],
+              ['label'=> 'Neuropatía','nombre'=> 'diabetologico[neuropatia]', 'propiedad' => 'neuropatia', 'session' => 'diabetologico.neuropatia', 'valor' => $diabetologico->neuropatia ],
+              ['label'=> 'Dislipidemia','nombre'=> 'diabetologico[dislipidemia]', 'propiedad' => 'dislipidemia', 'session' => 'diabetologico.dislipidemia', 'valor' => $diabetologico->dislipidemia ],
+              ['label'=> 'Vasculopatía Periférica','nombre'=> 'diabetologico[vasculopatia_periferica]', 'propiedad' => 'vasculopatia_periferica', 'session' => 'diabetologico.vasculopatia_periferica', 'valor' => $diabetologico->vasculopatia_periferica],
+              ['label'=> 'Tabaquismo','nombre'=> 'diabetologico[tabaquismo]', 'propiedad' => 'tabaquismo', 'session' => 'diabetologico.tabaquismo', 'valor' => $diabetologico->tabaquismo],
+          ];
+        @endphp
+
+        @foreach( $opciones as $op)
         <div class="row">
             <div class="form-group col-md-3">
-                    <label class="form-check-label" for="nefropatia">Nefropatia</label>
+                <label class="form-check-label" for="{{$op['propiedad']}}">{{$op['label']}}</label>
             </div>
             <div class="form-group col-md-1">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="nefropatia" id="nefropatia1" value="1">
+                    <input class="form-check-input" type="radio" name="{{$op['nombre']}}" id="{{$op['propiedad']}}" value="1" {{ old('$op[\'propiedad\']',$op['valor'] ) == 1 ? 'checked': '' }}>
                 </div>
             </div>
             <div class="form-group col-md-1">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="nefropatia" id="nefropatia1" value="0">
+                    <input class="form-check-input" type="radio" name="{{$op['nombre']}}" id="{{$op['propiedad']}}" value="0" {{ old('$op[\'propiedad\']',$op['valor'] ) == 0 ? 'checked': '' }}>
                 </div>
             </div>
         </div>
+        @endforeach
 
         <div class="row">
             <div class="form-group col-md-3">
-                <label class="form-check-label" for="Neuropatia">Neuropatía</label>
+                <label class="form-check-label" for="Enfermedad">Enfermedad</label>
             </div>
             <div class="form-group col-md-1">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Neuropatia" id="Neuropatia1" value="1">
+                    <input class="form-check-input" type="radio" name="diabetologico[enfermedad]" id="Enfermedad" value="1" {{ old('diabetologico.enfermedad', $diabetologico->enfermedad ) == 1 ? 'checked': '' }}>
                 </div>
             </div>
             <div class="form-group col-md-1">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Neuropatia" id="Neuropatia1" value="0">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="Dislipidemia">Dislipidemia</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Dislipidemia" id="Dislipidemia" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Dislipidemia" id="Dislipidemia" value="0">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="HipertensionArterial">Hipertensión Arterial</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="HipertensionArterial" id="HipertensionArterial" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="HipertensionArterial" id="HipertensionArterial" value="0">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="VasculopatiaPeriferica">Vasculopatía Periférica </label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="VasculopatiaPeriferica" id="VasculopatiaPeriferica" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="VasculopatiaPeriferica" id="VasculopatiaPeriferica" value="0">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="Tabaquismo">Tabaquismo</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Tabaquismo" id="Tabaquismo" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Tabaquismo" id="Tabaquismo" value="0">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="Tabaquismo">Enfermedad</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Enfermedad" id="Enfermedad" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Enfermedad" id="Enfermedad" value="0">
+                    <input class="form-check-input" type="radio" name="diabetologico[enfermedad]" id="Enfermedad" value="0" {{ old('diabetologico.enfermedad', $diabetologico->enfermedad ) == 0 ? 'checked': '' }}>
                 </div>
             </div>
             <div class="form-group col-md-5">
-                <input class="form-control" type="text" name="Otros" id="Otros"/>
+                <input class="form-control" type="text" name="diabetologico[otros]" id="Otros" value="{{ old('diabetologico.otros', $diabetologico->otros )}}"/>
                 <label class="form-check-label" for="Otros">Otros</label>
             </div>
         </div>
@@ -283,145 +219,44 @@
             <div class="form-group col-md-3"><h3>Tratamiento</h3></div>
         </div>
 
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="PlanAlimentario">Plan Alimentario</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PlanAlimentario" id="PlanAlimentario" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="PlanAlimentario" id="PlanAlimentario" value="0">
-                </div>
-            </div>
-            <div class="form-group col-md-5">
-                    <input class="form-control" type="text" name="PlanAlimentarioTexto" id="PlanAlimentarioTexto">
-            </div>
-        </div>
+        @php
+          $tratamientos = [
+              ['label'=> 'Plan Alimentario','nombre'=> 'diabetologico[plan_alimentario]', 'propiedad' => 'plan_alimentario', 'session' => 'diabetologico.plan_alimentario', 'valor' => $diabetologico->plan_alimentario, 'valor_texto' => $diabetologico->plan_alimentario_texto],
+              ['label'=> 'Actividad Física','nombre'=> 'diabetologico[actividad_fisica]', 'propiedad' => 'actividad_fisica', 'session' => 'diabetologico.actividad_fisica', 'valor' => $diabetologico->actividad_fisica, 'valor_texto' => $diabetologico->actividad_fisica_texto],
+              ['label'=> 'Insulina','nombre'=> 'diabetologico[insulina]', 'propiedad' => 'insulina', 'session' => 'diabetologico.insulina', 'valor' => $diabetologico->insulina, 'valor_texto' => $diabetologico->insulina_texto ],
+              ['label'=> 'Educación Terapéutica','nombre' => 'diabetologico[educacion_terapeutica]', 'propiedad' => 'educacion_terapeutica', 'session' => 'diabetologico.educacion_terapeutica', 'valor' => $diabetologico->educacion_terapeutica, 'valor_texto' => $diabetologico->educacion_terapeutica_texto],
+              ['label'=> 'Automonitoreo Glucémico','nombre' => 'diabetologico[automonitoreo_glucemico]', 'propiedad' => 'automonitoreo_glucemico', 'session' => 'diabetologico.automonitoreo_glucemico', 'valor' => $diabetologico->automonitoreo_glucemico, 'valor_texto' => $diabetologico->automonitoreo_glucemico_texto],
+              ['label'=> 'Otras Medidas Terapeúticas','nombre' => 'diabetologico[otras_medidas_terapeuticas]', 'propiedad' => 'otras_medidas_terapeuticas', 'session' => 'diabetologico.otras_medidas_terapeuticas', 'valor' => $diabetologico->otras_medidas_terapeuticas, 'valor_texto' => $diabetologico->otras_medidas_terapeuticas_texto],
+          ];
+        @endphp
+
+        @foreach($tratamientos as $tratamiento)
+          <div class="row">
+              <div class="form-group col-md-3">
+                  <label class="form-check-label" for="{{ $tratamiento['propiedad']}}">{{ $tratamiento['label']}}</label>
+              </div>
+              <div class="form-group col-md-1">
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="{{ $tratamiento['nombre']}}" id="{{ $tratamiento['propiedad']}}" value="1" {{ old('$tratamiento[\'propiedad\']',$tratamiento['valor'] ) == 1 ? 'checked': '' }}>
+                  </div>
+              </div>
+              <div class="form-group col-md-1">
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="{{ $tratamiento['nombre']}}" id="{{ $tratamiento['propiedad']}}" value="0" {{ old('$tratamiento[\'propiedad\']',$tratamiento['valor'] ) == 0 ? 'checked': '' }}>
+                  </div>
+              </div>
+              <div class="form-group col-md-7">
+                      <input class="form-control" type="text" name="diabetologico[{{ $tratamiento['propiedad']}}_texto]" id="diabetologico[{{ $tratamiento['propiedad']}}_texto]" value="{{ $tratamiento['valor_texto']}}">
+              </div>
+          </div>
+        @endforeach
 
         <div class="row">
             <div class="form-group col-md-3">
-                <label class="form-check-label" for="ActividadFisica">Actividad Física</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ActividadFisica" id="ActividadFisica" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ActividadFisica" id="ActividadFisica" value="0">
-                </div>
-            </div>
-            <div class="form-group col-md-5">
-                <input class="form-control" type="text" name="ActividadFisicaTexto" id="ActividadFisica">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="Insulina">Insulina</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Insulina" id="Insulina" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Insulina" id="Insulina" value="0">
-                </div>
-            </div>
-            <div class="form-group col-md-5">
-                <input class="form-control" type="text" name="InsulinaTexto" id="InsulinaTexto">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="AntidiabeticosOrales">Antidiabéticos Orales</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="AntidiabeticosOrales" id="AntidiabeticosOrales" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="AntidiabeticosOrales" id="AntidiabeticosOrales" value="0">
-                </div>
-            </div>
-            <div class="form-group col-md-5">
-                <input class="form-control" type="text" name="AntidiabeticosOralesTexto" id="AntidiabeticosOralesTexto">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="EducacionTerapeutica">Educación Terapéutica</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="EducacionTerapeutica" id="EducacionTerapeutica" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="EducacionTerapeutica" id="EducacionTerapeutica" value="0">
-                </div>
-            </div>
-            <div class="form-group col-md-5">
-                <input class="form-control" type="text" name="EducacionTerapeutica" id="EducacionTerapeutica">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="AutomonitoreoGlucemico">Automonitoreo Glucémico</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="AutomonitoreoGlucemico" id="AutomonitoreoGlucemico" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="AutomonitoreoGlucemico" id="AutomonitoreoGlucemico" value="0">
-                </div>
-            </div>
-            <div class="form-group col-md-5">
-                <input class="form-control" type="text" name="AutomonitoreoGlucemicoTexto" id="AutomonitoreoGlucemicoTexto">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="OtrasMedidasTerapeuticas">Otras Medidas Terapeúticas</label>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OtrasMedidasTerapeuticas" id="OtrasMedidasTerapeuticas" value="1">
-                </div>
-            </div>
-            <div class="form-group col-md-1">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="OtrasMedidasTerapeuticas" id="OtrasMedidasTerapeuticas" value="0">
-                </div>
-            </div>
-            <div class="form-group col-md-5">
-                <input class="form-control" type="text" name="OtrasMedidasTerapeuticasTexto" id="OtrasMedidasTerapeuticasTexto">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label class="form-check-label" for="Observaciones">Observaciones</label>
+                <label class="form-check-label" for="observaciones">Observaciones</label>
             </div>
             <div class="form-group col-md-9">
-                <input class="form-control" type="text" name="Observaciones" id="Observaciones" multiple size="3">
+                <textarea class="form-control" type="texta" name="diabetologico[observaciones]*" id="Observaciones" rows="5"></textarea>
             </div>
         </div>
 
