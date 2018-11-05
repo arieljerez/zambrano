@@ -12,13 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect('login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::Resource('casos', 'CasoController');
+Route::group(['middleware' => 'auth'], function () {
+  Route::get('/home', 'HomeController@index')->name('home');
+  Route::Resource('casos', 'CasoController');
 
-Route::get('descargar-caso/{caso_id}/diabetologico', 'CasoController@pdf_diabetologico')->name('caso_diabetologico.pdf');
-Route::get('descargar-caso/{caso_id}/oftalmologico', 'CasoController@pdf_oftalmologico')->name('caso_oftalmologico.pdf');
+  Route::get('descargar-caso/{caso_id}/diabetologico', 'CasoController@pdf_diabetologico')->name('caso_diabetologico.pdf');
+  Route::get('descargar-caso/{caso_id}/oftalmologico', 'CasoController@pdf_oftalmologico')->name('caso_oftalmologico.pdf');
+});
