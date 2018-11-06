@@ -23,4 +23,14 @@ Route::group(['middleware' => 'auth'], function () {
 
   Route::get('descargar-caso/{caso_id}/diabetologico', 'CasoController@pdf_diabetologico')->name('caso_diabetologico.pdf');
   Route::get('descargar-caso/{caso_id}/oftalmologico', 'CasoController@pdf_oftalmologico')->name('caso_oftalmologico.pdf');
+  Route::get('descargar/oftalmologico/{file}', function ($file) {
+      return Storage::response("oftalmologico/$file");
+  });
+  Route::get('descargar/diabetologicos/{file}', function ($file) {
+      return Storage::response('diabetologicos/'.$file);
+  });
+
+  Route::get('descargar/oftalmologicos/{file}', function ($file) {
+      return Storage::response('oftalmologicos/'.$file);
+  });
 });

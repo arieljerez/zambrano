@@ -85,7 +85,8 @@ class CasoController extends Controller
     {
         $paciente =  json_decode($caso->paciente);
         $diabetologico = json_decode($caso->diabetologico);
-        return view('casos.edit', compact('caso','paciente','diabetologico'));
+        $oftalmologico = json_decode($caso->oftalmologico);
+        return view('casos.edit', compact('caso','paciente','diabetologico','oftalmologico'));
     }
 
     /**
@@ -98,9 +99,36 @@ class CasoController extends Controller
     public function update(Request $request, Caso $caso)
     {
         $destino = $request->input('destino');
-        $diabetologico = json_encode($request->input('diabetologico'));
-        $caso->update(['diabetologico'=> $diabetologico]);
-        $caso->save();
+        if ($destino == 'diabetologico')
+        {
+            $diabetologico = json_encode($request->input('diabetologico'));
+
+            if( $request->hasfile('archivo')){
+              $diabetologico_archivo =  $request->file('archivo')->store('diabetologicos');
+            //  dd($diabetologico_archivo);
+              $caso->update(['diabetologico'=> $diabetologico, 'diabetologico_archivo' => $diabetologico_archivo]);
+              $caso->save();
+            }else{
+              $caso->update(['diabetologico'=> $diabetologico]);
+              $caso->save();
+            }
+
+        }
+
+        if ($destino == 'oftalmologico')
+        {
+            $oftalmologico = json_encode($request->input('oftalmologico'));
+
+            if( $request->hasfile('archivo')){
+              $oftalmologico_archivo =  $request->file('archivo')->store('oftalmologicos');
+
+              $caso->update(['oftalmologico'=> $oftalmologico, 'oftalmologico_archivo' => $oftalmologico_archivo]);
+              $caso->save();
+            }else{
+              $caso->update(['oftalmologico'=> $oftalmologico]);
+              $caso->save();
+          }
+        }
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 

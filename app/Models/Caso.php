@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Caso extends Model
 {
-    protected $fillable = ['diabetologico','oftalmologo_id','diabetologo_id','paciente_id','oftalmologico','paciente'];
+    protected $fillable = ['diabetologico','oftalmologo_id','diabetologo_id','paciente_id','oftalmologico','paciente','estado','diabetologico_archivo','oftalmologico_archivo'];
 /*
     public function setPacienteAttribute($value)
     {
@@ -37,4 +37,15 @@ class Caso extends Model
 
        return $value;
     }
+    public function getOftalmologicoAttribute($value)
+    {
+       if ($value == '[]')
+       {
+           $value = '{"rdnp": "0", "fecha": null, "firma": null, "otros": null, "afaquia": "0", "catarata": "0", "rubeosis": "0", "derivante": null, "rdnp_leve": "0", "institucion": null, "rdnp_severa": "0", "fecha_hb_a1c": null, "pseudofaquia": "0", "edema_macular": "0", "rdnp_moderada": "0", "derivante_telefono": null, "tratamiento_actual": null, "cirugias_previas_od": "1", "cirugias_previas_oi": "1", "mejor_corregida_av_od": null, "mejor_corregida_av_oi": null, "mejor_corregida_to_od": null, "mejor_corregida_to_oi": null}';
+       }
+
+       return $value;
+    }
+
+
 }

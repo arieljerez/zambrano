@@ -260,5 +260,16 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label class="form-check-label" for="archivo">Subir archivo:</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input class="form-control" type="file" name="archivo" id="diabetologico_archivo">
+            </div>
+            <div class="form-group col-md-3">
+                <a href="{{ asset('descargar/'.$caso->diabetologico_archivo) }}" class="btn btn-primary">Descargar</a>
+            </div>
+        </div>
     </div>
 </div>
