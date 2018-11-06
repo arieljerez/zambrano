@@ -25,9 +25,15 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+              <nav class="navbar">
+               <a class="navbar-brand" href="#">
+                 <img src="{{ asset('images/BA-gris.png') }}"  class="d-inline-block align-top" alt="">
+               </a>
+               <a class="navbar-brand" href="{{ url('/') }}">
+                   {{ config('app.name', 'Laravel') }}
+               </a>
+              </nav>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -46,9 +52,17 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Acceder') }}</a>
-                            </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Acceder
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('login') }}">Profesionales</a>
+                            <a class="dropdown-item" href="#">Prestadores</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Prodiaba</a>
+                          </div>
+                        </li>
                             <li class="nav-item">
                                 @if (Route::has('register'))
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>

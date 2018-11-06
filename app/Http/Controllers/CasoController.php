@@ -6,6 +6,8 @@ use App\Models\Caso;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Serializables\Diabetologico;
+use App\Serializables\Oftalmologico;
 
 class CasoController extends Controller
 {
@@ -84,8 +86,8 @@ class CasoController extends Controller
     public function edit(Caso $caso)
     {
         $paciente =  json_decode($caso->paciente);
-        $diabetologico = json_decode($caso->diabetologico);
-        $oftalmologico = json_decode($caso->oftalmologico);
+        $diabetologico = new Diabetologico(json_decode($caso->diabetologico,true));
+        $oftalmologico = new Oftalmologico(json_decode($caso->oftalmologico,true));
         return view('casos.edit', compact('caso','paciente','diabetologico','oftalmologico'));
     }
 
