@@ -24,6 +24,45 @@ class CasoController extends Controller
         return view('casos.index',compact('casos'));
     }
 
+    public function pendientesFormulario()
+    {
+        $casos = \DB::Table('casos')
+            ->join('pacientes','pacientes.id','=','casos.paciente_id')
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+        return view('casos.pendientes-aprobacion',compact('casos'));
+    }
+
+    public function pendientesAprobacion()
+    {
+        $casos = \DB::Table('casos')
+            ->join('pacientes','pacientes.id','=','casos.paciente_id')
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+        return view('casos.pendientes-formulario',compact('casos'));
+    }
+
+    public function aprobados()
+    {
+        $casos = \DB::Table('casos')
+            ->join('pacientes','pacientes.id','=','casos.paciente_id')
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+        return view('casos.aprobados',compact('casos'));
+    }
+
+    public function rechazados()
+    {
+        $casos = \DB::Table('casos')
+            ->join('pacientes','pacientes.id','=','casos.paciente_id')
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+        return view('casos.rechazados',compact('casos'));
+    }
+
+    public function porPaciente()
+    {
+        $casos = \DB::Table('casos')
+            ->join('pacientes','pacientes.id','=','casos.paciente_id')
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+        return view('casos.por_paciente',compact('casos'));
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -19,6 +19,12 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/home', 'HomeController@index')->name('home');
+
+  Route::get('casos/pendientes-formulario', 'CasoController@pendientesFormulario')->name('casos.pendientes-formulario');
+  Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
+  Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
+  Route::get('casos/rechazados', 'CasoController@rechazados')->name('casos.rechazados');
+  Route::get('casos/por-paciente', 'CasoController@porPaciente')->name('casos.por_paciente');
   Route::Resource('casos', 'CasoController');
 
   Route::get('descargar-caso/{caso_id}/diabetologico', 'CasoController@pdf_diabetologico')->name('caso_diabetologico.pdf');

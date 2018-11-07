@@ -42,33 +42,71 @@
                     <!-- Left Side Of Navbar -->
                   @guest
                   @else
+
                     <ul class="navbar-nav mr-auto">
-                      <li class="nav-item">
-                          <a class="nav-link" href="{{ url('casos') }}">{{ __('Casos') }}</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Pacientes</a>
+                                <a class="dropdown-item" href="#">Usuarios</a>
+                            </div>
+                        </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Casos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{ route('casos.pendientes-formulario')}}">Pendientes Formulario</a>
+                          <a class="dropdown-item" href="{{ route('casos.pendientes-aprobacion')}}">Pendientes Aprobación</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="{{ route('casos.aprobados')}}">Aprobados</a>
+                          <a class="dropdown-item" href="{{ route('casos.rechazados')}}">Rechazados</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="{{ route('casos.por_paciente')}}">Por Paciente</a>
+                          <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>
+                        </div>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Auditoria
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="#">Pendientes</a>
+                          <a class="dropdown-item" href="#">Aprobados</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Rechazados</a>
+                        </div>
                       </li>
                     </ul>
                   @endguest
                     <!-- Right Side Of Navbar -->
+
+
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                        <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Acceder
-                          </a>
-                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('login') }}">Profesionales</a>
-                            <a class="dropdown-item" href="#">Prestadores</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Prodiaba</a>
-                          </div>
-                        </li>
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Acceder
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{{ route('login') }}">Profesionales</a>
+                              <a class="dropdown-item" href="#">Prestadores</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#">Prodiaba</a>
+                            </div>
+                          </li>
                             <li class="nav-item">
                                 @if (Route::has('register'))
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                                 @endif
                             </li>
                         @else
+                          <li class="nav-item">
+                              <a class="nav-link btn btn-success" href="{{ route('casos.create') }}">Iniciar Caso</a>
+                          </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::User()->dni }} , {{ Auth::User()->matricula }} <span class="caret"></span>
