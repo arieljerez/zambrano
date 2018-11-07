@@ -5,7 +5,39 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Caso {{ $caso->id }}</div>
+                    <div class="card-header">Caso # {{ $caso->id }}
+
+
+                    @if ($caso->estado == 'pendiente_formulario')
+
+                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                            <input type="hidden" name="cambiar_estado" value="pendiente_formulario">
+                            <button type="submit" class="btn btn-primary float-right">
+                                A aprobación <i class="fa fa-step-forward" aria-hidden="true"></i>
+                            </button>
+                        {!! Form::Close() !!}
+
+                    @endif
+
+                    @if ($caso->estado == 'pendiente_aprobacion')
+
+                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                        <input type="hidden" name="cambiar_estado" value="aprobado">
+                        <button type="submit" class="btn btn-success float-right">
+                            Aprobar <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                        {!! Form::Close() !!}
+
+                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                        <input type="hidden" name="cambiar_estado" value="rechazado">
+                        <button type="submit" class="btn btn-danger float-right">
+                            Rechazar <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                        {!! Form::Close() !!}
+
+                    @endif
+
+                    </div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -65,10 +97,7 @@
                         <div class="row"><div class="col-md-12">&nbsp;</div></div>
                         <div class="row">
                             <div class="col-md-6">
-
                                 <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
-                                <a href="{{ route('caso_diabetologico.pdf', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-down"></i> PDF Diabetologico</a>
-                                <a href="{{ route('caso_oftalmologico.pdf', $caso->id )  }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-down"></i> PDF Oftaltologico</a>
                             </div>
                         </div>
 

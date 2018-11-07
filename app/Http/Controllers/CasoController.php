@@ -20,31 +20,38 @@ class CasoController extends Controller
     {
         $casos = \DB::Table('casos')
             ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente ','pacientes.dni'))->get();
         return view('casos.index',compact('casos'));
     }
 
+    public function consultaBase()
+    {
+        return \DB::Table('casos')
+            ->join('pacientes','pacientes.id','=','casos.paciente_id')
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
+    }
     public function pendientesFormulario()
     {
-        $casos = \DB::Table('casos')
-            ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
-        return view('casos.pendientes-aprobacion',compact('casos'));
+        $casos = $this->consultaBase()
+            ->where('casos.estado','=','pendiente_formulario')->get();
+        return view('casos.pendientes-formulario',compact('casos'));
     }
 
     public function pendientesAprobacion()
     {
-        $casos = \DB::Table('casos')
-            ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
-        return view('casos.pendientes-formulario',compact('casos'));
+        $casos = $this->consultaBase()
+            ->where('casos.estado','=','pendiente_aprobacion')
+            ->get();
+        return view('casos.pendientes-aprobacion',compact('casos'));
     }
 
     public function aprobados()
     {
         $casos = \DB::Table('casos')
             ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))
+            ->where('casos.estado','=','aprobado')
+            ->get();
         return view('casos.aprobados',compact('casos'));
     }
 
@@ -52,7 +59,9 @@ class CasoController extends Controller
     {
         $casos = \DB::Table('casos')
             ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))
+            ->where('casos.estado','=','rechazado')
+            ->get();
         return view('casos.rechazados',compact('casos'));
     }
 
@@ -88,7 +97,7 @@ class CasoController extends Controller
         $paciente_data = $paciente_data['paciente'];
         $paciente =  Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
 
-       $caso = Caso::create( ['paciente_id' => $paciente->id,'oftalmologico' => '[]' ,'diabetologico' => '[]', 'paciente' => json_encode($paciente) ]);
+       $caso = Caso::create( ['estado'=> 'pendiente_formulario','paciente_id' => $paciente->id,'oftalmologico' => '[]' ,'diabetologico' => '[]', 'paciente' => json_encode($paciente) ]);
        return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 
@@ -139,6 +148,9 @@ class CasoController extends Controller
      */
     public function update(Request $request, Caso $caso)
     {
+        if ($request->has('cambiar_estado')){
+            return $this->cambiarEstado ($caso, $request->input('cambiar_estado'));
+        }
         $destino = $request->input('destino');
         if ($destino == 'diabetologico')
         {
@@ -184,6 +196,28 @@ class CasoController extends Controller
         //
     }
 
+    public function cambiarEstado (Caso $caso, $estado)
+    {
+
+        if ($estado == 'pendiente_formulario'){
+            $caso->update(['estado' => 'pendiente_aprobacion']);
+            $caso->save();
+            return redirect()->route('casos.pendientes-aprobacion');
+        }
+
+        if ($estado == 'rechazado'){
+            $caso->update(['estado' => 'rechazado']);
+            $caso->save();
+            return redirect()->route('casos.rechazados');
+        }
+
+        if ($estado == 'aprobado'){
+            $caso->update(['estado' => 'aprobado']);
+            $caso->save();
+            return redirect()->route('casos.aprobados');
+        }
+
+    }
     public function pdf_diabetologico($caso_id)
     {
       $caso = Caso::find($caso_id);
