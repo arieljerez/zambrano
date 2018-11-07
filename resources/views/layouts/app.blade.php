@@ -49,8 +49,8 @@
                                 <i class="fa fa-cog" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Pacientes</a>
-                                <a class="dropdown-item" href="#">Usuarios</a>
+                                <a class="dropdown-item" href="{{ route('pacientes.index') }}">Pacientes</a>
+                                <a class="dropdown-item" href="{{ route('usuarios.index') }}">Usuarios</a>
                             </div>
                         </li>
                       <li class="nav-item dropdown">
