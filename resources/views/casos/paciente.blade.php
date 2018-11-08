@@ -90,7 +90,8 @@
             </div>
 
             <div class="form-group col-md-3">
-                <input type="text" name="paciente[sexo]" class="form-control{{ $errors->has('paciente.sexo') ? ' is-invalid' : '' }}" value="{{ old('paciente.sexo',$paciente->sexo) }}"/>
+                {{ Form::select('paciente[sexo]', ['M' => 'Masculino', 'F' => 'Femenino'], $paciente->sexo, ['placeholder' => 'Seleccione una opción','class' => 'form-control'.( $errors->has('paciente.sexo') ? ' is-invalid' : '')]) }}
+
                 <label for="paciente[sexo]" class="col-form-label text-md-left">{{ __('Sexo') }}</label>
                 @if ($errors->has('paciente.sexo'))
                     <span class="invalid-feedback" role="alert">
@@ -109,6 +110,6 @@
                 @endif
             </div>
         </div>
-        <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>
+
     </div>
 </div>

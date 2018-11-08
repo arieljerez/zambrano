@@ -23,6 +23,18 @@ Route::group(['middleware' => 'auth'], function () {
   Route::Resource('usuarios', 'UsuarioController');
   Route::Resource('pacientes', 'PacienteController');
 
+    Route::get('casos/buscar_paciente', function (){
+
+
+        $pacientes = App\Models\Paciente::paginate(50);
+        return view('casos.buscar_paciente',compact(['pacientes']));
+    });
+
+    Route::get('casos/create/{id}', function ($id){
+        $paciente = App\Models\Paciente::find($id);
+        $caso = new App\Models\Caso();
+        return view('casos.create',compact(['paciente','caso']));
+    });
   Route::get('casos/pendientes-formulario', 'CasoController@pendientesFormulario')->name('casos.pendientes-formulario');
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');

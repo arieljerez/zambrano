@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Iniciar Nuevo Caso</div>
+                <div class="card-header">Iniciar Nuevo Caso         <a href="{{ url('casos/buscar_paciente/') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a></div>
 
                 <div class="card-body">
                     @if (session('status'))

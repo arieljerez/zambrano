@@ -18,9 +18,8 @@ class CasoController extends Controller
      */
     public function index()
     {
-        $casos = \DB::Table('casos')
-            ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente ','pacientes.dni'))->get();
+        $casos = $this->consultaBase()
+                ->get();
         return view('casos.index',compact('casos'));
     }
 
@@ -33,7 +32,8 @@ class CasoController extends Controller
     public function pendientesFormulario()
     {
         $casos = $this->consultaBase()
-            ->where('casos.estado','=','pendiente_formulario')->get();
+            ->where('casos.estado','=','pendiente_formulario')
+            ->get();
         return view('casos.pendientes-formulario',compact('casos'));
     }
 
@@ -47,9 +47,7 @@ class CasoController extends Controller
 
     public function aprobados()
     {
-        $casos = \DB::Table('casos')
-            ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))
+        $casos = $this->consultaBase()
             ->where('casos.estado','=','aprobado')
             ->get();
         return view('casos.aprobados',compact('casos'));
@@ -57,9 +55,7 @@ class CasoController extends Controller
 
     public function rechazados()
     {
-        $casos = \DB::Table('casos')
-            ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))
+        $casos = $this->consultaBase()
             ->where('casos.estado','=','rechazado')
             ->get();
         return view('casos.rechazados',compact('casos'));

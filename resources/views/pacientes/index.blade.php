@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('pacientes.table')
+    @component('pacientes.table',['pacientes'=>$pacientes])
+        <button type="button" class="btn btn-dark">Editar</button>
+    @endcomponent
 @endsection

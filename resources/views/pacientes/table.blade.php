@@ -55,7 +55,7 @@
                               <td><p>Teléfono{{ $usuario->telefono }}</p><p>Teléfono Familiar{{ $usuario->telefono_familiar }}</p></td>
                               <td>{{ $usuario->sexo }}</td>
                               <td>
-                                  <action-icons url="{{ url('pacientes') }}" :id="{{ $usuario->id }}" token="{{ csrf_token() }}"></action-icons>
+                                  {{ $slot }}
                               </td>
                           </tr>
                         @endforeach
