@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ elixir('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ elixir('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -70,10 +70,10 @@
                       </li>
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Auditoria
+                          Prodiaba
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="#">Pendientes</a>
+                          <a class="dropdown-item" href="{{ route('prodiaba.pendientes')}}">Pendientes</a>
                           <a class="dropdown-item" href="#">Aprobados</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="#">Rechazados</a>
@@ -95,7 +95,7 @@
                               <a class="dropdown-item" href="{{ route('login') }}">Profesionales</a>
                               <a class="dropdown-item" href="#">Prestadores</a>
                               <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="#">Prodiaba</a>
+                              <a class="dropdown-item" href="{{ route('prodiaba.login') }}">Prodiaba</a>
                             </div>
                           </li>
                             <li class="nav-item">
@@ -109,7 +109,7 @@
                           </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::User()->dni }} , {{ Auth::User()->matricula }} <span class="caret"></span>
+                                    {{ Auth::User()->apellido }} , {{ Auth::User()->nombres }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

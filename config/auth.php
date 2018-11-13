@@ -45,6 +45,14 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        'prodiaba' => [
+            'driver' => 'session',
+            'provider' => 'prodiabas',
+        ],
+        'prodiaba-api' => [
+            'driver' => 'token',
+            'provider' => 'prodiabas',
+        ],
     ],
 
     /*
@@ -70,10 +78,10 @@ return [
             'model' => App\Models\Usuario::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'prodiabas' => [
+             'driver' => 'eloquent',
+             'model' => App\Models\Prodiaba::class,
+         ],
     ],
 
     /*
@@ -96,6 +104,11 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
+        ],
+        'admins' => [
+            'provider' => 'prodiabas',
+            'table' => 'password_resets',
+            'expire' => 15,
         ],
     ],
 

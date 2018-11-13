@@ -15,7 +15,7 @@
             <td>      {{ $caso->dni }}       </td>
             <td>      {{ $caso->paciente }}    </td>
             <td>
-               <a href="{{ route('casos.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-save"></i> Editar</a>
+               <a href="{{ route('prodiaba.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-eye"></i> Ver</a>
             </td>
         </tr>
     @endforeach

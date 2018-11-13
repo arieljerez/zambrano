@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Iniciar Nuevo Caso         <a href="{{ url('casos/buscar_paciente/') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a></div>
+                <div class="card-header">Iniciar Nuevo Caso <a href="{{ url('casos/buscar_paciente/') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,8 +15,10 @@
                     @endif
 
                        {!! Form::model($caso, ['route' => ['casos.store', $caso], 'aria-label' => __('Nuevo Caso')])  !!}
+                       <fieldset {{ $solo_lectura == false ? '' : 'disabled' }} d>
+                         @include('casos.paciente')
+                       </fieldset>
 
-                        @include('casos.paciente')
                         <div class="row"><div class="col-md-12">&nbsp;</div></div>
                         <div class="row">
                         <div class="col-md-6">

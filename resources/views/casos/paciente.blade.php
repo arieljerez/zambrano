@@ -100,12 +100,15 @@
                 @endif
             </div>
 
+        @php
+          $regiones_sanitarias = \App\Models\Entidad::where('entidad','=','regiones_sanitarias')->pluck('valor','id');
+        @endphp
             <div class="form-group col-md-3">
-                <input type="date" name="paciente[fecha]" class="form-control{{ $errors->has('paciente.fecha') ? ' is-invalid' : '' }}" readonly/>
-                <label for="paciente[fecha]" class="col-form-label text-md-left">{{ __('Fecha') }}</label>
-                @if ($errors->has('paciente.fecha'))
+                {{ Form::select('paciente[region_sanitaria]', $regiones_sanitarias, $paciente->region_sanitaria, ['placeholder' => 'Seleccione una opción','class' => 'form-control'.( $errors->has('paciente.region_sanitaria') ? ' is-invalid' : '')]) }}
+                <label for="paciente[region_sanitaria]" class="col-form-label text-md-left">{{ __('Región Sanitaria') }}</label>
+                @if ($errors->has('paciente.region_sanitaria'))
                     <span class="invalid-feedback" role="alert">
-                       <strong>{{ $errors->first('paciente.fecha') }}</strong>
+                       <strong>{{ $errors->first('paciente.region_sanitaria') }}</strong>
                     </span>
                 @endif
             </div>

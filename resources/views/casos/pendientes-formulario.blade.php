@@ -24,7 +24,11 @@
                     <div class="row">
                         @include('casos.table')
                     </div>
-
+                    <div class="row">
+                      <div class="col">
+                        {{ $casos->links() }}
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>

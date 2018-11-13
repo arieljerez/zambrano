@@ -14,7 +14,21 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/prodiaba', function () {
+    return view('prodiaba/home');
+});
 
+Route::prefix('prodiaba')->group(function() {
+    Route::get('/login', 'Auth\ProdiabaLoginController@showLoginForm')->name('prodiaba.login');
+    Route::post('/login', 'Auth\ProdiabaLoginController@login')->name('prodiaba.login.submit');
+    Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
+
+    Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
+
+    Route::get('/pendientes', 'ProdiabaController@pendientes')->name('prodiaba.pendientes');
+
+});
+      Route::Resource('prodiaba', 'ProdiabaController');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
@@ -22,19 +36,18 @@ Route::group(['middleware' => 'auth'], function () {
 
   Route::Resource('usuarios', 'UsuarioController');
   Route::Resource('pacientes', 'PacienteController');
+  Route::Resource('auditoria', 'AuditoriaController');
 
-    Route::get('casos/buscar_paciente', function (){
+  Route::get('casos/buscar_paciente', function (){
+      $pacientes = App\Models\Paciente::paginate(50);
+      return view('casos.buscar_paciente',compact(['pacientes']));
+  });
 
-
-        $pacientes = App\Models\Paciente::paginate(50);
-        return view('casos.buscar_paciente',compact(['pacientes']));
-    });
-
-    Route::get('casos/create/{id}', function ($id){
-        $paciente = App\Models\Paciente::find($id);
-        $caso = new App\Models\Caso();
-        return view('casos.create',compact(['paciente','caso']));
-    });
+  Route::get('casos/create/{id}', function ($id){
+      $paciente = App\Models\Paciente::find($id);
+      $caso = new App\Models\Caso();
+      return view('casos.create',compact(['paciente','caso']));
+  });
   Route::get('casos/pendientes-formulario', 'CasoController@pendientesFormulario')->name('casos.pendientes-formulario');
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
@@ -42,8 +55,13 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('casos/por-paciente', 'CasoController@porPaciente')->name('casos.por_paciente');
   Route::Resource('casos', 'CasoController');
 
-  Route::get('descargar-caso/{caso_id}/diabetologico', 'CasoController@pdf_diabetologico')->name('caso_diabetologico.pdf');
-  Route::get('descargar-caso/{caso_id}/oftalmologico', 'CasoController@pdf_oftalmologico')->name('caso_oftalmologico.pdf');
+  Route::get('eliminar_archivo_of/{caso_id}/oftalmologicos/{file}', function ($caso_id,$file) {
+      Storage::delete($file);
+      $caso = App\Models\Caso::find($caso_id);
+      $caso->update(['oftalmologico_archivo'=> '']);
+      $caso->save();
+      return back();
+  });
 
   Route::get('descargar/diabetologicos/{file}', function ($file) {
       return Storage::response('diabetologicos/'.$file);

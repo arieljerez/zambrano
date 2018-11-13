@@ -4,6 +4,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Paciente::class, function (Faker $faker) {
     $sexo = $faker->randomElement($array = array ('M','F'));
+    $region_sanitaria = DB::table('entidades')
+                  ->where('entidad','=','regiones_sanitarias')
+                  ->inRandomOrder()->value('id');
     return [
         'dni' => $faker->unique()->numerify('########'),
         'apellidos' => $faker->lastName,
@@ -13,6 +16,6 @@ $factory->define(App\Models\Paciente::class, function (Faker $faker) {
         'telefono' => $faker->phoneNumber,
         'telefono_familiar' => $faker->phoneNumber,
         'sexo' => $sexo,
+        'region_sanitaria' => $region_sanitaria
     ];
 });
-

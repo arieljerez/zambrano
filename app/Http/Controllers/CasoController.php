@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Serializables\Diabetologico;
 use App\Serializables\Oftalmologico;
+use App\Repositories\Caso as CasoRepository;
 
 class CasoController extends Controller
 {
+
+    public function __construct(CasoRepository $casoRepository)
+    {
+      $this->middleware('auth');
+      $this->casoRepository = $casoRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,11 +36,12 @@ class CasoController extends Controller
             ->join('pacientes','pacientes.id','=','casos.paciente_id')
             ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
     }
+
     public function pendientesFormulario()
     {
         $casos = $this->consultaBase()
             ->where('casos.estado','=','pendiente_formulario')
-            ->get();
+            ->paginate(25);
         return view('casos.pendientes-formulario',compact('casos'));
     }
 
@@ -41,7 +49,7 @@ class CasoController extends Controller
     {
         $casos = $this->consultaBase()
             ->where('casos.estado','=','pendiente_aprobacion')
-            ->get();
+            ->paginate(25);
         return view('casos.pendientes-aprobacion',compact('casos'));
     }
 
@@ -49,7 +57,7 @@ class CasoController extends Controller
     {
         $casos = $this->consultaBase()
             ->where('casos.estado','=','aprobado')
-            ->get();
+            ->paginate(25);
         return view('casos.aprobados',compact('casos'));
     }
 
@@ -57,15 +65,16 @@ class CasoController extends Controller
     {
         $casos = $this->consultaBase()
             ->where('casos.estado','=','rechazado')
-            ->get();
+            ->paginate(25);
         return view('casos.rechazados',compact('casos'));
     }
 
     public function porPaciente()
     {
-        $casos = \DB::Table('casos')
-            ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres ," " , pacientes.dni) as paciente '))->get();
+
+      $casos = $this->consultaBase()
+          ->where('casos.estado','=','rechazado')
+          ->paginate(25);
         return view('casos.por_paciente',compact('casos'));
     }
     /**
@@ -76,7 +85,8 @@ class CasoController extends Controller
     public function create(Paciente $paciente)
     {
         $caso = new Caso();
-         return view('casos.create',compact('paciente','caso'));
+        $solo_lectura = false;
+         return view('casos.create',compact('paciente','caso','solo_lectura'));
     }
 
     /**
@@ -129,10 +139,16 @@ class CasoController extends Controller
      */
     public function edit(Caso $caso)
     {
+        $solo_lectura = false;
         $paciente =  json_decode($caso->paciente);
         $diabetologico = new Diabetologico(json_decode($caso->diabetologico,true));
         $oftalmologico = new Oftalmologico(json_decode($caso->oftalmologico,true));
-        return view('casos.edit', compact('caso','paciente','diabetologico','oftalmologico'));
+
+        if($caso->estado != 'pendiente_formulario')
+        {
+          $solo_lectura = true;
+        }
+        return view('casos.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
 
     /**

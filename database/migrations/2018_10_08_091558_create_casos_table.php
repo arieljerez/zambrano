@@ -22,8 +22,8 @@ class CreateCasosTable extends Migration
             $table->json('oftalmologico');
             $table->json('paciente');
             $table->string('estado',20)->default('');
-            $table->string('diabetologico_archivo',100)->default('');
-            $table->string('oftalmologico_archivo',100)->default('');
+            $table->string('diabetologico_archivo',100)->nullable();
+            $table->string('oftalmologico_archivo',100)->nullable();
             $table->timestamps();
 
             $table->foreign('diabetologo_id')->references('id')->on('usuarios');

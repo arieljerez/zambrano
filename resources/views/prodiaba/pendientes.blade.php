@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Casos</div>
+                <div class="card-header">Casos: Pendientes de aprobacion</div>
                 <div class="card-body">
 
                     @if (session('status'))
@@ -16,15 +16,13 @@
                     @endif
 
                     <div class="row">
-                     <div class="col-md-6 mb-3">
-                       <a href="{{url('casos/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Caso</a>
-                     </div>
-                   </div>
-
-                    <div class="row">
-                      @include('casos.table')
+                        @include('prodiaba.table')
                     </div>
-
+                    <div class="row">
+                      <div class="col">
+                        {{ $casos->links() }}
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>

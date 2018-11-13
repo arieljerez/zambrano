@@ -23,6 +23,7 @@ class CreatePacientesTable extends Migration
             $table->string('telefono')->required();
             $table->string('telefono_familiar')->required();
             $table->enum('sexo',['M','F'])->required();
+            $table->string('region_sanitaria')->required();
 
             $table->timestamps();
         });
