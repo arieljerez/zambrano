@@ -24,6 +24,12 @@ class CreateCasosTable extends Migration
             $table->string('estado',20)->default('');
             $table->string('diabetologico_archivo',100)->nullable();
             $table->string('oftalmologico_archivo',100)->nullable();
+
+            $table->date('fecha_aprobacion')->nullable();
+            $table->date('fecha_rechazo')->nullable();
+            $table->string('texto_aprobacion')->nullable();
+            $table->string('texto_rechazo')->nullable();
+
             $table->timestamps();
 
             $table->foreign('diabetologo_id')->references('id')->on('usuarios');

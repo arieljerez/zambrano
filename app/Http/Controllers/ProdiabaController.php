@@ -50,16 +50,12 @@ class ProdiabaController extends Controller
 
     public function edit($caso_id)
     {
-        $solo_lectura = false;
+        $solo_lectura = true;
         $caso = Caso::find($caso_id);
         $paciente =  json_decode($caso->paciente);
         $diabetologico = new Diabetologico(json_decode($caso->diabetologico,true));
         $oftalmologico = new Oftalmologico(json_decode($caso->oftalmologico,true));
 
-        if($caso->estado != 'pendiente_formulario')
-        {
-          $solo_lectura = true;
-        }
         return view('prodiaba.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
 }

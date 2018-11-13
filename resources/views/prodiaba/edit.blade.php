@@ -7,26 +7,81 @@
                 <div class="card">
                     <div class="card-header">Caso # {{ $caso->id }}
 
-                    @if ($caso->estado == 'pendiente_aprobacion')
 
-                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                        <input type="hidden" name="cambiar_estado" value="aprobado">
-                        <button type="submit" class="btn btn-success float-right">
-                            Aprobar <i class="fa fa-check" aria-hidden="true"></i>
-                        </button>
-                        {!! Form::Close() !!}
 
-                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                        <input type="hidden" name="cambiar_estado" value="rechazado">
-                        <button type="submit" class="btn btn-danger float-right">
-                            Rechazar <i class="fa fa-times" aria-hidden="true"></i>
-                        </button>
-                        {!! Form::Close() !!}
 
-                    @endif
 
                     </div>
+                    @if ($caso->estado == 'pendiente_aprobacion')
 
+                    <!-- Button trigger modal -->
+                    <div class="form-inline">
+                      <button type="button" class="btn btn-danger col-6" data-toggle="modal" data-target="#rechazarModal">
+                        Rechazar <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn btn-success col-6 " data-toggle="modal" data-target="#aprobarModal">
+                        Aprobar <i class="fa fa-check" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <!-- Modal Aprobar-->
+                    <div class="modal fade" id="aprobarModal" tabindex="-1" role="dialog" aria-labelledby="aprobarModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                        <div class="modal-content">
+                          <div class="modal-header text-white bg-success mb-3">
+                            <h5 class="modal-title" id="exampleModalLabel">Aprobar</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <input type="hidden" name="cambiar_estado" value="aprobado">
+                            <div class="form-group">
+                                <textarea name="texto_aprobacion" class="form-control col-10" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="date" name="fecha_aprobacion" class="form-control col-6" required>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Aprobar <i class="fa fa-check" aria-hidden="true"></i></button>
+                          </div>
+                        </div>
+                        {!! Form::Close() !!}
+                      </div>
+                    </div>
+
+                    <!-- Modal Aprobar-->
+                    <div class="modal fade" id="rechazarModal" tabindex="-1" role="dialog" aria-labelledby="rechazarModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                        <div class="modal-content">
+                          <div class="modal-header text-white bg-danger mb-3">
+                            <h5 class="modal-title" id="exampleModalLabel">Rechazar</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <input type="hidden" name="cambiar_estado" value="rechazado">
+                            <div class="form-group">
+                                <textarea name="texto_aprobacion" class="form-control col-10" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="date" name="fecha_aprobacion" class="form-control col-6" required>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">Rechazar <i class="fa fa-times" aria-hidden="true"></i></button>
+                          </div>
+                        </div>
+                        {!! Form::Close() !!}
+                      </div>
+                    </div>
+                    @endif
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -45,42 +100,21 @@
                             </div>
                             <div class="col-10">
                                 <div class="tab-content" id="v-pills-tabContent">
-                                    <div class="tab-pane fade" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab"> @include('casos.paciente')</div>
-                                    <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
-                                        {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                                        <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
-
-                                        @include('casos.diabetologico')
-
-                                        <div class="row"><div class="col-md-12">&nbsp;</div></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="fas fa-save"></i> {{ __('Grabar') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <input  type="hidden" name="destino" value="diabetologico">
+                                    <div class="tab-pane fade" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab">
+                                        <fieldset disabled>
+                                           @include('casos.paciente')
                                         </fieldset>
-
-                                        {!! Form::Close() !!}
+                                      </div>
+                                    <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
+                                        <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
+                                        @include('casos.diabetologico')
+                                        <div class="row"><div class="col-md-12">&nbsp;</div></div>
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-oftalmologico" role="tabpanel" aria-labelledby="v-pills-oftalmologico-tab">
-                                        {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
                                         <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
                                           @include('casos.oftalmologico')
                                           <div class="row"><div class="col-md-12">&nbsp;</div></div>
-                                          <div class="row">
-                                              <div class="col-md-6">
-                                                  <button type="submit" class="btn btn-primary">
-                                                      <i class="fas fa-save"></i> {{ __('Grabar') }}
-                                                  </button>
-                                              </div>
-                                          </div>
-                                          <input  type="hidden" name="destino" value="oftalmologico">
-
-                                          </fieldset>
-                                        {!! Form::Close() !!}
+                                        </fieldset>
                                      </div>
                                     <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('casos.bitacora')</div>
                                 </div>
@@ -89,7 +123,7 @@
                         <div class="row"><div class="col-md-12">&nbsp;</div></div>
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
+                                <a href="{{ url('prodiaba/pendientes') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
                             </div>
                         </div>
 
