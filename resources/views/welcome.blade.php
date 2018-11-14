@@ -41,7 +41,7 @@
         <div class="card-body">
           <h5 class="card-title"><h2>Prodiaba</h2></h5>
           <p class="card-text">Ingreso de documentacion y formularios electrónicos. Alta de Casos</p>
-          <a href="#" class="btn btn-primary">Acceder</a>
+          <a href="{{ route('prodiaba.login')}}" class="btn btn-primary">Acceder</a>
         </div>
       </div>
   </div>
