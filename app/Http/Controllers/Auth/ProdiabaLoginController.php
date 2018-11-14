@@ -40,4 +40,9 @@ class ProdiabaLoginController extends Controller
     {
       $this->middleware('guest:prodiaba')->except('logout');
     }
+
+    public function username()
+    {
+        return 'usuario';
+    }
 }

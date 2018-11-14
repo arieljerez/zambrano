@@ -210,7 +210,7 @@ class CasoController extends Controller
 
     public function cambiarEstado (Caso $caso, $estado)
     {
-
+         // TODO: pasara a repositorie
         if ($estado == 'pendiente_formulario'){
             $caso->update(['estado' => 'pendiente_aprobacion']);
             $caso->save();
@@ -223,33 +223,5 @@ class CasoController extends Controller
             return redirect()->route('casos.rechazados');
         }
 
-        if ($estado == 'aprobado'){
-            $caso->update(['estado' => 'aprobado']);
-            $caso->save();
-            return redirect()->route('casos.aprobados');
-        }
-
-    }
-    public function pdf_diabetologico($caso_id)
-    {
-      $caso = Caso::find($caso_id);
-      $paciente =  json_decode($caso->paciente);
-      $diabetologico = json_decode($caso->diabetologico);
-      $pdf = \PDF::loadView('casos.pdf.diabetologico', compact('caso','paciente','diabetologico'));
-      //return $pdf->download('caso.pdf');
-      //return view('casos.pdf.diabetologico', compact('caso','paciente','diabetologico'));
-
-      return $pdf->download('caso_'.$caso_id.'_diabetologico.pdf');
-    }
-
-    public function pdf_oftalmologico($caso_id)
-    {
-      $caso = Caso::find($caso_id);
-      $paciente =  json_decode($caso->paciente);
-      $diabetologico = json_decode($caso->diabetologico);
-      $pdf = \PDF::loadView('casos.pdf.oftalmologico', compact('caso','paciente','diabetologico'));
-      //return $pdf->download('caso.pdf');
-
-      return $pdf->download('caso_'.$caso_id.'_oftalmologico.pdf');
     }
 }

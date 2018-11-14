@@ -58,4 +58,26 @@ class ProdiabaController extends Controller
 
         return view('prodiaba.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
+
+    public function aprobar()
+    {
+      $caso_id = request()->input('caso_id');
+      $texto_aprobacion = request()->input('texto_aprobacion');
+      $fecha_aprobacion = request()->input('fecha_aprobacion');
+      $this->casoRepository->aprobar($caso_id,$fecha_aprobacion,$texto_aprobacion);
+
+      request()->session()->flash('status', 'Caso #'.$caso_id.' ha sido aprobado.');
+      return redirect()->route('prodiaba.pendientes');
+    }
+
+    public function rechazar()
+    {
+      $id = request()->input('caso_id');
+      $texto = request()->input('texto_aprobacion');
+      $fecha = request()->input('fecha_aprobacion');
+      $this->casoRepository->rechazar($id,$fecha,$texto);
+
+      request()->session()->flash('wrongs', 'Caso #'.$id.' ha sido rechazado.');
+      return redirect()->route('prodiaba.pendientes');
+    }
 }

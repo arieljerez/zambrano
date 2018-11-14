@@ -11,7 +11,7 @@ class Prodiaba extends Authenticatable
 // The authentication guard for prodiaba
   protected $guard = 'prodiaba';
 
-  protected $fillable = ['email', 'password'];
+  protected $fillable = ['email', 'password','usuario'];
 
   protected $hidden = ['password', 'remember_token'];
 }

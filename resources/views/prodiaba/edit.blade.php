@@ -27,7 +27,7 @@
                     <!-- Modal Aprobar-->
                     <div class="modal fade" id="aprobarModal" tabindex="-1" role="dialog" aria-labelledby="aprobarModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
-                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                        {!! Form::model($caso, ['method' => 'POST','route' => ['prodiaba.aprobar'], 'aria-label' => __('Aprobar Caso')])  !!}
                         <div class="modal-content">
                           <div class="modal-header text-white bg-success mb-3">
                             <h5 class="modal-title" id="exampleModalLabel">Aprobar</h5>
@@ -45,6 +45,7 @@
                             </div>
                           </div>
                           <div class="modal-footer">
+                            <input type="hidden" name="caso_id" value="{{ $caso->id}}" />
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-success">Aprobar <i class="fa fa-check" aria-hidden="true"></i></button>
                           </div>
@@ -56,7 +57,7 @@
                     <!-- Modal Aprobar-->
                     <div class="modal fade" id="rechazarModal" tabindex="-1" role="dialog" aria-labelledby="rechazarModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
-                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                        {!! Form::model($caso, ['method' => 'POST','route' => ['prodiaba.rechazar'], 'aria-label' => __('Actualizar Caso')])  !!}
                         <div class="modal-content">
                           <div class="modal-header text-white bg-danger mb-3">
                             <h5 class="modal-title" id="exampleModalLabel">Rechazar</h5>
@@ -74,6 +75,7 @@
                             </div>
                           </div>
                           <div class="modal-footer">
+                            <input type="hidden" name="caso_id" value="{{ $caso->id}}" />
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-danger">Rechazar <i class="fa fa-times" aria-hidden="true"></i></button>
                           </div>

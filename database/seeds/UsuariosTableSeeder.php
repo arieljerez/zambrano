@@ -12,5 +12,7 @@ class UsuariosTableSeeder extends Seeder
     public function run()
     {
         factory(App\Models\Usuario::class, 15)->create();
+
+        factory(App\Models\Usuario::class, 1)->create(['dni' => '1234']);
     }
 }

@@ -26,6 +26,8 @@ Route::prefix('prodiaba')->group(function() {
     Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
 
     Route::get('/pendientes', 'ProdiabaController@pendientes')->name('prodiaba.pendientes');
+    Route::post('/aprobar', 'ProdiabaController@aprobar')->name('prodiaba.aprobar');
+    Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
 
 });
       Route::Resource('prodiaba', 'ProdiabaController');

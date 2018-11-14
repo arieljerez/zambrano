@@ -5,6 +5,7 @@
         <th> Fecha </th>
         <th> DNI </th>
         <th> Paciente </th>
+        <th>  </th>
     </tr>
     </thead>
     <tbody>

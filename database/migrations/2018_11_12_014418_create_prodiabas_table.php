@@ -15,6 +15,7 @@ class CreateProdiabasTable extends Migration
     {
         Schema::create('prodiabas', function (Blueprint $table) {
           $table->increments('id');
+          $table->string('usuario')->unique();
           $table->string('email')->unique();
           $table->string('password');
           $table->rememberToken();

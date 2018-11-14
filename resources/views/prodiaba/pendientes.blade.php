@@ -15,6 +15,11 @@
                         </div>
                     @endif
 
+                    @if (session('wrongs'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('wrongs') }}
+                        </div>
+                    @endif
                     <div class="row">
                         @include('prodiaba.table')
                     </div>
