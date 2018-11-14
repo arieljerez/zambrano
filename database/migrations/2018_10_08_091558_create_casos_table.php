@@ -14,7 +14,7 @@ class CreateCasosTable extends Migration
     public function up()
     {
         Schema::create('casos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id',1001);
             $table->unsignedInteger('diabetologo_id')->nullable();
             $table->unsignedInteger('oftalmologo_id')->nullable();
             $table->unsignedInteger('paciente_id');
