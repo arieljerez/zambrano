@@ -2,6 +2,7 @@
  namespace App\Repositories;
 
  use App\Models\Caso as CasoModel;
+ use App\Repositories\Bitacora;
 
  class Caso
  {
@@ -25,6 +26,7 @@
      $data = ['estado' => 'aprobado','fecha_aprobacion' => $fecha, 'texto_aprobacion' => $texto];
      $caso->update($data);
      $caso->save();
+     Bitacora::grabar($caso->id,'Aprobado',$texto);
    }
 
    public function rechazar($caso_id,$fecha,$texto)
@@ -33,5 +35,6 @@
      $data = ['estado' => 'rechazado','fecha_rechazo' => $fecha, 'texto_rechazo' => $texto];
      $caso->update($data);
      $caso->save();
+    Bitacora::grabar($caso->id,'Rechazado',$texto);
    }
  }

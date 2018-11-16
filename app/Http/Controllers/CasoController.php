@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Serializables\Diabetologico;
 use App\Serializables\Oftalmologico;
 use App\Repositories\Caso as CasoRepository;
+use App\Repositories\Bitacora;
 
 class CasoController extends Controller
 {
@@ -103,8 +104,11 @@ class CasoController extends Controller
         $paciente_data = $paciente_data['paciente'];
         $paciente =  Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
 
-       $caso = Caso::create( ['estado'=> 'pendiente_formulario','paciente_id' => $paciente->id,'oftalmologico' => '[]' ,'diabetologico' => '[]', 'paciente' => json_encode($paciente) ]);
-       return redirect()->route('casos.edit',['id' => $caso->id]);
+
+        $caso = Caso::create( ['estado'=> 'pendiente_formulario','paciente_id' => $paciente->id,'oftalmologico' => '[]' ,'diabetologico' => '[]', 'paciente' => json_encode($paciente) ]);
+        Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de formularios');
+
+        return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 
     protected function validarPaciente($paciente)
@@ -148,6 +152,7 @@ class CasoController extends Controller
         {
           $solo_lectura = true;
         }
+
         return view('casos.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
 
@@ -194,6 +199,8 @@ class CasoController extends Controller
               $caso->save();
           }
         }
+
+        Bitacora::grabar($caso->id,$destino,'Actualizado');
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 
@@ -214,12 +221,14 @@ class CasoController extends Controller
         if ($estado == 'pendiente_formulario'){
             $caso->update(['estado' => 'pendiente_aprobacion']);
             $caso->save();
+            Bitacora::grabar($caso->id,'Cambio estado','Pasa a Pendiente aprobación');
             return redirect()->route('casos.pendientes-aprobacion');
         }
 
         if ($estado == 'rechazado'){
             $caso->update(['estado' => 'rechazado']);
             $caso->save();
+            Bitacora::grabar($caso->id,'Cambio estado','Caso Rechazado');
             return redirect()->route('casos.rechazados');
         }
 

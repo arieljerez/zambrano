@@ -30,7 +30,7 @@ Route::prefix('prodiaba')->group(function() {
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
 
 });
-      Route::Resource('prodiaba', 'ProdiabaController');
+Route::Resource('prodiaba', 'ProdiabaController');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
@@ -48,7 +48,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('casos/create/{id}', function ($id){
       $paciente = App\Models\Paciente::find($id);
       $caso = new App\Models\Caso();
-      return view('casos.create',compact(['paciente','caso']));
+      $solo_lectura = false;
+      //Todo: Pasar a controlador
+      return view('casos.create',compact(['paciente','caso','solo_lectura']));
   });
   Route::get('casos/pendientes-formulario', 'CasoController@pendientesFormulario')->name('casos.pendientes-formulario');
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
