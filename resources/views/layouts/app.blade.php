@@ -53,6 +53,7 @@
                                 <a class="dropdown-item" href="{{ route('usuarios.index') }}">Usuarios</a>
                             </div>
                         </li>
+                      <!-- casos -->
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Casos
@@ -68,6 +69,28 @@
                           <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>
                         </div>
                       </li>
+                      <!-- Efector -->
+                      @auth('web')
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Efector
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{ route('tratamientos.index')}}">Tratamientos</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="{{ route('casos.pendientes-formulario')}}">Pendientes Formulario</a>
+                          <a class="dropdown-item" href="{{ route('casos.pendientes-aprobacion')}}">Pendientes Aprobación</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="{{ route('casos.aprobados')}}">Aprobados</a>
+                          <a class="dropdown-item" href="{{ route('casos.rechazados')}}">Rechazados</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="{{ route('casos.por_paciente')}}">Por Paciente</a>
+                          <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>
+                        </div>
+                      </li>
+                      @endauth
+                      @auth('prodiaba')
+                      <!-- prodiaba -->
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Prodiaba
@@ -79,6 +102,8 @@
                           <a class="dropdown-item" href="#">Rechazados</a>
                         </div>
                       </li>
+
+                    @endauth
                     </ul>
                   @endguest
                     <!-- Right Side Of Navbar -->

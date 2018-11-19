@@ -31,6 +31,7 @@ Route::prefix('prodiaba')->group(function() {
 
 });
 Route::Resource('prodiaba', 'ProdiabaController');
+Route::Resource('tratamientos', 'TratamientoController');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {

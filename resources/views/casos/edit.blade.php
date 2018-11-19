@@ -53,6 +53,7 @@
                                     <a class="nav-link active" id="v-pills-diabetologico-tab" data-toggle="pill" href="#v-pills-diabetologico" role="tab" aria-controls="v-pills-diabetologico" aria-selected="false">Diabetológico</a>
                                     <a class="nav-link" id="v-pills-oftalmologico-tab" data-toggle="pill" href="#v-pills-oftalmologico" role="tab" aria-controls="v-pills-oftalmologico" aria-selected="false">Oftalmológico</a>
                                     <a class="nav-link" id="v-pills-bitacora-tab" data-toggle="pill" href="#v-pills-bitacora" role="tab" aria-controls="v-pills-bitacora" aria-selected="false">Bitácora</a>
+                                    <a class="nav-link" id="v-pills-tratamientos-tab" data-toggle="pill" href="#v-pills-tratamientos" role="tab" aria-controls="v-pills-tratamientos" aria-selected="false">Tratamientos</a>
                                 </div>
                             </div>
                             <div class="col-10">
@@ -95,6 +96,7 @@
                                         {!! Form::Close() !!}
                                      </div>
                                     <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('casos.bitacora')</div>
+                                    <div class="tab-pane fade" id="v-pills-tratamientos" role="tabpanel" aria-labelledby="v-pills-tratamientos-tab">@include('casos.tratamientos')</div>
                                 </div>
                             </div>
                         </div>
