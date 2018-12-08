@@ -5,8 +5,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Casos: Pendientes de aprobacion</div>
+            <div class="card shadow mb-5 bg-white rounded">
+                <div class="card-header bg-danger text-white">Casos: Rechazados</div>
                 <div class="card-body">
 
                     @if (session('status'))

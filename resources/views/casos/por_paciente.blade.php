@@ -28,7 +28,7 @@
 
                     <div class="clearfix"> </div>
                     <div class="row">
-                      @include('casos.table')
+                      @include('casos.table',['accion' => 'ver'])
                     </div>
 
                 </div>

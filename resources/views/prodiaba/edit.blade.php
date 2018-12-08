@@ -6,11 +6,6 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Caso # {{ $caso->id }}
-
-
-
-
-
                     </div>
                     @if ($caso->estado == 'pendiente_aprobacion')
 

@@ -5,6 +5,7 @@
         <th> Fecha </th>
         <th> DNI </th>
         <th> Paciente </th>
+        <th> Acción </th>
     </tr>
     </thead>
     <tbody>
@@ -15,7 +16,14 @@
             <td>      {{ $caso->dni }}       </td>
             <td>      {{ $caso->paciente }}    </td>
             <td>
-               <a href="{{ route('casos.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-save"></i> Editar</a>
+              @switch($accion)
+                @case("ver")
+                  <a href="{{ route('casos.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-eye"></i> Ver</a>
+                  @break
+                @case("editar")
+                  <a href="{{ route('casos.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-save"></i> Editar</a>
+                  @break
+              @endswitch
             </td>
         </tr>
     @endforeach

@@ -40,17 +40,43 @@ class CasoController extends Controller
 
     public function pendientesFormulario()
     {
-        $casos = $this->consultaBase()
-            ->where('casos.estado','=','pendiente_formulario')
-            ->paginate(25);
+        $query = $this->consultaBase()
+            ->where('casos.estado','=','pendiente_formulario');
+
+        if(request()->has('dni')){
+          $query = $query->where('pacientes.dni','like','%'.request()->input('dni').'%');
+        }
+
+        if(request()->has('apellidos')){
+          $query = $query->where('pacientes.apellidos','like','%'.request()->input('apellidos').'%');
+        }
+
+        if(request()->has('nombres')){
+          $query = $query->where('pacientes.nombres','like','%'.request()->input('nombres').'%');
+        }
+
+        $casos = $query->paginate(25);
         return view('casos.pendientes-formulario',compact('casos'));
     }
 
     public function pendientesAprobacion()
     {
-        $casos = $this->consultaBase()
-            ->where('casos.estado','=','pendiente_aprobacion')
-            ->paginate(25);
+        $query = $this->consultaBase()
+            ->where('casos.estado','=','pendiente_aprobacion');
+
+        if(request()->has('dni')){
+          $query = $query->where('pacientes.dni','like','%'.request()->input('dni').'%');
+        }
+
+        if(request()->has('apellidos')){
+          $query = $query->where('pacientes.apellidos','like','%'.request()->input('apellidos').'%');
+        }
+
+        if(request()->has('nombres')){
+          $query = $query->where('pacientes.nombres','like','%'.request()->input('nombres').'%');
+        }
+
+        $casos = $query->paginate(25);
         return view('casos.pendientes-aprobacion',compact('casos'));
     }
 
@@ -72,11 +98,10 @@ class CasoController extends Controller
 
     public function porPaciente()
     {
-
-      $casos = $this->consultaBase()
-          ->where('casos.estado','=','rechazado')
-          ->paginate(25);
-        return view('casos.por_paciente',compact('casos'));
+        $casos = $this->consultaBase()
+            ->where('casos.estado','=','rechazado')
+            ->paginate(25);
+          return view('casos.por_paciente',compact('casos'));
     }
     /**
      * Show the form for creating a new resource.

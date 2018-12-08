@@ -97,9 +97,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <a class="dropdown-item" href="{{ route('prodiaba.pendientes')}}">Pendientes</a>
-                          <a class="dropdown-item" href="#">Aprobados</a>
+                          <a class="dropdown-item" href="{{ route('prodiaba.aprobados')}}">Aprobados</a>
                           <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Rechazados</a>
+                          <a class="dropdown-item" href="{{ route('prodiaba.rechazados')}}">Rechazados</a>
                         </div>
                       </li>
 

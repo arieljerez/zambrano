@@ -20,12 +20,9 @@
                         </div>
                     @endif
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <a href="{{url('pacientes/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Usuario</a>
-                        </div>
-                    </div>
-
+                  <form method="get" action="{{url('casos/buscar_paciente')}}">
+                    @include('casos.parts.filtro_paciente')
+                  </form>
 
                     @if( $pacientes->count() > 0)
                         <div class="row">
@@ -37,28 +34,29 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-condensed">
                                 <thead>
-                                <th>DNI</th>
-                                <th>Apellidos</th>
-                                <th>Nombres</th>
-                                <th>Fecha Nacimiento</th>
-                                <th>Teléfonos</th>
-                                <th>Sexo</th>
+                                  <th>DNI</th>
+                                  <th>Apellidos</th>
+                                  <th>Nombres</th>
+                                  <th>Fecha Nacimiento</th>
+                                  <th>Teléfonos</th>
+                                  <th>Sexo</th>
+                                  <th>Seleccionar</th>
                                 </thead>
                                 <tbody>
                                 @foreach( $pacientes as $usuario)
                                     <tr>
                                         <td>
                                             <p class="h4">{{ $usuario->dni }}</p>
-                                            <p><small>Registro: {{ $usuario->created_at }}</small></p>
-                                            <small>Actualización: {{ $usuario->updated_at }}</small>
+                                            <p><small>Registro: {{ \Carbon\Carbon::parse($usuario->created_at)->format('d/m/Y')  }} </small></p>
+                                            <small>Actualización: {{ \Carbon\Carbon::parse($usuario->updated_at)->format('d/m/Y')  }}</small>
                                         </td>
                                         <td>{{ $usuario->apellidos}}</td>
                                         <td>{{ $usuario->nombres}}</td>
-                                        <td>{{ $usuario->fecha_nacimiento }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($usuario->fecha_nacimiento)->format('d/m/Y')  }}</td>
                                         <td><p>Teléfono{{ $usuario->telefono }}</p><p>Teléfono Familiar{{ $usuario->telefono_familiar }}</p></td>
                                         <td>{{ $usuario->sexo }}</td>
                                         <td>
-                                            <a href="{{ url('casos/create',$usuario->id) }}" class="btn btn-link">Seleccionar</a>
+                                            <a href="{{ url('casos/create',$usuario->id) }}" class="btn btn-primary"><i class="fa fa-check"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

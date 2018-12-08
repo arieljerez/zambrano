@@ -26,6 +26,8 @@ Route::prefix('prodiaba')->group(function() {
     Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
 
     Route::get('/pendientes', 'ProdiabaController@pendientes')->name('prodiaba.pendientes');
+    Route::get('/aprobados', 'ProdiabaController@aprobados')->name('prodiaba.aprobados');
+    Route::get('/rechazados', 'ProdiabaController@rechazados')->name('prodiaba.rechazados');
     Route::post('/aprobar', 'ProdiabaController@aprobar')->name('prodiaba.aprobar');
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
 
@@ -41,10 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::Resource('pacientes', 'PacienteController');
   Route::Resource('auditoria', 'AuditoriaController');
 
-  Route::get('casos/buscar_paciente', function (){
-      $pacientes = App\Models\Paciente::paginate(50);
-      return view('casos.buscar_paciente',compact(['pacientes']));
-  });
+  Route::get('casos/buscar_paciente', 'PacienteController@buscar');
 
   Route::get('casos/create/{id}', function ($id){
       $paciente = App\Models\Paciente::find($id);
@@ -64,6 +63,14 @@ Route::group(['middleware' => 'auth'], function () {
       Storage::delete($file);
       $caso = App\Models\Caso::find($caso_id);
       $caso->update(['oftalmologico_archivo'=> '']);
+      $caso->save();
+      return back();
+  });
+
+  Route::get('eliminar_archivo_di/{caso_id}/diabetologicos/{file}', function ($caso_id,$file) {
+      Storage::delete($file);
+      $caso = App\Models\Caso::find($caso_id);
+      $caso->update(['diabetologico_archivo'=> '']);
       $caso->save();
       return back();
   });

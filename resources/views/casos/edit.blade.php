@@ -19,24 +19,6 @@
 
                     @endif
 
-                    @if ($caso->estado == 'pendiente_aprobacion')
-
-                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                        <input type="hidden" name="cambiar_estado" value="aprobado">
-                        <button type="submit" class="btn btn-success float-right">
-                            Aprobar <i class="fa fa-check" aria-hidden="true"></i>
-                        </button>
-                        {!! Form::Close() !!}
-
-                        {!! Form::model($caso, ['method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                        <input type="hidden" name="cambiar_estado" value="rechazado">
-                        <button type="submit" class="btn btn-danger float-right">
-                            Rechazar <i class="fa fa-times" aria-hidden="true"></i>
-                        </button>
-                        {!! Form::Close() !!}
-
-                    @endif
-
                     </div>
 
                     <div class="card-body">
@@ -91,7 +73,7 @@
                                               </div>
                                           </div>
                                           <input  type="hidden" name="destino" value="oftalmologico">
-                              
+
                                           </fieldset>
                                         {!! Form::Close() !!}
                                      </div>

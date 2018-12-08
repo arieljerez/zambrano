@@ -5,8 +5,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Casos: Pendientes de aprobacion</div>
+            <div class="card shadow mb-5 bg-white rounded">
+                <div class="card-header bg-success text-white">Casos: Aprobados</div>
                 <div class="card-body">
 
                     @if (session('status'))
@@ -21,7 +21,7 @@
                         </div>
                     @endif
 
-                    <form method="get" action="{{url('prodiaba/pendientes')}}">
+                    <form method="get" action="{{url('prodiaba/aprobados')}}">
                       @include('casos.parts.filtro_paciente')
                     </form>
 

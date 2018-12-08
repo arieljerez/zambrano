@@ -33,15 +33,25 @@ class ProdiabaController extends Controller
 
     public function pendientes()
     {
-      $casos  = $this->casoRepository->pendientesAprobacion();
+      $filtro = request()->only(['dni','apellidos','nombres']);
+      $casos  = $this->casoRepository->pendientesAprobacion($filtro);
       return view('prodiaba.pendientes', compact('casos'));
     }
 
     public function aprobados()
     {
-      $casos  = $this->casoRepository->aprobados();
+      $filtro = request()->only(['dni','apellidos','nombres']);
+      $casos  = $this->casoRepository->aprobados($filtro);
       return view('prodiaba.aprobados', compact('casos'));
     }
+
+    public function rechazados()
+    {
+      $filtro = request()->only(['dni','apellidos','nombres']);
+      $casos  = $this->casoRepository->rechazados($filtro);
+      return view('prodiaba.rechazados', compact('casos'));
+    }
+
 
     public function home()
     {

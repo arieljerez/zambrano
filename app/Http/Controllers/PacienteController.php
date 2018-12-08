@@ -7,6 +7,26 @@ use Illuminate\Http\Request;
 
 class PacienteController extends Controller
 {
+
+    public function buscar()
+    {
+      $query = Paciente::where('dni','like','%');
+
+      if(request()->has('dni')){
+        $query = $query->where('dni','like','%'.request()->input('dni').'%');
+      }
+
+      if(request()->has('apellidos')){
+        $query = $query->where('apellidos','like','%'.request()->input('apellidos').'%');
+      }
+
+      if(request()->has('nombres')){
+        $query = $query->where('nombres','like','%'.request()->input('nombres').'%');
+      }
+
+      $pacientes = $query->paginate(25);
+      return view('casos.buscar_paciente',compact(['pacientes']));
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +34,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::paginate(50);
+        $pacientes = Paciente::paginate(20);
         return view('pacientes.index',compact('pacientes'));
     }
 

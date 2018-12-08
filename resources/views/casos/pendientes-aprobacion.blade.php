@@ -15,8 +15,12 @@
                         </div>
                     @endif
 
+                    <form method="get" action="{{url('casos/pendientes-aprobacion')}}">
+                      @include('casos.parts.filtro_paciente')
+                    </form>
+
                     <div class="row">
-                        @include('casos.table')
+                        @include('casos.table',['accion' => 'ver'])
                     </div>
                     <div class="row">
                       <div class="col">

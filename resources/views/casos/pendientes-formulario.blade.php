@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card shadow mb-5 bg-white rounded">
                 <div class="card-header">Casos: Pendiente Formulario</div>
                 <div class="card-body">
 
@@ -15,15 +15,14 @@
                         </div>
                     @endif
 
-                    <div class="row">
-                     <div class="col-md-6 mb-3">
-                       <a href="{{url('casos/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Caso</a>
-                     </div>
-                   </div>
+                    <form method="get" action="{{url('casos/pendientes-formulario')}}">
+                      @include('casos.parts.filtro_paciente')
+                    </form>
 
                     <div class="row">
-                        @include('casos.table')
+                        @include('casos.table',['accion' => 'editar'])
                     </div>
+
                     <div class="row">
                       <div class="col">
                         {{ $casos->links() }}
