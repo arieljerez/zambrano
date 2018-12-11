@@ -123,17 +123,22 @@ class CasoController extends Controller
      */
     public function store(Request $request)
     {
-        $paciente_data = $request->only('paciente');
-        $this->validarPaciente($paciente_data);
-
-        $paciente_data = $paciente_data['paciente'];
-        $paciente =  Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
-
-
+        $paciente =  $this->grabarPaciente($request);
         $caso = Caso::create( ['estado'=> 'pendiente_formulario','paciente_id' => $paciente->id,'oftalmologico' => '[]' ,'diabetologico' => '[]', 'paciente' => json_encode($paciente) ]);
-        Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de formularios');
+        Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de frmularios');
 
         return redirect()->route('casos.edit',['id' => $caso->id]);
+    }
+    public function grabarPaciente($request,$caso)
+    {
+      $paciente_data = $request->only('paciente');
+      $this->validarPaciente($paciente_data);
+
+      $paciente_data = $paciente_data['paciente'];
+
+      $paciente = Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
+      Bitacora::grabar($caso->id,'Paciente','Datos del Paciente Actualizados');
+      return $paciente;
     }
 
     protected function validarPaciente($paciente)
@@ -181,6 +186,36 @@ class CasoController extends Controller
         return view('casos.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
 
+  public function grabarDiabetologico(Request $request, Caso $caso)
+  {
+      if( $request->hasfile('archivo')){
+        $diabetologico_archivo =  $request->file('archivo')->store('diabetologicos');
+        $caso->update(['diabetologico'=> $diabetologico, 'diabetologico_archivo' => $diabetologico_archivo]);
+        $caso->save();
+        Bitacora::grabar($caso->id,'Diabetologico','Archivo Diabetologico Actualizado');
+      }else{
+        $diabetologico = json_encode($request->input('diabetologico'));
+        $caso->update(['diabetologico'=> $diabetologico]);
+        $caso->save();
+        Bitacora::grabar($caso->id,'Diabetologico','Formulario Diabetologico Actualizado');
+      }
+
+  }
+
+  public function grabarOftalmologico(Request $request, Caso $caso)
+  {
+    if( $request->hasfile('archivo')){
+        $oftalmologico_archivo =  $request->file('archivo')->store('oftalmologicos');
+        $caso->update(['oftalmologico'=> $oftalmologico, 'oftalmologico_archivo' => $oftalmologico_archivo]);
+        $caso->save();
+        Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
+      }else{
+        $oftalmologico = json_encode($request->input('oftalmologico'));
+        $caso->update(['oftalmologico'=> $oftalmologico]);
+        $caso->save();
+        Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
+    }
+  }
     /**
      * Update the specified resource in storage.
      *
@@ -193,39 +228,24 @@ class CasoController extends Controller
         if ($request->has('cambiar_estado')){
             return $this->cambiarEstado ($caso, $request->input('cambiar_estado'));
         }
-        $destino = $request->input('destino');
-        if ($destino == 'diabetologico')
-        {
-            $diabetologico = json_encode($request->input('diabetologico'));
 
-            if( $request->hasfile('archivo')){
-              $diabetologico_archivo =  $request->file('archivo')->store('diabetologicos');
-            //  dd($diabetologico_archivo);
-              $caso->update(['diabetologico'=> $diabetologico, 'diabetologico_archivo' => $diabetologico_archivo]);
-              $caso->save();
-            }else{
-              $caso->update(['diabetologico'=> $diabetologico]);
-              $caso->save();
-            }
-
+        switch ($request->input('destino')) {
+          case 'paciente':
+            $paciente = $this->grabarPaciente($request, $caso);
+            $caso->update( ['paciente' => json_encode($paciente) ]);
+            $caso->save();
+            break;
+          case 'diabetologico':
+            $this->grabarDiabetologico($request, $caso);
+            break;
+          case 'oftalmologico':
+            $this->grabarOftalmalogico($request, $caso);
+            break;
+          default:
+            // code...
+            break;
         }
 
-        if ($destino == 'oftalmologico')
-        {
-            $oftalmologico = json_encode($request->input('oftalmologico'));
-
-            if( $request->hasfile('archivo')){
-              $oftalmologico_archivo =  $request->file('archivo')->store('oftalmologicos');
-
-              $caso->update(['oftalmologico'=> $oftalmologico, 'oftalmologico_archivo' => $oftalmologico_archivo]);
-              $caso->save();
-            }else{
-              $caso->update(['oftalmologico'=> $oftalmologico]);
-              $caso->save();
-          }
-        }
-
-        Bitacora::grabar($caso->id,$destino,'Actualizado');
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 

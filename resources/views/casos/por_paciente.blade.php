@@ -14,21 +14,17 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="row">
-                      <div class="col-6">
-                        <form method="post" action=" {{ route('casos.por_paciente')}}">
-                          <div class="form-inline">
-                            <label class="form-label col-2">DNI:</label>
-                              <input type="text" class="form-control col-5" name="dni"/>
-                              <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
+                    <form method="get" action="{{url('casos/por-paciente')}}">
+                      @include('casos.parts.filtro_paciente')
+                    </form>
 
-                    <div class="clearfix"> </div>
                     <div class="row">
-                      @include('casos.table',['accion' => 'ver'])
+                        @include('casos.table',['accion' => 'ver'])
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        {{ $casos->links() }}
+                      </div>
                     </div>
 
                 </div>

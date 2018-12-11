@@ -40,7 +40,24 @@
                             </div>
                             <div class="col-10">
                                 <div class="tab-content" id="v-pills-tabContent">
-                                    <div class="tab-pane fade" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab"> @include('casos.paciente')</div>
+                                    <div class="tab-pane fade" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab">
+                                      {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                                      <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
+
+                                        @include('casos.paciente')
+
+                                        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fas fa-save"></i> {{ __('Grabar') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="destino" value="paciente">
+                                      </fieldset>
+                                        {!! Form::Close() !!}
+                                    </div>
                                     <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
                                         {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
                                         <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
