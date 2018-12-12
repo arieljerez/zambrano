@@ -98,11 +98,12 @@ class CasoController extends Controller
 
     public function porPaciente()
     {
-        $casos = $this->consultaBase()
-            ->where('casos.estado','=','rechazado')
-            ->paginate(25);
+          $query = $this->consultaBase();
+          //$query = $query->where('pacientes.dni','like',$paciente_id);
+          $casos = $query->paginate(25);
           return view('casos.por_paciente',compact('casos'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -129,6 +130,7 @@ class CasoController extends Controller
 
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
+
     public function grabarPaciente($request,$caso)
     {
       $paciente_data = $request->only('paciente');
@@ -153,16 +155,6 @@ class CasoController extends Controller
             'paciente.dni' => 'required|integer',
             'paciente.sexo' => 'required',
         ])->validate();
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Caso  $caso
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Caso $caso)
-    {
-
     }
 
     /**

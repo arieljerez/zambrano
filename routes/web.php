@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::Resource('pacientes', 'PacienteController');
   Route::Resource('auditoria', 'AuditoriaController');
 
-  Route::get('casos/buscar_paciente', 'PacienteController@buscar');
+  Route::get('casos/buscar_paciente/{url}', ['uses'=>'PacienteController@buscar']);
 
   Route::get('casos/create/{id}', function ($id){
       $paciente = App\Models\Paciente::find($id);
@@ -56,7 +56,16 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
   Route::get('casos/rechazados', 'CasoController@rechazados')->name('casos.rechazados');
-  Route::get('casos/por-paciente', 'CasoController@porPaciente')->name('casos.por_paciente');
+  Route::get('casos/por-paciente/{id?}', function ($id = 0){
+    $query =  \DB::Table('casos')
+        ->join('pacientes','pacientes.id','=','casos.paciente_id')
+        ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
+    $query = $query->where('pacientes.id','=',$id);
+    $casos = $query->paginate(25);
+    return view('casos.por_paciente',compact('casos'));
+
+  })->name('casos.por_paciente');
+
   Route::Resource('casos', 'CasoController');
 
   Route::get('eliminar_archivo_of/{caso_id}/oftalmologicos/{file}', function ($caso_id,$file) {
@@ -78,7 +87,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('descargar/diabetologicos/{file}', function ($file) {
       return Storage::response('diabetologicos/'.$file);
   });
-
   Route::get('descargar/oftalmologicos/{file}', function ($file) {
       return Storage::response('oftalmologicos/'.$file);
   });

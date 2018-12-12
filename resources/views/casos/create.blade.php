@@ -4,14 +4,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Iniciar Nuevo Caso </div>
+            <div class="card  shadow mb-5 bg-white rounded">
+                <div class="card-header bg-success text-white">Iniciar Nuevo Caso </div>
 
                 <div class="card-body">
 
                   <div class="row">
                     <div class="col-12">
-                      <a href="{{ url('casos/buscar_paciente/') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>
+                      <a href="{{ url('casos/buscar_paciente/casos.create') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>
                     </div>
                     <div class="col-12">
                       &nbsp;
@@ -34,7 +34,6 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> {{ __('Crear') }}
                             </button>
-                            <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
                         </div>
                         {!! Form::Close() !!}
                 </div>

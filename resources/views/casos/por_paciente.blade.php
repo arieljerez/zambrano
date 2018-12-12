@@ -14,9 +14,15 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form method="get" action="{{url('casos/por-paciente')}}">
-                      @include('casos.parts.filtro_paciente')
-                    </form>
+
+                    <div class="row">
+                      <div class="col-12">
+                        <a href="{{ url('casos/buscar_paciente/casos.por_paciente') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>
+                      </div>
+                      <div class="col-12">
+                        &nbsp;
+                      </div>
+                    </div>
 
                     <div class="row">
                         @include('casos.table',['accion' => 'ver'])

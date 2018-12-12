@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PacienteController extends Controller
 {
 
-    public function buscar()
+    public function buscar($url)
     {
       $query = Paciente::where('dni','like','%');
 
@@ -24,8 +24,22 @@ class PacienteController extends Controller
         $query = $query->where('nombres','like','%'.request()->input('nombres').'%');
       }
 
-      $pacientes = $query->paginate(25);
-      return view('casos.buscar_paciente',compact(['pacientes']));
+      $pacientes = $query->paginate(3);
+      $pacientes->withPath('/casos/buscar_paciente/'.$url);
+
+      if(request()->has('dni')){
+         $pacientes->appends(['dni' => request()->input('dni')]);
+      }
+
+      if(request()->has('apellidos')){
+        $pacientes->appends(['apellidos' => request()->input('apellidos')]);
+      }
+
+      if(request()->has('nombres')){
+        $pacientes->appends(['nombres' => request()->input('nombres')]);
+      }
+
+      return view('casos.buscar_paciente',compact(['pacientes','url']));
     }
     /**
      * Display a listing of the resource.

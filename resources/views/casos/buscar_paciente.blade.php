@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                  <form method="get" action="{{url('casos/buscar_paciente')}}">
+                  <form method="get" action="{{url('casos/buscar_paciente/'.$url.'/')}}">
                     @include('casos.parts.filtro_paciente')
                   </form>
 
@@ -56,7 +56,7 @@
                                         <td><p>Teléfono{{ $usuario->telefono }}</p><p>Teléfono Familiar{{ $usuario->telefono_familiar }}</p></td>
                                         <td>{{ $usuario->sexo }}</td>
                                         <td>
-                                            <a href="{{ url('casos/create',$usuario->id) }}" class="btn btn-primary"><i class="fa fa-check"></i></a>
+                                            <a href="{{ url(route($url).'/'.$usuario->id) }}" class="btn btn-primary"><i class="fa fa-check"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
