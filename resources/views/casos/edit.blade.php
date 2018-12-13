@@ -102,7 +102,7 @@
                         <div class="row"><div class="col-md-12">&nbsp;</div></div>
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="{{ url('casos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
                             </div>
                         </div>
 

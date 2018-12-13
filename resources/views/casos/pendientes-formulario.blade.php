@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card shadow mb-5 bg-white rounded">
-                <div class="card-header">Casos: Pendiente Formulario</div>
+                <div class="card-header bg-warning text-black">Casos: Pendiente Formulario</div>
                 <div class="card-body">
 
                     @if (session('status'))

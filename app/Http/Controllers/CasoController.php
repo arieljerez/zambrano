@@ -27,21 +27,15 @@ class CasoController extends Controller
     public function index()
     {
         $casos = $this->consultaBase()
-                ->get();
+                ->paginate(25);
         return view('casos.index',compact('casos'));
     }
 
     public function consultaBase()
     {
-        return \DB::Table('casos')
+        $query =  \DB::Table('casos')
             ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
-    }
-
-    public function pendientesFormulario()
-    {
-        $query = $this->consultaBase()
-            ->where('casos.estado','=','pendiente_formulario');
+            ->select('casos.estado as Estado','casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
 
         if(request()->has('dni')){
           $query = $query->where('pacientes.dni','like','%'.request()->input('dni').'%');
@@ -54,7 +48,27 @@ class CasoController extends Controller
         if(request()->has('nombres')){
           $query = $query->where('pacientes.nombres','like','%'.request()->input('nombres').'%');
         }
+        //--
 
+        if(request()->input('id') > 0){
+          $query = $query->where('casos.id','=',request()->input('id'));
+        }
+
+        if(request()->input('fecha_desde') != ""){
+          $query = $query->where('casos.created_at','>=',request()->input('fecha_desde'));
+        }
+
+        if(request()->input('fecha_hasta') != ""){
+          $query = $query->where('casos.created_at','<=',request()->input('fecha_hasta'));
+        }
+
+        return $query;
+    }
+
+    public function pendientesFormulario()
+    {
+        $query = $this->consultaBase()
+            ->where('casos.estado','=','pendiente_formulario');
         $casos = $query->paginate(25);
         return view('casos.pendientes-formulario',compact('casos'));
     }
@@ -63,18 +77,6 @@ class CasoController extends Controller
     {
         $query = $this->consultaBase()
             ->where('casos.estado','=','pendiente_aprobacion');
-
-        if(request()->has('dni')){
-          $query = $query->where('pacientes.dni','like','%'.request()->input('dni').'%');
-        }
-
-        if(request()->has('apellidos')){
-          $query = $query->where('pacientes.apellidos','like','%'.request()->input('apellidos').'%');
-        }
-
-        if(request()->has('nombres')){
-          $query = $query->where('pacientes.nombres','like','%'.request()->input('nombres').'%');
-        }
 
         $casos = $query->paginate(25);
         return view('casos.pendientes-aprobacion',compact('casos'));
@@ -99,7 +101,6 @@ class CasoController extends Controller
     public function porPaciente()
     {
           $query = $this->consultaBase();
-          //$query = $query->where('pacientes.dni','like',$paciente_id);
           $casos = $query->paginate(25);
           return view('casos.por_paciente',compact('casos'));
     }
