@@ -18,6 +18,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         switch ($guard) {
+            case 'efector' :
+              if (Auth::guard($guard)->check()) {
+                  return redirect()->route('efector.home');
+              }
+              break;
             case 'prodiaba' :
                 if (Auth::guard($guard)->check()) {
                     return redirect()->route('prodiaba.home');

@@ -70,7 +70,7 @@
                         </div>
                       </li>
                       <!-- Efector -->
-                      @auth('web')
+                      @auth('efector')
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Efector
@@ -118,7 +118,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="{{ route('login') }}">Profesionales</a>
-                              <a class="dropdown-item" href="#">Prestadores</a>
+                              <a class="dropdown-item" href="{{ route('efector.login')}}">Prestadores</a>
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="{{ route('prodiaba.login') }}">Prodiaba</a>
                             </div>

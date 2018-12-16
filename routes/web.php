@@ -32,6 +32,13 @@ Route::prefix('prodiaba')->group(function() {
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
 
 });
+
+Route::prefix('efector')->group(function() {
+    Route::get('/login', 'Auth\EfectorLoginController@showLoginForm')->name('efector.login');
+    Route::post('/login', 'Auth\EfectorLoginController@login')->name('efector.login.submit');
+    Route::get('/home', 'EfectorController@index')->name('efector.home');
+});
+
 Route::Resource('prodiaba', 'ProdiabaController');
 Route::Resource('tratamientos', 'TratamientoController');
 Auth::routes();
