@@ -87,6 +87,7 @@
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="{{ route('casos.aprobados')}}">Aprobados</a>
                           <a class="dropdown-item" href="{{ route('casos.rechazados')}}">Rechazados</a>
+                          <a class="dropdown-item" href="{{ route('casos.vencidos')}}">Vencidos</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="{{ route('casos.por_paciente')}}">Por Paciente</a>
                           <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>

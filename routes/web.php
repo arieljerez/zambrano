@@ -26,9 +26,9 @@ Route::prefix('prodiaba')->group(function() {
     Route::get('/pendientes', 'ProdiabaController@pendientes')->name('prodiaba.pendientes');
     Route::get('/aprobados', 'ProdiabaController@aprobados')->name('prodiaba.aprobados');
     Route::get('/rechazados', 'ProdiabaController@rechazados')->name('prodiaba.rechazados');
+    Route::get('/vencidos', 'ProdiabaController@vencidos')->name('prodiaba.vencidos');
     Route::post('/aprobar', 'ProdiabaController@aprobar')->name('prodiaba.aprobar');
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
-    Route::post('/vencidos', 'ProdiabaController@vencidos')->name('prodiaba.vencidos');
 
 });
 
@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth:web,efector'], function () {
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
   Route::get('casos/rechazados', 'CasoController@rechazados')->name('casos.rechazados');
+  Route::get('casos/vencidos', 'CasoController@rechazados')->name('casos.vencidos');
   Route::get('casos/por-paciente/{id?}', function ($id = 0){
     $query =  \DB::Table('casos')
         ->join('pacientes','pacientes.id','=','casos.paciente_id')
