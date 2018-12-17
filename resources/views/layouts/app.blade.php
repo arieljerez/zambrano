@@ -104,6 +104,7 @@
                           <a class="dropdown-item" href="{{ route('prodiaba.aprobados')}}">Aprobados</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="{{ route('prodiaba.rechazados')}}">Rechazados</a>
+                          <a class="dropdown-item" href="{{ route('prodiaba.vencidos')}}">Vencidos</a>
                         </div>
                       </li>
 

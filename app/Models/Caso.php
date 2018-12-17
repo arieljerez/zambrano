@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Caso extends Model
 {
-    protected $fillable = ['diabetologico','oftalmologo_id','diabetologo_id','paciente_id','oftalmologico','paciente','estado','diabetologico_archivo','oftalmologico_archivo','texto_rechazo','texto_aprobacion','fecha_rechazo','fecha_aprobacion'];
+    protected $fillable = ['diabetologico','oftalmologo_id','diabetologo_id','paciente_id','oftalmologico','paciente','estado','diabetologico_archivo','oftalmologico_archivo','texto_rechazo','texto_aprobacion','fecha_rechazo','fecha_aprobacion','fecha_reaprobacion','texto_reaprobacion'];
 /*
     public function setPacienteAttribute($value)
     {

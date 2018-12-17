@@ -27,8 +27,11 @@ class CreateCasosTable extends Migration
 
             $table->date('fecha_aprobacion')->nullable();
             $table->date('fecha_rechazo')->nullable();
-            $table->string('texto_aprobacion')->nullable();
-            $table->string('texto_rechazo')->nullable();
+            $table->string('texto_aprobacion',200)->nullable();
+            $table->string('texto_rechazo',200)->nullable();
+
+            $table->date('fecha_reaprobacion')->nullable();
+            $table->string('texto_reaprobacion',200)->nullable();
 
             $table->timestamps();
 

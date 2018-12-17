@@ -90,6 +90,14 @@ class CasoController extends Controller
         return view('casos.aprobados',compact('casos'));
     }
 
+    public function vencidos()
+    {
+        $casos = $this->consultaBase()
+            ->where('casos.estado','=','vencido')
+            ->paginate(25);
+        return view('casos.vencidos',compact('casos'));
+    }
+
     public function rechazados()
     {
         $casos = $this->consultaBase()
@@ -237,6 +245,18 @@ class CasoController extends Controller
           default:
             // code...
             break;
+        }
+
+        if($caso->estado == 'aprobado')
+        {
+          $ahora = \Carbon\Carbon::now();
+          $fecha_aprobacion = \Carbon\Carbon::parse($caso->fecha_aprobacion);
+          if($fecha_aprobacion->diffInDays($ahora) > 15)
+          {
+            $paciente = $this->grabarPaciente($request, $caso);
+            $caso->update( ['estado' => 'vencido' ]);
+            $caso->save();
+          }
         }
 
         return redirect()->route('casos.edit',['id' => $caso->id]);

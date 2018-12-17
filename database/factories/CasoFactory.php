@@ -16,7 +16,7 @@ $factory->define(App\Models\Caso::class, function (Faker $faker) {
 		'fecha_rechazo' => $faker->dateTimeBetween($startDate = '-12 days', $endDate = 'now') ,
     'created_at' => $faker->dateTimeBetween($startDate = '-3 month', $endDate = '-20 days') ,
 		'fecha_aprobacion' => $faker->dateTimeBetween($startDate = '-12 days', $endDate = 'now'),
-		'texto_rechazo' => 'Motivo del rechazo: '.$faker->text,
-		'texto_aprobacion' => 'Razón de la aprobacion: '.$faker->text
+		'texto_rechazo' => 'Motivo del rechazo: '.$faker->text(100),
+		'texto_aprobacion' => 'Razón de la aprobacion: '.$faker->text(100)
     ];
 });

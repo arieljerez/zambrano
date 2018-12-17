@@ -28,6 +28,7 @@ Route::prefix('prodiaba')->group(function() {
     Route::get('/rechazados', 'ProdiabaController@rechazados')->name('prodiaba.rechazados');
     Route::post('/aprobar', 'ProdiabaController@aprobar')->name('prodiaba.aprobar');
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
+    Route::post('/vencidos', 'ProdiabaController@vencidos')->name('prodiaba.vencidos');
 
 });
 

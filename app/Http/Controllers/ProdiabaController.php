@@ -52,7 +52,12 @@ class ProdiabaController extends Controller
       return view('prodiaba.rechazados', compact('casos'));
     }
 
-
+    public function vencidos()
+    {
+        $filtro = request()->only(['dni','apellidos','nombres']);
+        $casos  = $this->casoRepository->rechazados($filtro);
+        return view('prodiaba.vencidos', compact('casos'));
+    }
     public function home()
     {
       return view('prodiaba.home');
