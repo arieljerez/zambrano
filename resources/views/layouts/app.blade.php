@@ -44,6 +44,7 @@
                   @else
 
                     <ul class="navbar-nav mr-auto">
+                      @auth('efector')
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-cog" aria-hidden="true"></i>
@@ -53,7 +54,9 @@
                                 <a class="dropdown-item" href="{{ route('usuarios.index') }}">Usuarios</a>
                             </div>
                         </li>
+                      @endauth
                       <!-- casos -->
+                      @auth('web')
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Casos
@@ -69,8 +72,9 @@
                           <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>
                         </div>
                       </li>
+                      @endauth
                       <!-- Efector -->
-                      @auth('web')
+                      @auth('efector')
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Efector
@@ -118,7 +122,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="{{ route('login') }}">Profesionales</a>
-                              <a class="dropdown-item" href="#">Prestadores</a>
+                              <a class="dropdown-item" href="{{ route('efector.login')}}">Prestadores</a>
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="{{ route('prodiaba.login') }}">Prodiaba</a>
                             </div>

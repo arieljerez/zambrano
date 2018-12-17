@@ -69,6 +69,8 @@ class Handler extends ExceptionHandler
         }
          $guard = array_get($exception->guards(), 0);
           switch ($guard) {
+            case 'efector': $login = 'efector.login';
+            break;
             case 'prodiaba': $login = 'prodiaba.login';
             break;
             default: $login = 'login';

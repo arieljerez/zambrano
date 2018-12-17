@@ -7,7 +7,11 @@
     $tratamientos = App\Models\Tratamiento::where('caso_id', '=', $caso->id)->get();
 @endphp
 
-
+@auth('efector')
+  @php
+    $solo_lectura = false;
+  @endphp
+@endauth
 <nav>
     <div class="nav nav-tabs" id="nav-tab2" role="tablist">
         <a class="nav-item nav-link active" id="nav-home-tab2" data-toggle="tab" href="#nav-home2" role="tab" aria-controls="nav-home" aria-selected="true">Listado</a>
@@ -57,6 +61,7 @@
             <div class="card-header">{{ __('Nuevo tratamiento') }}</div>
 
             <div class="card-body">
+              <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
                 <form method="POST" action="{{ route('tratamientos.store') }}" aria-label="{{ __('Nuevo tratamientos') }}">
                     @csrf
                     @include('tratamientos.fields')
@@ -69,6 +74,7 @@
                         </div>
                     </div>
                 </form>
+              </fieldset>
             </div>
         </div>
     </div>

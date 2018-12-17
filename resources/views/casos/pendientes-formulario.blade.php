@@ -20,7 +20,13 @@
                     </form>
 
                     <div class="row">
+                      @auth('web')
                         @include('casos.table',['accion' => 'editar'])
+                      @endauth
+
+                      @auth('efector')
+                        @include('casos.table',['accion' => 'ver'])
+                      @endauth
                     </div>
 
                     <div class="row">

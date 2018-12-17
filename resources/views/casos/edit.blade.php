@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
+@auth('efector')
+ @php
+  $solo_lectura = true;
+ @endphp
+@endauth
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">

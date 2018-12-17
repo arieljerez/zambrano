@@ -23,8 +23,6 @@ Route::prefix('prodiaba')->group(function() {
     Route::post('/login', 'Auth\ProdiabaLoginController@login')->name('prodiaba.login.submit');
     Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
 
-    Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
-
     Route::get('/pendientes', 'ProdiabaController@pendientes')->name('prodiaba.pendientes');
     Route::get('/aprobados', 'ProdiabaController@aprobados')->name('prodiaba.aprobados');
     Route::get('/rechazados', 'ProdiabaController@rechazados')->name('prodiaba.rechazados');
@@ -32,16 +30,24 @@ Route::prefix('prodiaba')->group(function() {
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
 
 });
+
+Route::prefix('efector')->group(function() {
+    Route::get('/login', 'Auth\EfectorLoginController@showLoginForm')->name('efector.login');
+    Route::post('/login', 'Auth\EfectorLoginController@login')->name('efector.login.submit');
+    Route::get('/home', 'EfectorController@home')->name('efector.home');
+});
+
 Route::Resource('prodiaba', 'ProdiabaController');
+Route::Resource('efector', 'EfectorController');
 Route::Resource('tratamientos', 'TratamientoController');
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:web,efector'], function () {
   Route::get('/home', 'HomeController@index')->name('home');
 
   Route::Resource('usuarios', 'UsuarioController');
   Route::Resource('pacientes', 'PacienteController');
-  Route::Resource('auditoria', 'AuditoriaController');
+  //Route::Resource('auditoria', 'AuditoriaController');
 
   Route::get('casos/buscar_paciente/{url}', ['uses'=>'PacienteController@buscar']);
 

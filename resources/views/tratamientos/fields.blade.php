@@ -4,7 +4,7 @@
     <label for="name" class="col-md-4 col-form-label text-md-right">Caso</label>
 
     <div class="form-group col-md-4">
-        <input class="form-control" type="input" name="caso_id" id="caso_id" value="{{ old('caso_id',$tratamiento->caso_id)}}">
+        <input class="form-control" type="input" name="caso_id" id="caso_id" value="{{ old('caso_id',$tratamiento->caso_id)}}" readonly>
     </div>
 </div>
 

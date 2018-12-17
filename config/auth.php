@@ -17,7 +17,10 @@ return [
         'guard' => 'web',
         'passwords' => 'usuarios',
     ],
-
+    'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Efector::class,
+        ],
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -53,6 +56,14 @@ return [
             'driver' => 'token',
             'provider' => 'prodiabas',
         ],
+        'efector' => [
+          'driver' => 'session',
+          'provider' => 'efectores',
+        ],
+        'efector-api' => [
+            'driver' => 'token',
+            'provider' => 'efectores',
+        ],
     ],
 
     /*
@@ -82,6 +93,10 @@ return [
              'driver' => 'eloquent',
              'model' => App\Models\Prodiaba::class,
          ],
+        'efectores' => [
+              'driver' => 'eloquent',
+              'model' => App\Models\Efector::class,
+          ],
     ],
 
     /*
@@ -107,6 +122,11 @@ return [
         ],
         'admins' => [
             'provider' => 'prodiabas',
+            'table' => 'password_resets',
+            'expire' => 15,
+        ],
+        'efectores' => [
+            'provider' => 'efectores',
             'table' => 'password_resets',
             'expire' => 15,
         ],
