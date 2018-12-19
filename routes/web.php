@@ -22,6 +22,7 @@ Route::prefix('prodiaba')->group(function() {
     Route::get('/login', 'Auth\ProdiabaLoginController@showLoginForm')->name('prodiaba.login');
     Route::post('/login', 'Auth\ProdiabaLoginController@login')->name('prodiaba.login.submit');
     Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
+    Route::post('/logout', 'Auth\ProdiabaLoginController@logout')->name('prodiaba.logout');
 
     Route::get('/pendientes', 'ProdiabaController@pendientes')->name('prodiaba.pendientes');
     Route::get('/aprobados', 'ProdiabaController@aprobados')->name('prodiaba.aprobados');
@@ -36,6 +37,7 @@ Route::prefix('efector')->group(function() {
     Route::get('/login', 'Auth\EfectorLoginController@showLoginForm')->name('efector.login');
     Route::post('/login', 'Auth\EfectorLoginController@login')->name('efector.login.submit');
     Route::get('/home', 'EfectorController@home')->name('efector.home');
+    Route::post('/logout', 'Auth\EfectorLoginController@logout')->name('efector.logout');
 });
 
 Route::Resource('prodiaba', 'ProdiabaController');
