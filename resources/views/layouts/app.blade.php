@@ -80,8 +80,6 @@
                           Efector
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="{{ route('tratamientos.index')}}">Tratamientos</a>
-                          <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="{{ route('casos.pendientes-formulario')}}">Pendientes Formulario</a>
                           <a class="dropdown-item" href="{{ route('casos.pendientes-aprobacion')}}">Pendientes Aprobación</a>
                           <div class="dropdown-divider"></div>
@@ -110,6 +108,8 @@
                       </li>
 
                     @endauth
+
+
                     </ul>
                   @endguest
                     <!-- Right Side Of Navbar -->
