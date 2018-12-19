@@ -60,7 +60,12 @@ class ProdiabaController extends Controller
     }
     public function home()
     {
-      return view('prodiaba.home');
+      $aprobados = Caso::where('estado','=','aprobado')->count();
+      $rechazados = Caso::where('estado','=','rechazado')->count();
+      $pendientes_aprobacion = Caso::where('estado','=','pendiente_aprobacion')->count();
+      $pendientes_formulario = Caso::where('estado','=','pendiente_formulario')->count();
+      $vencidos = Caso::where('estado','=','vencido')->count();
+      return view('prodiaba.home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
     }
 
     public function edit($caso_id)
