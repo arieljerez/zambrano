@@ -29,9 +29,21 @@
                <a class="navbar-brand" href="#">
                  <img src="{{ asset('images/BA-gris.png') }}"  class="d-inline-block align-top" alt="">
                </a>
-               <a class="navbar-brand" href="{{ url('/') }}">
+               @auth('web')
+               <a class="navbar-brand" href="{{ url('/home') }}">
                    {{ config('app.name', 'Laravel') }}
                </a>
+               @endauth
+               @auth('prodiaba')
+               <a class="navbar-brand" href="{{ url('/prodiaba/home') }}">
+                   {{ config('app.name', 'Laravel') }}
+               </a>
+               @endauth
+               @auth('efector')
+               <a class="navbar-brand" href="{{ url('/efector/home') }}">
+                   {{ config('app.name', 'Laravel') }}
+               </a>
+               @endauth
               </nav>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

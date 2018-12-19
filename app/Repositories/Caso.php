@@ -38,7 +38,10 @@
    {
     $query =  \DB::Table('casos')
          ->join('pacientes','pacientes.id','=','casos.paciente_id')
-         ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni','fecha_aprobacion', 'casos.estado as estado','fecha_rechazo');
+         ->select('casos.id as id','casos.created_at as fecha',
+         \DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),
+         'pacientes.dni as dni','fecha_aprobacion', 'casos.estado as estado',
+         'fecha_rechazo','fecha_reaprobacion','fecha_rechazo');
          if(isset($filtro['dni'])){
            $query = $query->where('dni','like','%'.request()->input('dni').'%');
          }
