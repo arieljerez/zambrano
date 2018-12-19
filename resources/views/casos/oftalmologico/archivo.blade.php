@@ -3,7 +3,9 @@
     @if($caso->oftalmologico_archivo != null)
     <div class="form-group col-md-3">
         <a href="{{ asset('descargar/'.$caso->oftalmologico_archivo) }}" class="btn btn-primary">Descargar</a>
+        @if($caso->estado == 'pendiente_formulario')
         <a href="{{ asset('eliminar_archivo_of/'.$caso->id.'/'.$caso->oftalmologico_archivo) }}" class="btn btn-danger">Eliminar</a>
+        @endif
     </div>
     @else
     <div class="form-group col-md-3">

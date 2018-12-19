@@ -39,7 +39,7 @@
                                   <td>      {{ \Carbon\Carbon::parse($caso->fecha)->format('d/m/Y')  }}    </td>
                                   <td>      {{ $caso->dni }}       </td>
                                   <td>      {{ $caso->paciente }}    </td>
-                                  <td>      {{ $caso->Estado }}    </td>
+                                  <td>      {{ $caso->estado }}    </td>
                                   <td>
                                     <a href="{{ route('casos.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-eye"></i> Ver</a>
                                   </td>

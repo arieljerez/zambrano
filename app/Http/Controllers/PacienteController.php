@@ -24,7 +24,7 @@ class PacienteController extends Controller
         $query = $query->where('nombres','like','%'.request()->input('nombres').'%');
       }
 
-      $pacientes = $query->paginate(3);
+      $pacientes = $query->paginate(25);
       $pacientes->withPath('/casos/buscar_paciente/'.$url);
 
       if(request()->has('dni')){
@@ -48,7 +48,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::paginate(20);
+        $pacientes = Paciente::paginate(25);
         return view('pacientes.index',compact('pacientes'));
     }
 

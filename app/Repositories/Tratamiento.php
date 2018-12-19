@@ -9,7 +9,7 @@
    {
       $tratamiento = new ModelTratamiento();
       $tratamiento->caso_id = $caso_id;
-      $tratamiento->usuario_id = \Auth::User()->id;
+      $tratamiento->usuario_id =1; //\Auth::User()->id;
       $tratamiento->fecha = $fecha;
       $tratamiento->evento = $evento;
       $tratamiento->descripcion = $descripcion;

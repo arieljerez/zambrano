@@ -29,7 +29,7 @@ Route::prefix('prodiaba')->group(function() {
     Route::get('/vencidos', 'ProdiabaController@vencidos')->name('prodiaba.vencidos');
     Route::post('/aprobar', 'ProdiabaController@aprobar')->name('prodiaba.aprobar');
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
-
+    Route::post('/reaprobar', 'ProdiabaController@reaprobar')->name('prodiaba.reaprobar');
 });
 
 Route::prefix('efector')->group(function() {
@@ -63,8 +63,8 @@ Route::group(['middleware' => 'auth:web,efector'], function () {
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
   Route::get('casos/rechazados', 'CasoController@rechazados')->name('casos.rechazados');
-  Route::get('casos/vencidos', 'CasoController@rechazados')->name('casos.vencidos');
-  Route::get('casos/por-paciente/{id?}', function ($id = 0){
+  Route::get('casos/vencidos', 'CasoController@vencidos')->name('casos.vencidos');
+/*  Route::get('casos/por-paciente/{id?}', function ($id = 0){
     $query =  \DB::Table('casos')
         ->join('pacientes','pacientes.id','=','casos.paciente_id')
         ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
@@ -72,8 +72,8 @@ Route::group(['middleware' => 'auth:web,efector'], function () {
     $casos = $query->paginate(25);
     return view('casos.por_paciente',compact('casos'));
 
-  })->name('casos.por_paciente');
-
+  })->name('casos.por_paciente');*/
+  Route::get('casos/por-paciente/{id?}',['uses'=> 'CasoController@porPaciente'])->name('casos.por_paciente');
   Route::Resource('casos', 'CasoController');
 
   Route::get('eliminar_archivo_of/{caso_id}/oftalmologicos/{file}', function ($caso_id,$file) {

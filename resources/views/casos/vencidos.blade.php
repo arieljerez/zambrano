@@ -21,12 +21,12 @@
                         </div>
                     @endif
 
-                    <form method="get" action="{{url('prodiaba/vencidos')}}">
+                    <form method="get" action="{{url('casos/vencidos')}}">
                       @include('casos.parts.filtro_paciente')
                     </form>
 
                     <div class="row">
-                        @include('prodiaba.table')
+                      @include('casos.table',['accion' => 'ver'])
                     </div>
                     <div class="row">
                       <div class="col">

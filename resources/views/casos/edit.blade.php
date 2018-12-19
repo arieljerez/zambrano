@@ -66,7 +66,6 @@
                                     </div>
                                     <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
                                         {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                                        <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
 
                                         @include('casos.diabetologico')
 
@@ -79,13 +78,11 @@
                                             </div>
                                         </div>
                                         <input  type="hidden" name="destino" value="diabetologico">
-                                        </fieldset>
 
                                         {!! Form::Close() !!}
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-oftalmologico" role="tabpanel" aria-labelledby="v-pills-oftalmologico-tab">
                                         {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                                        <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
                                           @include('casos.oftalmologico')
                                           <div class="row"><div class="col-md-12">&nbsp;</div></div>
                                           <div class="row">
@@ -97,7 +94,6 @@
                                           </div>
                                           <input  type="hidden" name="destino" value="oftalmologico">
 
-                                          </fieldset>
                                         {!! Form::Close() !!}
                                      </div>
                                     <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('casos.bitacora')</div>

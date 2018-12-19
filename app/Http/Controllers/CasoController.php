@@ -31,12 +31,13 @@ class CasoController extends Controller
         return view('casos.index',compact('casos'));
     }
 
-    public function consultaBase()
+    public function consultaBase($filtro = [])
     {
-        $query =  \DB::Table('casos')
+        /*$query =  \DB::Table('casos')
             ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.estado as Estado','casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
-
+            ->select('casos.estado as Estado','casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni', 'fecha_aprobacion');
+*/
+        $query = $this->casoRepository->consultabase($filtro);
         if(request()->has('dni')){
           $query = $query->where('pacientes.dni','like','%'.request()->input('dni').'%');
         }
@@ -106,9 +107,10 @@ class CasoController extends Controller
         return view('casos.rechazados',compact('casos'));
     }
 
-    public function porPaciente()
+    public function porPaciente($id = 0)
     {
-          $query = $this->consultaBase();
+          $query = $this->consultaBase([]);
+          $query = $query->where('pacientes.id','=',$id);
           $casos = $query->paginate(25);
           return view('casos.por_paciente',compact('casos'));
     }
@@ -140,7 +142,7 @@ class CasoController extends Controller
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 
-    public function grabarPaciente($request,$caso)
+    public function grabarPaciente($request,$caso=0)
     {
       $paciente_data = $request->only('paciente');
       $this->validarPaciente($paciente_data);
@@ -148,7 +150,11 @@ class CasoController extends Controller
       $paciente_data = $paciente_data['paciente'];
 
       $paciente = Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
-      Bitacora::grabar($caso->id,'Paciente','Datos del Paciente Actualizados');
+      if ($caso > 0)
+      {
+        Bitacora::grabar($caso->id,'Paciente','Datos del Paciente Actualizados');
+      }
+
       return $paciente;
     }
 
@@ -191,7 +197,7 @@ class CasoController extends Controller
   {
       if( $request->hasfile('archivo')){
         $diabetologico_archivo =  $request->file('archivo')->store('diabetologicos');
-        $caso->update(['diabetologico'=> $diabetologico, 'diabetologico_archivo' => $diabetologico_archivo]);
+        $caso->update(['diabetologico'=> '[]', 'diabetologico_archivo' => $diabetologico_archivo]);
         $caso->save();
         Bitacora::grabar($caso->id,'Diabetologico','Archivo Diabetologico Actualizado');
       }else{
@@ -200,14 +206,13 @@ class CasoController extends Controller
         $caso->save();
         Bitacora::grabar($caso->id,'Diabetologico','Formulario Diabetologico Actualizado');
       }
-
   }
 
   public function grabarOftalmologico(Request $request, Caso $caso)
   {
     if( $request->hasfile('archivo')){
         $oftalmologico_archivo =  $request->file('archivo')->store('oftalmologicos');
-        $caso->update(['oftalmologico'=> $oftalmologico, 'oftalmologico_archivo' => $oftalmologico_archivo]);
+        $caso->update(['oftalmologico'=> '[]', 'oftalmologico_archivo' => $oftalmologico_archivo]);
         $caso->save();
         Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
       }else{
@@ -240,7 +245,7 @@ class CasoController extends Controller
             $this->grabarDiabetologico($request, $caso);
             break;
           case 'oftalmologico':
-            $this->grabarOftalmalogico($request, $caso);
+            $this->grabarOftalmologico($request, $caso);
             break;
           default:
             // code...

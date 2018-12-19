@@ -10,9 +10,11 @@
         </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
+        @unless($caso->oftalmologico_archivo)
         <div class="tab-pane fade{{ $caso->oftalmologico_archivo == null ? 'show active': '' }}"  id="nav-form-ofta" role="tabpanel" aria-labelledby="nav-form-ofta-tab">
           @include('casos.oftalmologico.fields')
         </div>
+        @endunless
         <div class="tab-pane fade{{ $caso->oftalmologico_archivo == '' ? '': 'show active' }}" id="nav-arch-ofta" role="tabpanel" aria-labelledby="nav-arch-ofta-tab">
           @include('casos.oftalmologico.archivo')
         </div>

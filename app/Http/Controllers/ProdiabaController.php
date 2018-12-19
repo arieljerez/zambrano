@@ -55,7 +55,7 @@ class ProdiabaController extends Controller
     public function vencidos()
     {
         $filtro = request()->only(['dni','apellidos','nombres']);
-        $casos  = $this->casoRepository->rechazados($filtro);
+        $casos  = $this->casoRepository->vencidos($filtro);
         return view('prodiaba.vencidos', compact('casos'));
     }
     public function home()
@@ -83,6 +83,17 @@ class ProdiabaController extends Controller
 
       request()->session()->flash('status', 'Caso #'.$caso_id.' ha sido aprobado.');
       return redirect()->route('prodiaba.pendientes');
+    }
+
+    public function reaprobar()
+    {
+      $caso_id = request()->input('caso_id');
+      $texto_aprobacion = request()->input('texto_aprobacion');
+      $fecha_aprobacion = request()->input('fecha_aprobacion');
+      $this->casoRepository->reaprobar($caso_id,$fecha_aprobacion,$texto_aprobacion);
+
+      request()->session()->flash('status', 'Caso #'.$caso_id.' ha sido re-aprobado.');
+      return redirect()->route('prodiaba.vencidos');
     }
 
     public function rechazar()

@@ -16,7 +16,7 @@ class Bitacora
       $bitacora->caso_id = $caso_id;
       $bitacora->evento = $evento;
       $bitacora->descripcion = $descripcion;
-      $bitacora->usuario_id = \Auth::User()->id;
+      $bitacora->usuario_id = 1;//\Auth::User()->id;
       $bitacora->ambito_usuario = $guard;
       $bitacora->save();
     }

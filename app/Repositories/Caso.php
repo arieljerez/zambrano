@@ -26,11 +26,19 @@
              ->where('casos.estado','=','rechazado');
          return $query->paginate($paginate);
    }
+
+   public function vencidos($filtro = array(),$paginate = 25)
+   {
+     $query =  $this->consultaBase($filtro)
+         ->where('casos.estado','=','vencido');
+     return $query->paginate($paginate);
+   }
+
    public function consultaBase($filtro)
    {
     $query =  \DB::Table('casos')
          ->join('pacientes','pacientes.id','=','casos.paciente_id')
-         ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
+         ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni','fecha_aprobacion', 'casos.estado as estado','fecha_rechazo');
          if(isset($filtro['dni'])){
            $query = $query->where('dni','like','%'.request()->input('dni').'%');
          }
@@ -61,5 +69,14 @@
      $caso->update($data);
      $caso->save();
     Bitacora::grabar($caso->id,'Rechazado',$texto);
+   }
+
+   public function reaprobar($caso_id,$fecha,$texto)
+   {
+     $caso =  CasoModel::find($caso_id);
+     $data = ['estado' => 'aprobado','fecha_reaprobacion' => $fecha, 'texto_reaprobacion' => $texto];
+     $caso->update($data);
+     $caso->save();
+     Bitacora::grabar($caso->id,'Aprobado',$texto);
    }
  }

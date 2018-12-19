@@ -13,7 +13,7 @@
         <tr>
             <td> <h5>#     {{ $caso->id }}      </h5 </td>
             <td>      {{ \Carbon\Carbon::parse($caso->fecha)->format('d/m/Y')  }}    </td>
-            <td>      {{ $caso->dni }}       </td>
+            <td>      {{ $caso->dni }}    {{\Carbon\Carbon::parse($caso->fecha_aprobacion)->format('d/m/Y')  }}   </td>
             <td>      {{ $caso->paciente }}    </td>
             <td>
                <a href="{{ route('prodiaba.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-eye"></i> Ver</a>
