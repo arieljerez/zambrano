@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Caso;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $aprobados = Caso::where('estado','=','aprobado')->count();
+      $rechazados = Caso::where('estado','=','rechazado')->count();
+      $pendientes_aprobacion = Caso::where('estado','=','pendiente_aprobacion')->count();
+      $pendientes_formulario = Caso::where('estado','=','pendiente_formulario')->count();
+      $vencidos = Caso::where('estado','=','vencido')->count();
+      return view('home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
     }
 }
