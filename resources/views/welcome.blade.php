@@ -31,7 +31,7 @@
         <div class="card-body">
           <h5 class="card-title"><h2>Prestadores</h2></h5>
           <p class="card-text">Ingreso de documentacion y formularios electrónicos. Alta de Casos</p>
-          <a href="#" class="btn btn-primary">Acceder</a>
+          <a href="{{ route('efector.login')}}" class="btn btn-primary">Acceder</a>
         </div>
       </div>
     </div>
