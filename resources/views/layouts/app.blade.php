@@ -147,12 +147,24 @@
                                 @endif
                             </li>
                         @else
-                          <li class="nav-item">
-                              <a class="nav-link btn btn-success" href="{{ route('casos.create') }}">Iniciar Caso</a>
-                          </li>
+                          @auth('web')
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-success" href="{{ route('casos.create') }}">Iniciar Caso</a>
+                            </li>
+                          @endauth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::User()->apellido }} , {{ Auth::User()->nombres }} <span class="caret"></span>
+                                  @auth('web')
+                                    {{ Auth::User()->apellidos }} , {{ Auth::User()->nombres }} <span class="caret"></span>
+                                  @endauth
+
+                                  @auth('efector')
+                                    {{ Auth::User()->usuario }} <span class="caret"></span>
+                                  @endauth
+
+                                  @auth('prodiaba')
+                                    {{ Auth::User()->usuario }} <span class="caret"></span>
+                                  @endauth
                                 </a>
                                 @auth('web')
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
