@@ -8,12 +8,16 @@
         @endif
     </div>
     @else
+
     <div class="form-group col-md-3">
         <label class="form-check-label" for="archivo">Subir archivo:</label>
     </div>
     <div class="form-group col-md-6">
+        <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
         <input class="form-control" type="file" name="archivo" id="diabetologico_archivo">
+        </fieldset>
     </div>
+
     @endif
 
 </div>

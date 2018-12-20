@@ -1,3 +1,4 @@
+<fieldset {{ $solo_lectura == true ? 'disabled':''}}>
 <div class="row">
     <div class="form-group col-md-9">
         <input class="form-control" type="text" name="oftalmologico[derivante]" id="oftalmologico[derivante]" value="{{ old('oftalmologico.derivante',$oftalmologico->derivante)}}">
@@ -164,3 +165,4 @@
       <label class="form-label">Fecha</label>
     </div>
 </div>
+</fieldset>

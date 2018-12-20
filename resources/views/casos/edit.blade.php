@@ -11,8 +11,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Caso # {{ $caso->id }}
-
+                    <div class="card-header">Caso # {{ $caso->id }} <p>
+                      Estado: {{ $caso->estado }} {{ $solo_lectura }}
+                    </p>
 
                     @if ($caso->estado == 'pendiente_formulario')
 

@@ -1,4 +1,5 @@
 
+<fieldset {{ $solo_lectura == true ? 'disabled':''}}>
 <div class="form-group row">
     <div class="col-md-12">
         {!! Form::text('diabetologico[medico]',  $diabetologico->medico, ['class' => 'form-control'. ($errors->has('diabetologico.medico') ? ' is-invalid' : '') ]) !!}
@@ -255,3 +256,4 @@
         <textarea class="form-control" type="texta" name="diabetologico[observaciones]*" id="Observaciones" rows="5"></textarea>
     </div>
 </div>
+</fieldset>

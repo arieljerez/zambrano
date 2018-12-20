@@ -22,7 +22,6 @@
                                 <button type="submit" class="btn btn-primary">
                                   <i class="fas fa-save"></i> {{ __('Grabar') }}
                                 </button>
-                                <a href="{{ url('tratamientos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
                             </div>
                         </div>
                     </form>

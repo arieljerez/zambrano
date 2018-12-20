@@ -33,10 +33,6 @@ class CasoController extends Controller
 
     public function consultaBase($filtro = [])
     {
-        /*$query =  \DB::Table('casos')
-            ->join('pacientes','pacientes.id','=','casos.paciente_id')
-            ->select('casos.estado as Estado','casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni', 'fecha_aprobacion');
-*/
         $query = $this->casoRepository->consultabase($filtro);
         if(request()->has('dni')){
           $query = $query->where('pacientes.dni','like','%'.request()->input('dni').'%');

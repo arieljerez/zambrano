@@ -66,15 +66,7 @@ Route::group(['middleware' => 'auth:web,efector'], function () {
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
   Route::get('casos/rechazados', 'CasoController@rechazados')->name('casos.rechazados');
   Route::get('casos/vencidos', 'CasoController@vencidos')->name('casos.vencidos');
-/*  Route::get('casos/por-paciente/{id?}', function ($id = 0){
-    $query =  \DB::Table('casos')
-        ->join('pacientes','pacientes.id','=','casos.paciente_id')
-        ->select('casos.id as id','casos.created_at as fecha',\DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),'pacientes.dni as dni');
-    $query = $query->where('pacientes.id','=',$id);
-    $casos = $query->paginate(25);
-    return view('casos.por_paciente',compact('casos'));
 
-  })->name('casos.por_paciente');*/
   Route::get('casos/por-paciente/{id?}',['uses'=> 'CasoController@porPaciente'])->name('casos.por_paciente');
   Route::Resource('casos', 'CasoController');
 
