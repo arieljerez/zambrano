@@ -51,9 +51,9 @@ class TratamientoController extends Controller
 
         $caso = Caso::find($datos['caso_id']);
 
-        if($caso->estado == 'aprobado')
+        if($caso->estado == 'aprobado' && env('APP_DIAS_VENCIMIENTO', 0)) // 0 no vence
         {
-          if( !isset($caso->fecha_reaprobacion) && \Carbon\Carbon::parse($caso->fecha_aprobacion)->diffInDays(\Carbon\Carbon::now()) > 6)
+          if( !isset($caso->fecha_reaprobacion) && \Carbon\Carbon::parse($caso->fecha_aprobacion)->diffInDays(\Carbon\Carbon::now()) > env('APP_DIAS_VENCIMIENTO', 60))
           {
               $caso->estado = 'vencido';
               $caso->save();
@@ -63,7 +63,6 @@ class TratamientoController extends Controller
 
         $tratamiento = $this->repository->grabar($datos['caso_id'],$datos['fecha'],$datos['evento'],$datos['descripcion'],$datos['archivo']);
         Bitacora::grabar($datos['caso_id'],'Tratamiento',$datos['evento'] . ': '. $datos['descripcion']);
-
 
         return redirect()->back();
     }

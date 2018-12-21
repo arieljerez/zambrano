@@ -248,18 +248,6 @@ class CasoController extends Controller
             break;
         }
 
-        if($caso->estado == 'aprobado')
-        {
-          $ahora = \Carbon\Carbon::now();
-          $fecha_aprobacion = \Carbon\Carbon::parse($caso->fecha_aprobacion);
-          if($fecha_aprobacion->diffInDays($ahora) > 15)
-          {
-            $paciente = $this->grabarPaciente($request, $caso);
-            $caso->update( ['estado' => 'vencido' ]);
-            $caso->save();
-          }
-        }
-
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 
