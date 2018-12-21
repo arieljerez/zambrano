@@ -15,7 +15,20 @@
               </td>
               <td>{{ $registro->evento}}</td>
               <td>{{ $registro->descripcion }}</td>
-              <td>{{ $registro->usuario_id }}</td>
+              <td>
+
+                @if ($registro->usuario_tabla == 'prodiabas')
+                  {{ \App\Models\Prodiaba::find($registro->usuario_id)->usuario }}
+                @endif
+
+                @if ($registro->usuario_tabla == 'efectores')
+                  {{ \App\Models\Efector::find($registro->usuario_id)->usuario }}
+                @endif
+
+                @if ($registro->usuario_tabla == 'usuarios')
+                  {{ \App\Models\Usuario::find($registro->usuario_id)->usuario }}
+                @endif
+              </td>
           </tr>
         @endforeach
     </tbody>

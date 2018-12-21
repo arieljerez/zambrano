@@ -19,7 +19,7 @@ class CreateBitacorasTable extends Migration
             $table->string('evento');
             $table->string('descripcion');
             $table->unsignedinteger('usuario_id');
-            $table->string('ambito_usuario'); // prodiaba - zambrabo
+            $table->string('usuario_tabla',20);// prodiabas - efectores - usuarios
             $table->timestamps();
         });
     }

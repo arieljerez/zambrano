@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Caso # {{ $caso->id }} <p>
-                      Estado: {{ $caso->estado }} {{ $solo_lectura }}
+                      Estado: {{ $caso->estado }}
                     </p>
 
                     @if ($caso->estado == 'pendiente_formulario')

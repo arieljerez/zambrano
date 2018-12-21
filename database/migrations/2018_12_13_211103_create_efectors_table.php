@@ -30,6 +30,6 @@ class CreateEfectorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('efectors');
+        Schema::dropIfExists('efectores');
     }
 }

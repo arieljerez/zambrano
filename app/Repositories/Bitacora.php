@@ -2,22 +2,19 @@
 namespace App\Repositories;
 
 use App\Models\Bitacora as ModelBitacora;
+use Auth;
 
 class Bitacora
 {
     static public function grabar($caso_id, $evento, $descripcion)
     {
-      $guard = "web";
-      if(\Auth::guard('prodiaba')->check())
-      {
-        $guard = 'prodiaba';
-      }
+
       $bitacora = new ModelBitacora();
       $bitacora->caso_id = $caso_id;
       $bitacora->evento = $evento;
       $bitacora->descripcion = $descripcion;
-      $bitacora->usuario_id = 1;//\Auth::User()->id;
-      $bitacora->ambito_usuario = $guard;
+      $bitacora->usuario_id = auth()->User()->id;
+      $bitacora->usuario_tabla = Bitacora::getLoginTabla();
       $bitacora->save();
     }
 
@@ -25,12 +22,27 @@ class Bitacora
     {
       return ModelBitacora::where('caso_id','=',$caso_id)->get();
     }
-}
 
-/*
-  $table->unsignedinteger('caso_id');
-  $table->string('evento',50);
-  $table->string('descripcion',300);
-  $table->unsignedinteger('usuario_id',50);
-  $table->string('ambito_usuario',50); // prodiaba - zambrabo
-*/
+    public static function getLoginTabla()
+    {
+      $guard = auth()->guard(); // Retrieve the guard
+      $sessionName = $guard->getName(); // Retrieve the session name for the guard
+      // The following extracts the name of the guard by disposing of the first
+      // and last sections delimited by "_"
+      $parts = explode("_", $sessionName);
+      unset($parts[count($parts)-1]);
+      unset($parts[0]);
+      $guardName = implode("_",$parts);
+      switch ($guardName) {
+        case 'prodiaba':
+          return 'prodiabas';
+          break;
+        case 'efector':
+          return 'efectores';
+          break;
+        default:
+          return 'usuarios';
+          break;
+      }
+    }
+}

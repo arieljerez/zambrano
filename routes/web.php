@@ -40,13 +40,15 @@ Route::prefix('efector')->group(function() {
     Route::post('/logout', 'Auth\EfectorLoginController@logout')->name('efector.logout');
 });
 
-Route::Resource('prodiaba', 'ProdiabaController');
-Route::Resource('efector', 'EfectorController');
-Route::Resource('tratamientos', 'TratamientoController');
+
 Auth::routes();
 
-Route::group(['middleware' => 'auth:web,efector'], function () {
+Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('/home', 'HomeController@index')->name('home');
+
+  Route::Resource('prodiaba', 'ProdiabaController');
+  Route::Resource('efector', 'EfectorController');
+  Route::Resource('tratamientos', 'TratamientoController');
 
   Route::Resource('usuarios', 'UsuarioController');
   Route::Resource('pacientes', 'PacienteController');
