@@ -1,141 +1,110 @@
-<div class="form-group row">
-    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('DNI') }}</label>
-
-    <div class="col-md-6">
-        <input id="dni" type="text" class="form-control{{ $errors->has('dni') ? ' is-invalid' : '' }}" name="dni" value="{{ old('dni',$usuario->dni) }}" required autofocus>
-
-        @if ($errors->has('dni'))
+<div class="row">
+    <div class="form-group col-md-4">
+        <input type="text" name="paciente[apellidos]" class="form-control{{ $errors->has('paciente.apellidos') ? ' is-invalid' : '' }}" value="{{ old('paciente.apellidos',$paciente->apellidos) }}"/>
+        <label for="paciente[apellidos]" class="col-form-label text-md-left">{{ __('Apellidos') }}</label>
+        @if ($errors->has('paciente.apellidos'))
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('dni') }}</strong>
-            </span>
+              <strong>{{ $errors->first('paciente.apellidos') }}</strong>
+          </span>
+        @endif
+    </div>
+
+    <div class="form-group col-md-5">
+        <input type="text" name="paciente[nombres]" class="form-control{{ $errors->has('paciente.nombres') ? ' is-invalid' : '' }}" value="{{ old('paciente.nombres',$paciente->nombres) }}"/>
+        <label for="paciente[nombres]" class="col-form-label text-md-left">{{ __('Nombres') }}</label>
+        @if ($errors->has('paciente.nombres'))
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $errors->first('paciente.nombres') }}</strong>
+          </span>
+        @endif
+    </div>
+
+    <div class="form-group col-md-3">
+        <input type="date" name="paciente[fecha_nacimiento]" class="form-control{{ $errors->has('paciente.fecha_nacimiento') ? ' is-invalid' : '' }}"  value="{{ old('paciente.fecha_nacimiento',$paciente->fecha_nacimiento) }}"/>
+        <label for="paciente[fecha_nacimiento]" class="col-form-label text-md-left">{{ __('Fecha Nacimiento') }}</label>
+        @if ($errors->has('paciente.fecha_nacimiento'))
+            <span class="invalid-feedback" role="alert">
+           <strong>{{ $errors->first('paciente.fecha_nacimiento') }}</strong>
+       </span>
         @endif
     </div>
 </div>
 
-<div class="form-group row">
-    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-
-    <div class="col-md-6">
-        <input id="dni" type="text" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{ old('nombre',$usuario->nombre) }}" required autofocus>
-
-        @if ($errors->has('nombre'))
+<div class="row">
+    <div class="form-group col-md-2">
+        <input type="text" name="paciente[edad]" class="form-control{{ $errors->has('paciente.edad') ? ' is-invalid' : '' }}" value="{{ old('paciente.edad') }}"/>
+        <label for="paciente[edad]" class="col-form-label text-md-left">{{ __('Edad') }}</label>
+        @if ($errors->has('paciente.edad'))
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('nombre') }}</strong>
-            </span>
+      <strong>{{ $errors->first('paciente.edad') }}</strong>
+  </span>
         @endif
     </div>
-</div>
 
-<div class="form-group row">
-    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Oficina') }}</label>
-
-    <div class="col-md-6">
-        <input id="oficina" type="text" class="form-control{{ $errors->has('oficina') ? ' is-invalid' : '' }}" name="oficina" value="{{ old('oficina',$usuario->oficina) }}" autofocus>
-
-        @if ($errors->has('oficina'))
+    <div class="form-group col-md-7">
+        <input type="text" name="paciente[domicilio]" class="form-control{{ $errors->has('paciente.domicilio') ? ' is-invalid' : '' }}" value="{{ old('paciente.domicilio',$paciente->domicilio) }}" />
+        <label for="paciente[domicilio]" class="col-form-label text-md-left">{{ __('Domicilio') }}</label>
+        @if ($errors->has('paciente.domicilio'))
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('oficina') }}</strong>
-            </span>
+      <strong>{{ $errors->first('paciente.domicilio') }}</strong>
+  </span>
         @endif
     </div>
-</div>
-<div class="form-group row">
-    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Rol') }}</label>
 
-    <div class="col-md-6">
-        <select id="rol" name="rol" class="form-control{{ $errors->has('rol') ? ' is-invalid' : '' }}" required>
-          <option value="" {{ old('rol',$usuario->rol)  == '' ? ' selected': ''}}> Roles </option>
-          <option value="administrador" {{ old('rol',$usuario->rol)  == 'administrador' ? ' selected': ''}}> Administrador </option>
-          <option value="visor_cuentas" {{ old('rol',$usuario->rol)  == 'visor_cuentas' ? ' selected': ''}}> Visor Cuentas </option>
-          <option value="usuario" {{ old('rol',$usuario->rol)  == 'usuario' ? ' selected': ''}}> Usuario </option>
-          <option value="expendedor" {{ old('rol',$usuario->rol)  == 'expendedor' ? ' selected': ''}}> Expendedor </option>
-          <option value="cuenta_principal" {{ old('rol',$usuario->rol)  == 'cuenta_principal' ? ' selected': ''}}> Cuenta Principal </option>
-        </select>
-
-        @if ($errors->has('rol'))
+    <div class="form-group col-md-3">
+        <input type="text" name="paciente[telefono]" class="form-control{{ $errors->has('paciente.telefono') ? ' is-invalid' : '' }}" value="{{ old('paciente.telefono',$paciente->telefono) }}"/>
+        <label for="paciente[telefono]" class="col-form-label text-md-left">{{ __('Teléfono') }}</label>
+        @if ($errors->has('paciente.telefono'))
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('rol') }}</strong>
-            </span>
-        @endif
-    </div>
-</div>
-
-
-<div class="form-group row">
-    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Correo electrónico') }}</label>
-
-    <div class="col-md-6">
-        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email',$usuario->email) }}" placeholder="nomail@combustible.app">
-
-        @if ($errors->has('email'))
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('email') }}</strong>
-            </span>
-        @endif
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="es_cuenta_principal" class="col-md-4 col-form-label text-md-right">{{ __('Es Cuenta /c principal ') }}</label>
-
-    <div class="col-md-1">
-        <input id="es_cuenta_principal" type="checkbox" class="form-control" name="es_cuenta_principal" value="1" {{ old('es_cuenta_principal',$usuario->es_cuenta_principal) == 1? 'checked': '' }} >
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="cuenta_principal_id" class="col-md-4 col-form-label text-md-right">{{ __('Cuenta principal ') }}</label>
-
-    <div class="col-md-6">
-          @php
-          $cuentas = App\User::where('es_cuenta_principal',true)->get();
-        @endphp
-        <select id="cuenta_principal_id" name="cuenta_principal_id" class="form-control">
-          <option value=""  {{ old('cuenta_principal_id',$usuario->cuenta_principal_id) == '' ? 'selected': '' }} >
-            Seleccione una cuenta principal
-          </option>
-          @foreach($cuentas as $cuenta)
-          <option value="{{ $cuenta->id }}" {{ old('cuenta_principal_id',$usuario->cuenta_principal_id) == $cuenta->id ? 'selected': '' }}>
-            {{ $cuenta->nombre }}
-          </option>
-          @endforeach
-        </select>
-    </div>
-</div>
-<div class="form-group row">
-  <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Comentarios') }}</label>
-
-  <div class="col-md-6">
-      <textarea id="comentarios" class="form-control{{ $errors->has('comentarios') ? ' is-invalid' : '' }}" name="comentarios">{{ old('comentarios',$usuario->comentarios) }}</textarea>
-  </div>
-  @if ($errors->has('comentarios'))
-      <span class="invalid-feedback" role="alert">
-          <strong>{{ $errors->first('comentarios') }}</strong>
-      </span>
-  @endif
-</div>
-<div class="form-group row">
-    <label for="cuenta_principal" class="col-md-4 col-form-label text-md-right">{{ __('Estación') }}</label>
-
-    <div class="col-md-6">
-        @php
-          $estaciones = \DB::Table('estaciones')->get();
-        @endphp
-        <select id="estacion_id" name="estacion_id" class="form-control{{ $errors->has('estacion_id') ? ' is-invalid' : '' }}">
-          <option value=""  {{ old('estacion_id',$usuario->estacion_id) == '' ? 'selected': '' }} >
-            Seleccione una Estación
-          </option>
-          @foreach($estaciones as $estacion)
-          <option value="{{ $estacion->id }}" {{ old('estacion_id',$usuario->estacion_id) == $estacion->id ? 'selected': '' }}>
-            {{ $estacion->nombre }}
-          </option>
-          @endforeach
-        </select>
-        @if ($errors->has('estacion_id'))
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('estacion_id') }}</strong>
+                <strong>{{ $errors->first('paciente.telefono') }}</strong>
             </span>
         @endif
     </div>
 
+</div>
+
+<div class="row">
+    <div class="form-group col-md-3">
+        <input type="text" name="paciente[telefono_familiar]" class="form-control{{ $errors->has('paciente.telefono_familiar') ? ' is-invalid' : '' }}" value="{{ old('paciente.telefono_familiar',$paciente->telefono_familiar) }}" />
+        <label for="paciente[telefono_familiar]" class="col-form-label text-md-left">{{ __('Telefono Familiar') }}</label>
+        @if ($errors->has('paciente.telefono_familiar'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('paciente.telefono_familiar') }}</strong>
+            </span>
+        @endif
+    </div>
+
+    <div class="form-group col-md-3">
+        <input type="text" name="paciente[dni]" class="form-control{{ $errors->has('paciente.dni') ? ' is-invalid' : '' }}" value="{{ old('paciente.dni', $paciente->dni) }}"/>
+        <label for="paciente[dni]" class="col-form-label text-md-left">{{ __('DNI') }}</label>
+        @if ($errors->has('paciente.dni'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('paciente.dni') }}</strong>
+            </span>
+        @endif
+    </div>
+
+    <div class="form-group col-md-3">
+        {{ Form::select('paciente[sexo]', ['M' => 'Masculino', 'F' => 'Femenino'], $paciente->sexo, ['placeholder' => 'Seleccione una opción','class' => 'form-control'.( $errors->has('paciente.sexo') ? ' is-invalid' : '')]) }}
+
+        <label for="paciente[sexo]" class="col-form-label text-md-left">{{ __('Sexo') }}</label>
+        @if ($errors->has('paciente.sexo'))
+            <span class="invalid-feedback" role="alert">
+               <strong>{{ $errors->first('paciente.sexo') }}</strong>
+           </span>
+        @endif
+    </div>
+
+@php
+  $regiones_sanitarias = \App\Models\Entidad::where('entidad','=','regiones_sanitarias')->pluck('valor','id');
+@endphp
+    <div class="form-group col-md-3">
+        {{ Form::select('paciente[region_sanitaria]', $regiones_sanitarias, $paciente->region_sanitaria, ['placeholder' => 'Seleccione una opción','class' => 'form-control'.( $errors->has('paciente.region_sanitaria') ? ' is-invalid' : '')]) }}
+        <label for="paciente[region_sanitaria]" class="col-form-label text-md-left">{{ __('Región Sanitaria') }}</label>
+        @if ($errors->has('paciente.region_sanitaria'))
+            <span class="invalid-feedback" role="alert">
+               <strong>{{ $errors->first('paciente.region_sanitaria') }}</strong>
+            </span>
+        @endif
+    </div>
 </div>

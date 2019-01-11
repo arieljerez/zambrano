@@ -5,21 +5,21 @@
               <div class="card-header">Pacientes</div>
               <div class="card-body">
 
-                @if (session('delete_ok'))
+                @if (session('success'))
                   <div class="alert alert-success">
-                      {{ session('delete_ok') }}
+                      {{ session('success') }}
                   </div>
                 @endif
 
-                @if (session('delete_fail'))
+                @if (session('fail'))
                   <div class="alert alert-danger">
-                      {{ session('delete_fail') }}
+                      {{ session('fail') }}
                   </div>
                 @endif
 
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <a href="{{url('pacientes/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Usuario</a>
+                    <a href="{{url('pacientes/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Paciente</a>
                   </div>
                 </div>
 
@@ -42,20 +42,27 @@
                         <th>Sexo</th>
                     </thead>
                     <tbody>
-                        @foreach( $pacientes as $usuario)
+                        @foreach( $pacientes as $paciente)
                           <tr>
                               <td>
-                                <p class="h4">{{ $usuario->dni }}</p>
-                                <p><small>Registro: {{ $usuario->created_at }}</small></p>
-                                  <small>Actualización: {{ $usuario->updated_at }}</small>
+                                <p class="h4">{{ $paciente->dni }}</p>
+                                <p><small>Registro: {{ $paciente->created_at }}</small></p>
+                                  <small>Actualización: {{ $paciente->updated_at }}</small>
                               </td>
-                              <td>{{ $usuario->apellidos}}</td>
-                              <td>{{ $usuario->nombres}}</td>
-                              <td>{{ $usuario->fecha_nacimiento }}</td>
-                              <td><p>Teléfono{{ $usuario->telefono }}</p><p>Teléfono Familiar{{ $usuario->telefono_familiar }}</p></td>
-                              <td>{{ $usuario->sexo }}</td>
+                              <td>{{ $paciente->apellidos}}</td>
+                              <td>{{ $paciente->nombres}}</td>
+                              <td>{{ $paciente->fecha_nacimiento }}</td>
+                              <td><p>Teléfono{{ $paciente->telefono }}</p><p>Teléfono Familiar{{ $paciente->telefono_familiar }}</p></td>
+                              <td>{{ $paciente->sexo }}</td>
                               <td>
-                                  {{ $slot }}
+                                <div class="btn-group" role="group">
+                                  <a href="{{ route('pacientes.edit', $paciente->id) }}" class='btn btn-link'><i class="fas fa-edit"></i></a>
+                                  <form action="{{ route('pacientes.destroy', $paciente->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class ="btn btn-danger btn-xs" type="submit" onclick="return confirm('¿Está seguro?')"><i class="fas fa-trash-alt"></i></button>
+                                  </form>
+                                </div>
                               </td>
                           </tr>
                         @endforeach
