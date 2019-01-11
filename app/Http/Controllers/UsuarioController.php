@@ -15,7 +15,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = Usuario::paginate(50);
-        return view('usuarios.index',compact('usuarios'));
+        return view('backend.usuarios.index',compact('usuarios'));
     }
 
     /**
@@ -25,7 +25,13 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        return Usuario::create([
+            'dni' => $data['dni'],
+            'matricula' => $data['matricula'],
+            'apellidos' => $data['apellidos'],
+            'nombres' => $data['nombres'],
+            'password' => Hash::make($data['matricula']),
+        ]);
     }
 
     /**
@@ -58,7 +64,8 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+      $usuario = Usuario::find($id);
+      return view('backend.usuarios.edit',compact('usuario'));
     }
 
     /**
@@ -70,7 +77,17 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $usuario = Usuario::find($id);
+      $data = $request->only('dni','matricula','apellidos','nombres');
+      $usuario->update([
+          'dni' => $data['dni'],
+          'matricula' => $data['matricula'],
+          'apellidos' => $data['apellidos'],
+          'nombres' => $data['nombres'],
+          'password' => \Hash::make($data['matricula']),
+      ]);
+      $usuario->save();
+      return redirect()->route('usuarios.index')->with('success', 'Usuario Profesional DNI: '. $data['dni'].' actualizado');
     }
 
     /**
@@ -81,6 +98,17 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+      $efector = Usuario::find($id);
+      $datos = \DB::table('bitacoras')->where([['usuario_tabla', '=','usuarios'],['usuarios', '=',$id]])->get();
+
+      if (count($datos)){
+        return redirect()->route('usuarios.index')
+                      ->with('fail','Usuario Profesional tiene registros relacionados y no se puede eliminar');
+      }
+
+      $efector->delete();
+      return redirect()->route('efectores.index')
+                    ->with('success','Usuario Efector eliminado');
     }
 }

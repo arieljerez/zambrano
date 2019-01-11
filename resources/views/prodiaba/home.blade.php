@@ -7,6 +7,11 @@
       <div class="card">
           <div class="card-header">Panel de Control</div>
           <div class="card-body">
+            @if (session('success'))
+              <div class="alert alert-success">
+                  {{ session('success') }}
+              </div>
+            @endif
           <div class="row">
               <div class="col-md-4">
                 <div class="card border-danger" style="max-width: 18rem;">

@@ -52,7 +52,10 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+
                   @guest
+
+
                   @else
 
                     <ul class="navbar-nav mr-auto">
@@ -63,8 +66,26 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('pacientes.index') }}">Pacientes</a>
-                                <a class="dropdown-item" href="{{ route('usuarios.index') }}">Usuarios</a>
+                                <a class="dropdown-item" href="{{ route('efectores.index') }}">Efectores</a>
+                                <a class="dropdown-item" href="{{ route('usuarios.index') }}">Profesionales</a>
+                                <a class="dropdown-item" href="{{ route('prodiabas.index') }}">Prodiaba</a>
                             </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Efector
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('casos.pendientes-formulario')}}">Pendientes Formulario</a>
+                            <a class="dropdown-item" href="{{ route('casos.pendientes-aprobacion')}}">Pendientes Aprobación</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('casos.aprobados')}}">Aprobados</a>
+                            <a class="dropdown-item" href="{{ route('casos.rechazados')}}">Rechazados</a>
+                            <a class="dropdown-item" href="{{ route('casos.vencidos')}}">Vencidos</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('casos.por_paciente')}}">Por Paciente</a>
+                            <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>
+                          </div>
                         </li>
                       @endauth
                       <!-- casos -->
@@ -85,27 +106,10 @@
                         </div>
                       </li>
                       @endauth
-                      <!-- Efector -->
-                      @auth('efector')
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Efector
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="{{ route('casos.pendientes-formulario')}}">Pendientes Formulario</a>
-                          <a class="dropdown-item" href="{{ route('casos.pendientes-aprobacion')}}">Pendientes Aprobación</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="{{ route('casos.aprobados')}}">Aprobados</a>
-                          <a class="dropdown-item" href="{{ route('casos.rechazados')}}">Rechazados</a>
-                          <a class="dropdown-item" href="{{ route('casos.vencidos')}}">Vencidos</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="{{ route('casos.por_paciente')}}">Por Paciente</a>
-                          <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>
-                        </div>
-                      </li>
-                      @endauth
-                      @auth('prodiaba')
+
                       <!-- prodiaba -->
+                      @auth('prodiaba')
+
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Prodiaba
@@ -118,9 +122,7 @@
                           <a class="dropdown-item" href="{{ route('prodiaba.vencidos')}}">Vencidos</a>
                         </div>
                       </li>
-
-                    @endauth
-
+                      @endauth
 
                     </ul>
                   @endguest
@@ -186,7 +188,9 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar sesión') }}
                                     </a>
-
+                                    <a class="dropdown-item" href="{{ route('prodiaba.cambiarclave') }}" style="background-color: #051a30; color:white">
+                                        {{ __('Cambiar Contraseña') }}
+                                    </a>
                                     <form id="logout-form" action="{{ route('efector.logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -200,7 +204,9 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar sesión') }}
                                     </a>
-
+                                    <a class="dropdown-item" href="{{ route('prodiaba.cambiarclave') }}" style="background-color: #051a30; color:white">
+                                        {{ __('Cambiar Contraseña') }}
+                                    </a>
                                     <form id="logout-form" action="{{ route('prodiaba.logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>

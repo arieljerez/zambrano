@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('usuarios.table')
+    @include('backend.efectores.table')
 @endsection

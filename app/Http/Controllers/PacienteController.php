@@ -49,7 +49,7 @@ class PacienteController extends Controller
     public function index()
     {
         $pacientes = Paciente::paginate(25);
-        return view('pacientes.index',compact('pacientes'));
+        return view('backend.pacientes.index',compact('pacientes'));
     }
 
     /**

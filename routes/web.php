@@ -46,13 +46,19 @@ Auth::routes();
 Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('/home', 'HomeController@index')->name('home');
 
+  Route::get('prodiaba/cambiarclave', 'ProdiabaController@mostrarCambiarClaveForm')->name('prodiaba.cambiarclave');
+  Route::post('prodiaba/cambiarclave', 'ProdiabaController@cambiarClave')->name('prodiaba.cambiarclave');
   Route::Resource('prodiaba', 'ProdiabaController');
   Route::Resource('efector', 'EfectorController');
   Route::Resource('tratamientos', 'TratamientoController');
 
+  Route::get('efectores/cambiarclave', 'EfectorController@mostrarCambiarClaveForm')->name('efectores.cambiarclave');
+  Route::post('efectores/cambiarclave', 'EfectorController@cambiarClave')->name('efectores.cambiarclave');
+
   Route::Resource('usuarios', 'UsuarioController');
   Route::Resource('pacientes', 'PacienteController');
-  //Route::Resource('auditoria', 'AuditoriaController');
+  Route::Resource('efectores', 'EfectorController');
+  Route::Resource('prodiabas', 'UsuarioProdiabaController');
 
   Route::get('casos/buscar_paciente/{url}', ['uses'=>'PacienteController@buscar']);
 

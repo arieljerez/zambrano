@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\Caso as CasoRepository;
 use App\Models\Caso;
+use App\Models\Prodiaba;
 use App\Serializables\Diabetologico;
 use App\Serializables\Oftalmologico;
 
@@ -18,7 +19,7 @@ class ProdiabaController extends Controller
     */
     public function __construct(CasoRepository $casoRepository)
     {
-      $this->middleware('auth:prodiaba');
+      $this->middleware('auth:prodiaba,efector');
       $this->casoRepository = $casoRepository;
     }
     /**
@@ -28,7 +29,8 @@ class ProdiabaController extends Controller
     */
     public function index()
     {
-
+        $datos = Prodiaba::paginate(25);
+        return view('backend.prodiaba.index',compact('datos'));
     }
 
     public function pendientes()
@@ -110,5 +112,24 @@ class ProdiabaController extends Controller
 
       request()->session()->flash('wrongs', 'Caso #'.$id.' ha sido rechazado.');
       return redirect()->route('prodiaba.pendientes');
+    }
+
+    public function mostrarCambiarClaveForm()
+    {
+      return view('auth.prodiaba-change');
+    }
+
+    public function cambiarClave()
+    {
+      $user = \Auth::user();
+      if (!\Hash::check(request('oldpassword'), $user->password)) {
+          return back()->withErrors(['oldpassword' => 'Contraseña Incorrecta']);
+      }
+      $data = request()->validate([
+              'password' => 'required|confirmed',
+      ]);
+      $data['password']= bcrypt($data['password']);
+      $user->update($data);
+      return redirect()->route('prodiaba.home')->with(['success' => 'Contraseña actualizada']);
     }
 }

@@ -12,14 +12,14 @@
     <label for="name" class="col-md-4 col-form-label text-md-right">Fecha</label>
 
     <div class="form-group col-md-4">
-      <input class="form-control" type="date" name="fecha" id="fecha" value="{{ old('fecha',$tratamiento->fecha)}}">
+      <input class="form-control" type="date" name="fecha" id="fecha" value="{{ old('fecha',$tratamiento->fecha)}}" required>
     </div>
 </div>
 
 <div class="form-group row">
     <label for="name" class="col-md-4 col-form-label text-md-right">Evento</label>
     <div class="form-group col-md-4">
-      <input class="form-control" type="text" name="evento" id="evento" value="{{ old('evento',$tratamiento->evento)}}">
+      <input class="form-control" type="text" name="evento" id="evento" value="{{ old('evento',$tratamiento->evento)}}" required>
     </div>
 </div>
 
@@ -27,7 +27,7 @@
     <label for="name" class="col-md-4 col-form-label text-md-right">Descripcion</label>
 
     <div class="form-group col-md-6">
-        <input class="form-control" type="text" name="descripcion" id="fecha" value="{{ old('descripcion',$tratamiento->descripcion)}}">
+        <input class="form-control" type="text" name="descripcion" id="fecha" value="{{ old('descripcion',$tratamiento->descripcion)}}" required>
     </div>
 </div>
 
