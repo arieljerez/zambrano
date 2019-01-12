@@ -6,14 +6,16 @@ use Auth;
 
 class Bitacora
 {
-    static public function grabar($caso_id, $evento, $descripcion)
+    static public function grabar($caso_id, $evento, $descripcion,$usuario_id=null)
     {
-
+      if($usuario_id == null){
+        $usuario_id = auth()->User()->id;
+      }
       $bitacora = new ModelBitacora();
       $bitacora->caso_id = $caso_id;
       $bitacora->evento = $evento;
       $bitacora->descripcion = $descripcion;
-      $bitacora->usuario_id = auth()->User()->id;
+      $bitacora->usuario_id = $usuario_id;
       $bitacora->usuario_tabla = Bitacora::getLoginTabla();
       $bitacora->save();
     }

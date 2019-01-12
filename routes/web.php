@@ -100,4 +100,6 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('descargar/oftalmologicos/{file}', function ($file) {
       return Storage::response('oftalmologicos/'.$file);
   });
+
+
 });
