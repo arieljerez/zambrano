@@ -143,11 +143,6 @@
                               <a class="dropdown-item" href="{{ route('prodiaba.login') }}">Prodiaba</a>
                             </div>
                           </li>
-                            <li class="nav-item">
-                                @if (Route::has('register'))
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
-                                @endif
-                            </li>
                         @else
                           @auth('web')
                             <li class="nav-item">
