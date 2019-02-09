@@ -5,11 +5,12 @@
         <th> Evento </th>
         <th> Descripcion  </th>
         <th> Archivo </th>
+        <th> Usuario</th>
 
     </tr>
     </thead>
     <tbody>
-    @foreach ($tratamientos as $tratamiento)
+    @foreach ($caso->tratamientos as $tratamiento)
         <tr>
             <td> <h5>     {{ \Carbon\Carbon::parse($tratamiento->fecha)->format('d/m/Y')  }}       </h5>
                 <small> Registro: {{  \Carbon\Carbon::parse($tratamiento->created_at)->format('d/m/Y H:m') }} </small></td>
@@ -17,8 +18,11 @@
             <td>       {{ $tratamiento->descripcion }}       </td>
             <td>
                 @isset ($tratamiento->archivo)
-                    <a href="#" class="btn btn-default"> <i class="fa fa-download"></i> {{ $tratamiento->archivo }}</a>
+                    <a href="{{ url('descargar/'.$tratamiento->archivo)}}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
                 @endisset
+            </td>
+            <td>
+              {{  $tratamiento->usuario->usuario }}
             </td>
         </tr>
     @endforeach

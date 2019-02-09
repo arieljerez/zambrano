@@ -112,4 +112,8 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('descargar/adjuntos/{file}', function ($file) {
       return Storage::download('adjuntos/'.$file);
   })->name('adjuntos.download');
+
+  Route::get('descargar/tratamientos/{file}', function ($file) {
+      return Storage::download('tratamientos/'.$file);
+  })->name('adjuntos.download');
 });

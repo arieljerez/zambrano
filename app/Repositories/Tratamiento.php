@@ -18,8 +18,8 @@
       $tratamiento->descripcion = $descripcion;
 
       if( request()->hasfile('archivo') ){
-        $tratamiento->archivo =  request()->file('archivo')->store('tratamiento');
-        $tratamiento->archivo_original = request()->file('archivo')->getClientOriginalName();
+        $tratamiento->archivo =  request()->file('archivo')->store('tratamientos');
+        $tratamiento->archivo_nombre = request()->file('archivo')->getClientOriginalName();
       }
 
       $tratamiento->save();
@@ -30,4 +30,5 @@
    {
      return ModelTratamiento::where('caso_id','=',$caso_id)->get();
    }
+
  }

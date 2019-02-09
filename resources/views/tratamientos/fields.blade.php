@@ -1,10 +1,8 @@
-
-
 <div class="form-group row">
     <label for="name" class="col-md-4 col-form-label text-md-right">Caso</label>
 
     <div class="form-group col-md-4">
-        <input class="form-control" type="input" name="caso_id" id="caso_id" value="{{ old('caso_id',$tratamiento->caso_id)}}" readonly>
+        <input class="form-control" type="input" name="caso_id" id="caso_id" value="{{ old('caso_id',$caso->id)}}" readonly>
     </div>
 </div>
 
@@ -12,14 +10,14 @@
     <label for="name" class="col-md-4 col-form-label text-md-right">Fecha</label>
 
     <div class="form-group col-md-4">
-      <input class="form-control" type="date" name="fecha" id="fecha" value="{{ old('fecha',$tratamiento->fecha)}}" required>
+      <input class="form-control" type="date" name="fecha" id="fecha" value="{{ old('fecha')}}" required>
     </div>
 </div>
 
 <div class="form-group row">
     <label for="name" class="col-md-4 col-form-label text-md-right">Evento</label>
     <div class="form-group col-md-4">
-      <input class="form-control" type="text" name="evento" id="evento" value="{{ old('evento',$tratamiento->evento)}}" required>
+      {{ Form::Select('evento', config('prodiaba.tratamientos.eventos'),null,['placeholder' => 'Seleccione una opción', 'class' => 'form-control', 'required'] ) }}
     </div>
 </div>
 
@@ -27,7 +25,7 @@
     <label for="name" class="col-md-4 col-form-label text-md-right">Descripcion</label>
 
     <div class="form-group col-md-6">
-        <input class="form-control" type="text" name="descripcion" id="fecha" value="{{ old('descripcion',$tratamiento->descripcion)}}" required>
+        {{ Form::textarea('descripcion',null,['placeholder' => 'Complete el campo', 'class' => 'form-control', 'required'])}}
     </div>
 </div>
 
@@ -36,7 +34,7 @@
 
     <div class="form-group col-md-8">
         <div class="form-check form-check-inline">
-            <input class="form-control" type="file" name="archivo" id="archivo">
+            <input class="form-control" type="file" name="archivo" id="archivo" required>
         </div>
     </div>
 </div>

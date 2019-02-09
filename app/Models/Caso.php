@@ -55,4 +55,8 @@ class Caso extends Model
         return $this->hasMany('App\Models\Adjunto');
     }
 
+    public function tratamientos()
+    {
+        return $this->hasMany('App\Models\Tratamiento');
+    }
 }
