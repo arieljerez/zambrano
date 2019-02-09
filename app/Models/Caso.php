@@ -47,5 +47,12 @@ class Caso extends Model
        return $value;
     }
 
+    /**
+     *
+     */
+    public function adjuntos()
+    {
+        return $this->hasMany('App\Models\Adjunto');
+    }
 
 }

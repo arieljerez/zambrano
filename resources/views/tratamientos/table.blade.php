@@ -1,21 +1,24 @@
 <table class="table">
     <thead>
     <tr>
-        <th> Caso</th>
         <th> Fecha </th>
-        <th> DNI </th>
-        <th> Paciente </th>
+        <th> Evento </th>
+        <th> Descripcion  </th>
+        <th> Archivo </th>
+
     </tr>
     </thead>
     <tbody>
-    @foreach ($casos as $caso)
+    @foreach ($tratamientos as $tratamiento)
         <tr>
-            <td> <h5>#     {{ $caso->id }}      </h5 </td>
-            <td>      {{ \Carbon\Carbon::parse($caso->fecha)->format('d/m/Y')  }}    </td>
-            <td>      {{ $caso->dni }}       </td>
-            <td>      {{ $caso->paciente }}    </td>
+            <td> <h5>     {{ \Carbon\Carbon::parse($tratamiento->fecha)->format('d/m/Y')  }}       </h5>
+                <small> Registro: {{  \Carbon\Carbon::parse($tratamiento->created_at)->format('d/m/Y H:m') }} </small></td>
+            <td>   {{ $tratamiento->evento }}      </td>
+            <td>       {{ $tratamiento->descripcion }}       </td>
             <td>
-               <a href="{{ route('tratamientos.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-save"></i> Editar</a>
+                @isset ($tratamiento->archivo)
+                    <a href="#" class="btn btn-default"> <i class="fa fa-download"></i> {{ $tratamiento->archivo }}</a>
+                @endisset
             </td>
         </tr>
     @endforeach

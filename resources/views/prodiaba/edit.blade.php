@@ -89,7 +89,7 @@
                       </button>
                     </div>
 
-                    <!-- Modal Aprobar-->
+                    <!-- Modal Re Aprobar-->
                     <div class="modal fade" id="reaprobarModal" tabindex="-1" role="dialog" aria-labelledby="reaprobarModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         {!! Form::model($caso, ['method' => 'POST','route' => ['prodiaba.reaprobar'], 'aria-label' => __('Re Aprobar Caso')])  !!}
@@ -164,6 +164,7 @@
                                     <a class="nav-link" id="v-pills-oftalmologico-tab" data-toggle="pill" href="#v-pills-oftalmologico" role="tab" aria-controls="v-pills-oftalmologico" aria-selected="false">Oftalmológico</a>
                                     <a class="nav-link" id="v-pills-bitacora-tab" data-toggle="pill" href="#v-pills-bitacora" role="tab" aria-controls="v-pills-bitacora" aria-selected="false">Bitácora</a>
                                     <a class="nav-link" id="v-pills-tratamientos-tab" data-toggle="pill" href="#v-pills-tratamientos" role="tab" aria-controls="v-pills-tratamientos" aria-selected="false">Tratamientos</a>
+                                    <a class="nav-link" id="v-pills-adjuntos-tab" data-toggle="pill" href="#v-pills-adjuntos" role="tab" aria-controls="v-pills-adjuntos" aria-selected="false">Adjuntos</a>
                                 </div>
                             </div>
                             <div class="col-10">
@@ -186,6 +187,7 @@
                                      </div>
                                     <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('casos.bitacora')</div>
                                     <div class="tab-pane fade" id="v-pills-tratamientos" role="tabpanel" aria-labelledby="v-pills-tratamientos-tab">@include('casos.tratamientos')</div>
+                                    <div class="tab-pane fade" id="v-pills-adjuntos" role="tabpanel" aria-labelledby="v-pills-adjuntos-tab">@include('adjuntos.index')</div>
                                 </div>
                             </div>
                         </div>

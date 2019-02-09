@@ -18,6 +18,8 @@ Route::get('/prodiaba', function () {
     return view('prodiaba/home');
 });
 
+Auth::routes();
+
 Route::prefix('prodiaba')->group(function() {
     Route::get('/login', 'Auth\ProdiabaLoginController@showLoginForm')->name('prodiaba.login');
     Route::post('/login', 'Auth\ProdiabaLoginController@login')->name('prodiaba.login.submit');
@@ -41,7 +43,7 @@ Route::prefix('efector')->group(function() {
 });
 
 
-Auth::routes();
+
 
 Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('/home', 'HomeController@index')->name('home');
@@ -95,11 +97,19 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   });
 
   Route::get('descargar/diabetologicos/{file}', function ($file) {
-      return Storage::response('diabetologicos/'.$file);
+      return Storage::download('diabetologicos/'.$file);
   });
   Route::get('descargar/oftalmologicos/{file}', function ($file) {
-      return Storage::response('oftalmologicos/'.$file);
+      return Storage::download('oftalmologicos/'.$file);
   });
 
+  Route::post('adjuntos', function() {
+    $data = request()->all();
+    App\Repositories\Adjunto::grabar($data['caso_id'],$data['fecha'],$data['descripcion']);
+    return back();
+  })->name('adjuntos.store');
 
+  Route::get('descargar/adjuntos/{file}', function ($file) {
+      return Storage::download('adjuntos/'.$file);
+  })->name('adjuntos.download');
 });
