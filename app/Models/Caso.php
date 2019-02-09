@@ -59,4 +59,9 @@ class Caso extends Model
     {
         return $this->hasMany('App\Models\Tratamiento');
     }
+
+    public function bitacoras()
+    {
+        return $this->hasMany('App\Models\Bitacora');
+    }
 }

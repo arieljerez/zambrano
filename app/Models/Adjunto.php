@@ -8,12 +8,12 @@ class Adjunto extends Model
 {
     public function usuario()
     {
-        $guardName = getGuardName();
+        $guardName = $this->nombre_tabla;
         switch ($guardName) {
-          case 'prodiaba':
+          case 'prodiabas':
             return $this->belongsTo('App\Models\Prodiaba');
             break;
-          case 'efector':
+          case 'efectores':
             return $this->belongsTo('App\Models\Efector');
             break;
           default:

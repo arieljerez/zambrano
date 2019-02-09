@@ -7,7 +7,7 @@
         <th>Usuario</th>
     </thead>
     <tbody>
-        @foreach( $datos as $registro)
+        @foreach( $caso->bitacoras as $registro)
           <tr>
               <td>
                 <p class="h4">{{ $registro->id }}</p>
@@ -17,17 +17,7 @@
               <td>{{ $registro->descripcion }}</td>
               <td>
 
-                @if ($registro->usuario_tabla == 'prodiabas')
-                  {{ \App\Models\Prodiaba::find($registro->usuario_id)->usuario }}
-                @endif
-
-                @if ($registro->usuario_tabla == 'efectores')
-                  {{ \App\Models\Efector::find($registro->usuario_id)->usuario }}
-                @endif
-
-                @if ($registro->usuario_tabla == 'usuarios')
-                  {{ \App\Models\Usuario::find($registro->usuario_id)->usuario }}
-                @endif
+                {{ $registro->usuario_tabla }} / {{$registro->usuario->usuario }}
               </td>
           </tr>
         @endforeach
