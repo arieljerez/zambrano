@@ -61,13 +61,8 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
 
   Route::get('casos/buscar_paciente/{url}', ['uses'=>'PacienteController@buscar']);
 
-  Route::get('casos/create/{id}', function ($id){
-      $paciente = App\Models\Paciente::find($id);
-      $caso = new App\Models\Caso();
-      $solo_lectura = false;
-      //Todo: Pasar a controlador
-      return view('casos.create',compact(['paciente','caso','solo_lectura']));
-  });
+  Route::get('casos/create/{id}', 'CasoController@createPacienteExistente');
+
   Route::get('casos/pendientes-formulario', 'CasoController@pendientesFormulario')->name('casos.pendientes-formulario');
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
@@ -75,23 +70,12 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('casos/vencidos', 'CasoController@vencidos')->name('casos.vencidos');
 
   Route::get('casos/por-paciente/{id?}',['uses'=> 'CasoController@porPaciente'])->name('casos.por_paciente');
+
   Route::Resource('casos', 'CasoController');
 
-  Route::get('eliminar_archivo_of/{caso_id}/oftalmologicos/{file}', function ($caso_id,$file) {
-      Storage::delete($file);
-      $caso = App\Models\Caso::find($caso_id);
-      $caso->update(['oftalmologico_archivo'=> '']);
-      $caso->save();
-      return back();
-  });
+  Route::get('eliminar_archivo_of/{caso_id}/oftalmologicos/{file}', 'CasoController@eliminarArchivoOf');
 
-  Route::get('eliminar_archivo_di/{caso_id}/diabetologicos/{file}', function ($caso_id,$file) {
-      Storage::delete($file);
-      $caso = App\Models\Caso::find($caso_id);
-      $caso->update(['diabetologico_archivo'=> '']);
-      $caso->save();
-      return back();
-  });
+  Route::get('eliminar_archivo_di/{caso_id}/diabetologicos/{file}', 'CasoController@eliminarArchivoDi');
 
   Route::get('descargar/diabetologicos/{file}', function ($file) {
       return Storage::download('diabetologicos/'.$file);

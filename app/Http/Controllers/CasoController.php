@@ -123,6 +123,15 @@ class CasoController extends Controller
          return view('casos.create',compact('paciente','caso','solo_lectura'));
     }
 
+    public function createPacienteExistente($id)
+    {
+      $paciente = \App\Models\Paciente::find($id);
+      $caso = new \App\Models\Caso();
+      $solo_lectura = false;
+      //Todo: Pasar a controlador
+      return view('casos.create',compact(['paciente','caso','solo_lectura']));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -279,5 +288,23 @@ class CasoController extends Controller
             return redirect()->route('casos.rechazados');
         }
 
+    }
+
+    public function eliminarArchivoOf($caso_id,$file)
+    {
+        \Storage::delete($file);
+        $caso = \App\Models\Caso::find($caso_id);
+        $caso->update(['oftalmologico_archivo'=> '']);
+        $caso->save();
+        return back();
+    }
+
+    public function eliminarArchivoDi($caso_id,$file)
+    {
+        \Storage::delete($file);
+        $caso = App\Models\Caso::find($caso_id);
+        $caso->update(['diabetologico_archivo'=> '']);
+        $caso->save();
+        return back();
     }
 }

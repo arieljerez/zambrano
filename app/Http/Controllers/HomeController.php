@@ -34,6 +34,6 @@ class HomeController extends Controller
 
     public function welcome()
     {
-      return view('wekcome');
+      return view('welcome');
     }
 }
