@@ -307,4 +307,14 @@ class CasoController extends Controller
         $caso->save();
         return back();
     }
+
+    public function descargarArchivoDi($file)
+    {
+      return \Storage::download('diabetologicos/'.$file);
+    }
+
+    public function descargarArchivoOf($file)
+    {
+      return \Storage::download('oftalmologicos/'.$file);
+    }
 }

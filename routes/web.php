@@ -77,24 +77,12 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
 
   Route::get('eliminar_archivo_di/{caso_id}/diabetologicos/{file}', 'CasoController@eliminarArchivoDi');
 
-  Route::get('descargar/diabetologicos/{file}', function ($file) {
-      return Storage::download('diabetologicos/'.$file);
-  });
-  Route::get('descargar/oftalmologicos/{file}', function ($file) {
-      return Storage::download('oftalmologicos/'.$file);
-  });
+  Route::get('descargar/diabetologicos/{file}', 'CasoController@descargarArchivoDi');
+  Route::get('descargar/oftalmologicos/{file}', 'CasoController@descargarArchivoOf');
 
-  Route::post('adjuntos', function() {
-    $data = request()->all();
-    App\Repositories\Adjunto::grabar($data['caso_id'],$data['fecha'],$data['descripcion']);
-    return back();
-  })->name('adjuntos.store');
+  Route::resource('adjuntos', 'AdjuntoController')->only('store');
 
-  Route::get('descargar/adjuntos/{file}', function ($file) {
-      return Storage::download('adjuntos/'.$file);
-  })->name('adjuntos.download');
+  Route::get('descargar/adjuntos/{file}', 'AdjuntoController@download')->name('adjuntos.download');
 
-  Route::get('descargar/tratamientos/{file}', function ($file) {
-      return Storage::download('tratamientos/'.$file);
-  })->name('adjuntos.download');
+  Route::get('descargar/tratamientos/{file}', 'TratamientoController@download')->name('adjuntos.download');
 });

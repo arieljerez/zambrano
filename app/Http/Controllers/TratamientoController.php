@@ -115,4 +115,9 @@ class TratamientoController extends Controller
     {
         //
     }
+
+    public function download($file)
+    {
+        return \Storage::download('tratamientos/'.$file);
+    }
 }
