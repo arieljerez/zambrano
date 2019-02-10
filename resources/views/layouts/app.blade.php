@@ -120,6 +120,9 @@
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="{{ route('prodiaba.rechazados')}}">Rechazados</a>
                           <a class="dropdown-item" href="{{ route('prodiaba.vencidos')}}">Vencidos</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="{{ route('prodiaba.tratamientos_solicitados')}}">Tratamientos Solicitados</a>
+
                         </div>
                       </li>
                       @endauth

@@ -26,6 +26,15 @@
       return $tratamiento;
    }
 
+   static public function aprobar(ModelTratamiento $tratamiento)
+   {
+     $tratamiento->estado = 'aprobado';
+     $tratamiento->fecha_aprobacion = now();
+     $tratamiento->usuario_aprobacion = auth()->User()->usuario;
+     $tratamiento->update();
+     return $tratamiento;
+   }
+
    public function porCaso($caso_id)
    {
      return ModelTratamiento::where('caso_id','=',$caso_id)->get();

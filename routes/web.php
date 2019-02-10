@@ -33,6 +33,8 @@ Route::prefix('prodiaba')->group(function() {
     Route::post('/aprobar', 'ProdiabaController@aprobar')->name('prodiaba.aprobar');
     Route::post('/rechazar', 'ProdiabaController@rechazar')->name('prodiaba.rechazar');
     Route::post('/reaprobar', 'ProdiabaController@reaprobar')->name('prodiaba.reaprobar');
+    Route::get('/tratamientos-solicitados', 'ProdiabaController@tratamientosSolicitados')->name('prodiaba.tratamientos_solicitados');
+    Route::post('/aprobar-tratamiento', 'ProdiabaController@aprobarTratamiento')->name('prodiaba.aprobar-tratamiento');
 });
 
 Route::prefix('efector')->group(function() {
@@ -41,9 +43,6 @@ Route::prefix('efector')->group(function() {
     Route::get('/home', 'EfectorController@home')->name('efector.home');
     Route::post('/logout', 'Auth\EfectorLoginController@logout')->name('efector.logout');
 });
-
-
-
 
 Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('/home', 'HomeController@index')->name('home');

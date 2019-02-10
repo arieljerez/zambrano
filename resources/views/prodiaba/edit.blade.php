@@ -4,150 +4,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Caso # {{ $caso->id }}
+              <div class="card shadow mb-5 bg-white rounded">
+                  <div class="card-header {{ config('prodiaba.casos.class.'.$caso->estado) }} ">Caso # {{ $caso->id }} <p>
+                    Estado: {{ config('prodiaba.casos.estados.'.$caso->estado) }}
+                  </p>
                     </div>
                     @if ($caso->estado == 'pendiente_aprobacion')
-
-                    <!-- Button trigger modal -->
-                    <div class="form-inline">
-                      <button type="button" class="btn btn-danger col-6" data-toggle="modal" data-target="#rechazarModal">
-                        Rechazar <i class="fa fa-times" aria-hidden="true"></i>
-                      </button>
-                      <button type="button" class="btn btn-success col-6 " data-toggle="modal" data-target="#aprobarModal">
-                        Aprobar <i class="fa fa-check" aria-hidden="true"></i>
-                      </button>
-                    </div>
-
-                    <!-- Modal Aprobar-->
-                    <div class="modal fade" id="aprobarModal" tabindex="-1" role="dialog" aria-labelledby="aprobarModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        {!! Form::model($caso, ['method' => 'POST','route' => ['prodiaba.aprobar'], 'aria-label' => __('Aprobar Caso')])  !!}
-                        <div class="modal-content">
-                          <div class="modal-header text-white bg-success mb-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Aprobar</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <input type="hidden" name="cambiar_estado" value="aprobado">
-                            <div class="form-group">
-                                <textarea name="texto_aprobacion" class="form-control col-10" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="date" name="fecha_aprobacion" class="form-control col-6" required>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <input type="hidden" name="caso_id" value="{{ $caso->id}}" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Aprobar <i class="fa fa-check" aria-hidden="true"></i></button>
-                          </div>
-                        </div>
-                        {!! Form::Close() !!}
-                      </div>
-                    </div>
-
-                    <!-- Modal Aprobar-->
-                    <div class="modal fade" id="rechazarModal" tabindex="-1" role="dialog" aria-labelledby="rechazarModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        {!! Form::model($caso, ['method' => 'POST','route' => ['prodiaba.rechazar'], 'aria-label' => __('Actualizar Caso')])  !!}
-                        <div class="modal-content">
-                          <div class="modal-header text-white bg-danger mb-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Rechazar</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <input type="hidden" name="cambiar_estado" value="rechazado">
-                            <div class="form-group">
-                                <textarea name="texto_aprobacion" class="form-control col-10" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="date" name="fecha_aprobacion" class="form-control col-6" required>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <input type="hidden" name="caso_id" value="{{ $caso->id}}" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger">Rechazar <i class="fa fa-times" aria-hidden="true"></i></button>
-                          </div>
-                        </div>
-                        {!! Form::Close() !!}
-                      </div>
-                    </div>
+                        @include('prodiaba.parts.aprobar_form')
                     @endif
 
                     @if ($caso->estado == 'vencido')
-
-                    <!-- Button trigger modal -->
-                    <div class="form-inline">
-                      <button type="button" class="btn btn-success col-6 " data-toggle="modal" data-target="#reaprobarModal">
-                        ReAprobar <i class="fa fa-check" aria-hidden="true"></i>
-                      </button>
-                    </div>
-
-                    <!-- Modal Re Aprobar-->
-                    <div class="modal fade" id="reaprobarModal" tabindex="-1" role="dialog" aria-labelledby="reaprobarModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        {!! Form::model($caso, ['method' => 'POST','route' => ['prodiaba.reaprobar'], 'aria-label' => __('Re Aprobar Caso')])  !!}
-                        <div class="modal-content">
-                          <div class="modal-header text-white bg-success mb-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Aprobar</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <input type="hidden" name="cambiar_estado" value="aprobado">
-                            <div class="form-group">
-                                <textarea name="texto_aprobacion" class="form-control col-10" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="date" name="fecha_aprobacion" class="form-control col-6" required>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <input type="hidden" name="caso_id" value="{{ $caso->id}}" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Aprobar <i class="fa fa-check" aria-hidden="true"></i></button>
-                          </div>
-                        </div>
-                        {!! Form::Close() !!}
-                      </div>
-                    </div>
-
-                    <!-- Modal Aprobar-->
-                    <div class="modal fade" id="rechazarModal" tabindex="-1" role="dialog" aria-labelledby="rechazarModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        {!! Form::model($caso, ['method' => 'POST','route' => ['prodiaba.rechazar'], 'aria-label' => __('Actualizar Caso')])  !!}
-                        <div class="modal-content">
-                          <div class="modal-header text-white bg-danger mb-3">
-                            <h5 class="modal-title" id="exampleModalLabel">Rechazar</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <input type="hidden" name="cambiar_estado" value="rechazado">
-                            <div class="form-group">
-                                <textarea name="texto_aprobacion" class="form-control col-10" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="date" name="fecha_aprobacion" class="form-control col-6" required>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <input type="hidden" name="caso_id" value="{{ $caso->id}}" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger">Rechazar <i class="fa fa-times" aria-hidden="true"></i></button>
-                          </div>
-                        </div>
-                        {!! Form::Close() !!}
-                      </div>
-                    </div>
+                        @include('prodiaba.parts.reaprobar_form')
                     @endif
                     <div class="card-body">
                         @if (session('status'))
@@ -158,14 +25,7 @@
 
                         <div class="row">
                             <div class="col-2">
-                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <a class="nav-link" id="v-pills-paciente-tab" data-toggle="pill" href="#v-pills-paciente" role="tab" aria-controls="v-pills-home" aria-selected="true">Paciente</a>
-                                    <a class="nav-link active" id="v-pills-diabetologico-tab" data-toggle="pill" href="#v-pills-diabetologico" role="tab" aria-controls="v-pills-diabetologico" aria-selected="false">Diabetológico</a>
-                                    <a class="nav-link" id="v-pills-oftalmologico-tab" data-toggle="pill" href="#v-pills-oftalmologico" role="tab" aria-controls="v-pills-oftalmologico" aria-selected="false">Oftalmológico</a>
-                                    <a class="nav-link" id="v-pills-bitacora-tab" data-toggle="pill" href="#v-pills-bitacora" role="tab" aria-controls="v-pills-bitacora" aria-selected="false">Bitácora</a>
-                                    <a class="nav-link" id="v-pills-tratamientos-tab" data-toggle="pill" href="#v-pills-tratamientos" role="tab" aria-controls="v-pills-tratamientos" aria-selected="false">Tratamientos</a>
-                                    <a class="nav-link" id="v-pills-adjuntos-tab" data-toggle="pill" href="#v-pills-adjuntos" role="tab" aria-controls="v-pills-adjuntos" aria-selected="false">Adjuntos</a>
-                                </div>
+                                @include('casos.parts.edit_form_nav_pills')
                             </div>
                             <div class="col-10">
                                 <div class="tab-content" id="v-pills-tabContent">
@@ -175,18 +35,17 @@
                                         </fieldset>
                                       </div>
                                     <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
-                                        <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
-                                        @include('casos.diabetologico')
-                                        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                      <fieldset disabled>
+                                        @include('casos.diabetologico.index')
+                                      </fieldset>
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-oftalmologico" role="tabpanel" aria-labelledby="v-pills-oftalmologico-tab">
-                                        <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
-                                          @include('casos.oftalmologico')
-                                          <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                        <fieldset disabled>
+                                          @include('casos.oftalmologico.index')
                                         </fieldset>
                                      </div>
-                                    <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('casos.bitacora')</div>
-                                    <div class="tab-pane fade" id="v-pills-tratamientos" role="tabpanel" aria-labelledby="v-pills-tratamientos-tab">@include('casos.tratamientos')</div>
+                                    <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('bitacora.index')</div>
+                                    <div class="tab-pane fade" id="v-pills-tratamientos" role="tabpanel" aria-labelledby="v-pills-tratamientos-tab">@include('tratamientos.index')</div>
                                     <div class="tab-pane fade" id="v-pills-adjuntos" role="tabpanel" aria-labelledby="v-pills-adjuntos-tab">@include('adjuntos.index')</div>
                                 </div>
                             </div>
@@ -194,7 +53,9 @@
                         <div class="row"><div class="col-md-12">&nbsp;</div></div>
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="{{ url('prodiaba/pendientes') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
+                              @if ($caso->estado == 'vencido')
+                                <a href="{{ url('prodiaba/vencidos') }}" class="btn btn-primary"> <i class="far fa-arrow-alt-circle-left"></i> Volver</a>
+                              @endif
                             </div>
                         </div>
 

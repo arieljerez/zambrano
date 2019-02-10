@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Repositories\Caso as CasoRepository;
 use App\Models\Caso;
 use App\Models\Prodiaba;
+use App\Models\Tratamiento;
 use App\Serializables\Diabetologico;
 use App\Serializables\Oftalmologico;
+use App\Repositories\Tratamiento as TratamientoRepository;
 
 class ProdiabaController extends Controller
 {
@@ -60,6 +62,14 @@ class ProdiabaController extends Controller
         $casos  = $this->casoRepository->vencidos($filtro);
         return view('prodiaba.vencidos', compact('casos'));
     }
+
+    public function tratamientosSolicitados()
+    {
+        $filtro = request()->only(['dni','apellidos','nombres']);
+        $casos  = $this->casoRepository->tratamientosSolicitados($filtro);
+        return view('prodiaba.tratamientos_solicitados', compact('casos'));
+    }
+
     public function home()
     {
       $aprobados = Caso::where('estado','=','aprobado')->count();
@@ -114,6 +124,13 @@ class ProdiabaController extends Controller
       return redirect()->route('prodiaba.pendientes');
     }
 
+    public function aprobarTratamiento()
+    {
+        $tratamiento = Tratamiento::find(request()->input('id'));
+        $tratamiento->texto_aprobacion =  request()->input('texto_aprobacion');
+        TratamientoRepository::aprobar($tratamiento);
+        return redirect()->back();
+    }
     public function mostrarCambiarClaveForm()
     {
       return view('auth.prodiaba-change');

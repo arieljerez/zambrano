@@ -22,6 +22,10 @@ class CreateTratamientosTable extends Migration
             $table->string('descripcion');
             $table->string('archivo')->nullable();
             $table->string('archivo_nombre')->nullable();
+            $table->string('estado')->default('solicitado');
+            $table->date('fecha_aprobacion')->nullable();
+            $table->string('usuario_aprobacion')->nullable();
+            $table->string('texto_aprobacion')->nullable();
             $table->timestamps();
         });
     }

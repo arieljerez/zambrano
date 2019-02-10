@@ -10,4 +10,5 @@ class Tratamiento extends Model
   {
       return $this->belongsTo('App\Models\Efector');
   }
+
 }

@@ -8,7 +8,11 @@ return [
           'laboratorio' => 'Laboratorio',
           'consulta' => 'Consultas',
           'otros' => 'Otros'
-        ]
+        ],
+      'estados' => [
+        'solicitado' => 'Solicitado',
+        'aprobado' => 'Aprobado'
+      ]
     ],
     'casos' => [
       'estados' => [
@@ -19,11 +23,11 @@ return [
         'vencido' => 'Vencido'
       ],
     'class' => [
-        'pendiente_formulario' => 'bg-primary text-black',
-        'pendiente_aprobacion' => 'bg-secondary text-black',
+        'pendiente_formulario' => 'bg-default text-black',
+        'pendiente_aprobacion' => 'bg-primary text-white',
         'aprobado' => 'bg-success text-white',
         'rechazado' => 'bg-danger text-white',
-        'vencido' => 'bg-warning text-white'
+        'vencido' => 'bg-danger text-white'
       ]
 
     ]

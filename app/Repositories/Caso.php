@@ -33,26 +33,35 @@
          ->where('casos.estado','=','vencido');
      return $query->paginate($paginate);
    }
-
+   public function tratamientosSolicitados($filtro = array(),$paginate = 25)
+   {
+     $query =  $this->consultaBase($filtro)
+         ->where([['casos.estado','=','vencido'],['tratamientos.estado','=','solicitado']])
+         ->join('tratamientos','tratamientos.caso_id','=','casos.id');
+     return $query->paginate($paginate);
+   }
    public function consultaBase($filtro)
    {
-    $query =  \DB::Table('casos')
-         ->join('pacientes','pacientes.id','=','casos.paciente_id')
-         ->select('casos.id as id','casos.created_at as fecha',
-         \DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),
-         'pacientes.dni as dni','fecha_aprobacion', 'casos.estado as estado',
-         'fecha_rechazo','fecha_reaprobacion','fecha_rechazo');
-         if(isset($filtro['dni'])){
-           $query = $query->where('dni','like','%'.request()->input('dni').'%');
-         }
+        $query =  \DB::Table('casos')
+             ->join('pacientes','pacientes.id','=','casos.paciente_id')
+             ->select('casos.id as id','casos.created_at as fecha',
+             \DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),
+             'pacientes.dni as dni','casos.estado as estado',
+             'casos.fecha_reaprobacion','casos.fecha_rechazo');
 
-         if(isset($filtro['apellidos'])){
-           $query = $query->where('apellidos','like','%'.request()->input('apellidos').'%');
-         }
+        $query = $query->orderBy('casos.id', 'desc');
 
-         if(isset($filtro['nombres'])){
-           $query = $query->where('nombres','like','%'.request()->input('nombres').'%');
-         }
+        if(isset($filtro['dni'])){
+          $query = $query->where('dni','like','%'.request()->input('dni').'%');
+        }
+
+        if(isset($filtro['apellidos'])){
+          $query = $query->where('apellidos','like','%'.request()->input('apellidos').'%');
+        }
+
+        if(isset($filtro['nombres'])){
+          $query = $query->where('nombres','like','%'.request()->input('nombres').'%');
+        }
     return $query;
    }
 
