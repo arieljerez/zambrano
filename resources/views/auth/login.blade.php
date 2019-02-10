@@ -1,7 +1,7 @@
 @extends('auth.login-layout')
 
 @section('imagen','doctor.jpg')
-@section('titulo','Acceo Profesionales')
+@section('titulo','Acceso Profesionales')
 @section('form')
     <form method="POST" action="{{ route('login') }}">
         @csrf

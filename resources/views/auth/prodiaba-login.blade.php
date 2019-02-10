@@ -1,7 +1,7 @@
 @extends('auth.login-layout')
 
 @section('imagen','prodiaba.jpg')
-@section('titulo','Acceo Prodiaba')
+@section('titulo','Acceso Prodiaba')
 @section('form')
 <form method="POST" action="{{ route('prodiaba.login.submit') }}">
     @csrf

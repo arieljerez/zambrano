@@ -1,7 +1,7 @@
 @extends('auth.login-layout')
 
 @section('imagen','auditor.png')
-@section('titulo','Acceo Efectores')
+@section('titulo','Acceso Efectores')
 @section('form')
     <form method="POST" action="{{ route('efector.login.submit') }}">
         @csrf

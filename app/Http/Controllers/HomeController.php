@@ -31,4 +31,9 @@ class HomeController extends Controller
       $vencidos = Caso::where('estado','=','vencido')->count();
       return view('home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
     }
+
+    public function welcome()
+    {
+      return view('wekcome');
+    }
 }

@@ -36,7 +36,7 @@
    public function tratamientosSolicitados($filtro = array(),$paginate = 25)
    {
      $query =  $this->consultaBase($filtro)
-         ->where([['casos.estado','=','vencido'],['tratamientos.estado','=','solicitado']])
+         ->where('tratamientos.estado','=','solicitado')
          ->join('tratamientos','tratamientos.caso_id','=','casos.id');
      return $query->paginate($paginate);
    }
