@@ -75,12 +75,12 @@ class PacienteController extends Controller
       $request->validate([
           'paciente.nombres' => 'required|string',
           'paciente.apellidos' => 'required|string',
-          'paciente.fecha_nacimiento' => 'required|date',
+          /*'paciente.fecha_nacimiento' => 'required|date',
           'paciente.domicilio' => 'required|string',
           'paciente.telefono' => 'required|string',
-          'paciente.telefono_familiar' => 'required|string',
+          'paciente.telefono_familiar' => 'required|string',*/
           'paciente.dni' => 'required|integer|unique:pacientes,dni',
-          'paciente.sexo' => 'required',
+         /* 'paciente.sexo' => 'required',*/
           'paciente.region_sanitaria' => 'required'
       ]);
 
@@ -123,12 +123,12 @@ class PacienteController extends Controller
       $datos = $request->validate([
           'paciente.nombres' => 'required|string',
           'paciente.apellidos' => 'required|string',
-          'paciente.fecha_nacimiento' => 'required|date',
+          /*'paciente.fecha_nacimiento' => 'required|date',
           'paciente.domicilio' => 'required|string',
           'paciente.telefono' => 'required|string',
-          'paciente.telefono_familiar' => 'required|string',
+          'paciente.telefono_familiar' => 'required|string',*/
           'paciente.dni' => ['required','integer',Rule::unique('pacientes','dni')->ignore($id)],
-          'paciente.sexo' => 'required',
+          /*'paciente.sexo' => 'required',*/
           'paciente.region_sanitaria' => 'required'
       ]);
 

@@ -5,19 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Caso;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Serializables\Diabetologico;
 use App\Serializables\Oftalmologico;
 use App\Repositories\Caso as CasoRepository;
 use App\Repositories\Bitacora;
+use App\Repositories\Paciente as PacienteRepository;
 
 class CasoController extends Controller
 {
+    protected $pacienteRepository;
 
-    public function __construct(CasoRepository $casoRepository)
+    public function __construct(CasoRepository $casoRepository,PacienteRepository $paciente)
     {
       $this->middleware('auth');
       $this->casoRepository = $casoRepository;
+      $this->pacienteRepository = $paciente;
     }
     /**
      * Display a listing of the resource.
@@ -128,7 +130,7 @@ class CasoController extends Controller
       $paciente = \App\Models\Paciente::find($id);
       $caso = new \App\Models\Caso();
       $solo_lectura = false;
-      //Todo: Pasar a controlador
+
       return view('casos.create',compact(['paciente','caso','solo_lectura']));
     }
 
@@ -141,41 +143,32 @@ class CasoController extends Controller
     public function store(Request $request)
     {
         $paciente =  $this->grabarPaciente($request);
-        $caso = Caso::create( ['estado'=> 'pendiente_formulario','paciente_id' => $paciente->id,'oftalmologico' => '[]' ,'diabetologico' => '[]', 'paciente' => json_encode($paciente) ]);
-        Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de frmularios');
+        $caso = Caso::create( [
+                'estado'=> 'pendiente_formulario',
+                'paciente_id' => $paciente->id,
+                'oftalmologico' => '[]' ,
+                'diabetologico' => '[]',
+                'paciente' => json_encode($paciente)
+        ]);
+
+        Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de formularios');
 
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 
     public function grabarPaciente($request,$caso=0)
     {
-      $paciente_data = $request->only('paciente');
-      $this->validarPaciente($paciente_data);
 
-      $paciente_data = $paciente_data['paciente'];
-
-      $paciente = Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
-      if ($caso > 0)
-      {
-        Bitacora::grabar($caso->id,'Paciente','Datos del Paciente Actualizados');
-      }
-
-      return $paciente;
+        $input = $request->only('paciente');
+        $paciente = $this->pacienteRepository->store($input);
+        if ($caso > 0)
+        {
+            Bitacora::grabar($caso,'Paciente','Datos del Paciente Actualizados');
+        }
+        return $paciente;
     }
 
-    protected function validarPaciente($paciente)
-    {
-        Validator::make($paciente, [
-            'paciente.nombres' => 'required|string',
-            'paciente.apellidos' => 'required|string',
-            'paciente.fecha_nacimiento' => 'required|date',
-            'paciente.domicilio' => 'required|string',
-            'paciente.telefono' => 'required|string',
-            'paciente.telefono_familiar' => 'required|string',
-            'paciente.dni' => 'required|integer',
-            'paciente.sexo' => 'required',
-        ])->validate();
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -242,7 +235,7 @@ class CasoController extends Controller
 
         switch ($request->input('destino')) {
           case 'paciente':
-            $paciente = $this->grabarPaciente($request, $caso);
+            $paciente = $this->grabarPaciente($request, $caso->id);
             $caso->update( ['paciente' => json_encode($paciente) ]);
             $caso->save();
             break;
@@ -271,7 +264,7 @@ class CasoController extends Controller
         //
     }
 
-    public function cambiarEstado (Caso $caso, $estado)
+    public function cambiarEstado(Caso $caso, $estado)
     {
          // TODO: pasara a repositorie
         if ($estado == 'pendiente_formulario'){
