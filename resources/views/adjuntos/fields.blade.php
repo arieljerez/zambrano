@@ -20,8 +20,7 @@
     <label for="name" class="col-md-4 col-form-label text-md-right">Descripcion</label>
 
     <div class="form-group col-md-6">
-        <textarea class="form-control" type="text" name="descripcion" id="descripcion" value="{{ old('descripcion') }}" required>
-        </textarea>
+        <textarea class="form-control" type="text" name="descripcion" id="descripcion" required></textarea>
     </div>
 </div>
 
