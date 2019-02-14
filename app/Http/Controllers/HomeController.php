@@ -32,8 +32,4 @@ class HomeController extends Controller
       return view('home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
     }
 
-    public function welcome()
-    {
-      return view('welcome');
-    }
 }

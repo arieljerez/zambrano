@@ -11,17 +11,20 @@
 |
 */
 
-Route::get('/','HomeController@welcome');
-Route::get('/prodiaba', function () {
-    return view('prodiaba/home');
+
+Route::get('/', function () {
+     return view('welcome');
 });
 
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/prodiaba/home', 'ProdiabaController@home')->name('prodiaba.home');
+Route::get('/efector/home', 'EfectorController@home')->name('efector.home');
 Auth::routes();
 
 Route::prefix('prodiaba')->group(function() {
     Route::get('/login', 'Auth\ProdiabaLoginController@showLoginForm')->name('prodiaba.login');
     Route::post('/login', 'Auth\ProdiabaLoginController@login')->name('prodiaba.login.submit');
-    Route::get('/home', 'ProdiabaController@home')->name('prodiaba.home');
+
     Route::post('/logout', 'Auth\ProdiabaLoginController@logout')->name('prodiaba.logout');
 
     Route::get('/pendientes', 'ProdiabaController@pendientes')->name('prodiaba.pendientes');
@@ -38,12 +41,10 @@ Route::prefix('prodiaba')->group(function() {
 Route::prefix('efector')->group(function() {
     Route::get('/login', 'Auth\EfectorLoginController@showLoginForm')->name('efector.login');
     Route::post('/login', 'Auth\EfectorLoginController@login')->name('efector.login.submit');
-    Route::get('/home', 'EfectorController@home')->name('efector.home');
     Route::post('/logout', 'Auth\EfectorLoginController@logout')->name('efector.logout');
 });
 
 Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
-  Route::get('/home', 'HomeController@index')->name('home');
 
   Route::get('prodiaba/cambiarclave', 'ProdiabaController@mostrarCambiarClaveForm')->name('prodiaba.cambiarclave');
   Route::post('prodiaba/cambiarclave', 'ProdiabaController@cambiarClave')->name('prodiaba.cambiarclave');

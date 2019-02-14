@@ -21,6 +21,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Efector::class,
         ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

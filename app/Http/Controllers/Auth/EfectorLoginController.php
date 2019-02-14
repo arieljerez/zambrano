@@ -9,20 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class EfectorLoginController extends Controller
 {
-    /**
-    * Show the application’s login form.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function showLoginForm()
-    {
-      return view('auth.efector-login');
-    }
-
-    protected function guard()
-    {
-      return Auth::guard('efector');
-    }
 
     use AuthenticatesUsers;
     /**
@@ -45,4 +31,19 @@ class EfectorLoginController extends Controller
     {
         return 'usuario';
     }
+    /**
+    * Show the application’s login form.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function showLoginForm()
+    {
+      return view('auth.efector-login');
+    }
+
+    protected function guard()
+    {
+      return Auth::guard('efector');
+    }
+
 }
