@@ -9,15 +9,18 @@
 @endauth
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card shadow mb-5 bg-white rounded">
-                    <div class="card-header {{ config('prodiaba.casos.class.'.$caso->estado) }} ">Caso # {{ $caso->id }} <p>
+                    <div class="card-header {{ config('prodiaba.casos.class.'.$caso->estado) }} ">
+                        <span class="float-left">Caso # {{ $caso->id }} <p>
                       Estado: {{ config('prodiaba.casos.estados.'.$caso->estado) }}
                     </p>
-
+</span>
+                <span class="float-right">
                     @if ($caso->estado == 'pendiente_formulario')
                       @include('casos.parts.caso_aaprobacion_form')
                     @endif
+                </span>
 
                     </div>
 
@@ -29,11 +32,11 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-12 col-sm-12 col-md-2 col-lg-2">
                                 @include('casos.parts.edit_form_nav_pills')
                             </div>
 
-                            <div class="col-10">
+                            <div class="col-12 col-sm-12 col-md-10 col-lg-10">
                                 <div class="tab-content" id="v-pills-tabContent">
 
                                     <div class="tab-pane fade" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab">
@@ -56,27 +59,14 @@
                                     </div>
 
                                     <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
-                                        {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
 
-                                        @include('casos.diabetologico.index')
+                                            {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
 
-                                        <div class="row"><div class="col-md-12">&nbsp;</div></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="fas fa-save"></i> {{ __('Grabar') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <input  type="hidden" name="destino" value="diabetologico">
+                                            @include('casos.diabetologico.index')
 
-                                        {!! Form::Close() !!}
-                                    </div>
-
-                                    <div class="tab-pane fade" id="v-pills-oftalmologico" role="tabpanel" aria-labelledby="v-pills-oftalmologico-tab">
-                                        {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-                                          @include('casos.oftalmologico.index')
                                             <div class="row"><div class="col-md-12">&nbsp;</div></div>
+
+                                            @if(!$solo_lectura)
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <button type="submit" class="btn btn-primary">
@@ -84,7 +74,26 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            <input  type="hidden" name="destino" value="oftalmologico">
+                                            <input  type="hidden" name="destino" value="diabetologico">
+                                            @endif
+                                            {!! Form::Close() !!}
+
+                                    </div>
+
+                                    <div class="tab-pane fade" id="v-pills-oftalmologico" role="tabpanel" aria-labelledby="v-pills-oftalmologico-tab">
+                                        {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+                                          @include('casos.oftalmologico.index')
+                                            <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                                            @if(!$solo_lectura)
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fas fa-save"></i> {{ __('Grabar') }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <input  type="hidden" name="destino" value="oftalmologico">
+                                            @endif
                                         {!! Form::Close() !!}
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('bitacora.index')</div>

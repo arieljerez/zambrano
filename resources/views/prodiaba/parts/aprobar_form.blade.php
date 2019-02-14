@@ -1,9 +1,9 @@
 <!-- Button trigger modal -->
 <div class="form-inline">
-  <button type="button" class="btn btn-danger col-6" data-toggle="modal" data-target="#rechazarModal">
+  <button type="button" class="btn btn-danger col-12 col-md-6" data-toggle="modal" data-target="#rechazarModal">
     Rechazar <i class="fa fa-times" aria-hidden="true"></i>
   </button>
-  <button type="button" class="btn btn-success col-6 " data-toggle="modal" data-target="#aprobarModal">
+  <button type="button" class="btn btn-success col-12 col-md-6" data-toggle="modal" data-target="#aprobarModal">
     Aprobar <i class="fa fa-check" aria-hidden="true"></i>
   </button>
 </div>

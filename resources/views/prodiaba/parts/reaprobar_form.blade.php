@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <div class="form-inline">
-  <button type="button" class="btn btn-success col-6 " data-toggle="modal" data-target="#reaprobarModal">
+  <button type="button" class="btn btn-success col-12 col-md-6 " data-toggle="modal" data-target="#reaprobarModal">
     ReAprobar <i class="fa fa-check" aria-hidden="true"></i>
   </button>
 </div>

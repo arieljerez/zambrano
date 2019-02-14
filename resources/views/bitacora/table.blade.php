@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table table-striped table-condensed">
+  <table class="table table-striped table-sm">
     <thead>
         <th>#</th>
         <th>Evento</th>
