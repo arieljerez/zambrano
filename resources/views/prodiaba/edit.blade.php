@@ -35,14 +35,10 @@
                                         </fieldset>
                                       </div>
                                     <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
-                                      <fieldset disabled>
                                         @include('casos.diabetologico.index')
-                                      </fieldset>
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-oftalmologico" role="tabpanel" aria-labelledby="v-pills-oftalmologico-tab">
-                                        <fieldset disabled>
                                           @include('casos.oftalmologico.index')
-                                        </fieldset>
                                      </div>
                                     <div class="tab-pane fade" id="v-pills-bitacora" role="tabpanel" aria-labelledby="v-pills-bitacora-tab">@include('bitacora.index')</div>
                                     <div class="tab-pane fade" id="v-pills-tratamientos" role="tabpanel" aria-labelledby="v-pills-tratamientos-tab">@include('tratamientos.index')</div>
