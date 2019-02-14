@@ -5,8 +5,18 @@
 
  class Tratamiento
  {
-   static public function grabar($caso_id,$fecha,$evento,$descripcion, $archivo, $usuario_id=null)
-   {
+    static public function attach($id)
+    {
+        $tratamiento = ModelTratamiento::find($id);
+        if( request()->hasfile('archivo') ){
+            $tratamiento->archivo =  request()->file('archivo')->store('tratamientos');
+            $tratamiento->archivo_nombre = request()->file('archivo')->getClientOriginalName();
+        }
+        $tratamiento->save();
+    }
+
+    static public function grabar($caso_id,$fecha,$evento,$descripcion, $archivo, $usuario_id=null)
+    {
       if($usuario_id == null){
         $usuario_id = auth()->User()->id;
       }
@@ -17,27 +27,22 @@
       $tratamiento->evento = $evento;
       $tratamiento->descripcion = $descripcion;
 
-      if( request()->hasfile('archivo') ){
-        $tratamiento->archivo =  request()->file('archivo')->store('tratamientos');
-        $tratamiento->archivo_nombre = request()->file('archivo')->getClientOriginalName();
-      }
-
       $tratamiento->save();
       return $tratamiento;
-   }
+    }
 
-   static public function aprobar(ModelTratamiento $tratamiento)
-   {
+    static public function aprobar(ModelTratamiento $tratamiento)
+    {
      $tratamiento->estado = 'aprobado';
      $tratamiento->fecha_aprobacion = now();
      $tratamiento->usuario_aprobacion = auth()->User()->usuario;
      $tratamiento->update();
      return $tratamiento;
-   }
+    }
 
-   public function porCaso($caso_id)
-   {
+    public function porCaso($caso_id)
+    {
      return ModelTratamiento::where('caso_id','=',$caso_id)->get();
-   }
+    }
 
  }

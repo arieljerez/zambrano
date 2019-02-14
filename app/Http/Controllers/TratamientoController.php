@@ -47,7 +47,6 @@ class TratamientoController extends Controller
     public function store(Request $request)
     {
         $datos = $request->only('caso_id','fecha','evento','descripcion','archivo');
-        $this->validar('datos');
 
         $caso = Caso::find($datos['caso_id']);
 
@@ -65,11 +64,6 @@ class TratamientoController extends Controller
         Bitacora::grabar($datos['caso_id'],'Tratamiento',$datos['evento'] . ': '. $datos['descripcion']);
 
         return redirect()->back();
-    }
-
-    public function validar($datos)
-    {
-
     }
     /**
      * Display the specified resource.
@@ -119,5 +113,11 @@ class TratamientoController extends Controller
     public function download($file)
     {
         return \Storage::download('tratamientos/'.$file);
+    }
+
+    public function adjuntar($id)
+    {
+        $this->repository->attach($id);
+        return redirect()->back();
     }
 }

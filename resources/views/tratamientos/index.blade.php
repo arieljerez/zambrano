@@ -7,7 +7,9 @@
     <div class="nav nav-tabs" id="nav-tab2" role="tablist">
         <a class="nav-item nav-link active" id="nav-home-tab2" data-toggle="tab" href="#nav-home2" role="tab" aria-controls="nav-home" aria-selected="true">Listado</a>
         @auth('efector')
-          <a class="nav-item nav-link " id="nav-profile-tab2" data-toggle="tab" href="#nav-profile2" role="tab" aria-controls="nav-profile" aria-selected="false">Cargar tratamiento</a>
+            @if($caso->estado == 'aprobado')
+                <a class="nav-item nav-link " id="nav-profile-tab2" data-toggle="tab" href="#nav-profile2" role="tab" aria-controls="nav-profile" aria-selected="false">Solicitar tratamiento</a>
+            @endif
         @endauth
     </div>
 </nav>

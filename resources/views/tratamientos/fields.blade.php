@@ -29,6 +29,9 @@
     </div>
 </div>
 
+<input class="form-control" type="hidden" name="archivo" id="archivo">
+
+<!--
 <div class="form-group row">
     <label for="name" class="col-md-4 col-form-label text-md-right">Archivo</label>
 
@@ -38,3 +41,4 @@
         </div>
     </div>
 </div>
+-->

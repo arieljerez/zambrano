@@ -22,6 +22,12 @@
             <td>
                 @isset ($tratamiento->archivo)
                     <a href="{{ url('descargar/'.$tratamiento->archivo)}}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
+                @else
+                    @if($tratamiento->estado == 'aprobado' )
+                        @auth('efector')
+                            @include('tratamientos.attach_field')
+                        @endauth
+                    @endif
                 @endisset
             </td>
             <td>

@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::Resource('efector', 'EfectorController');
   Route::Resource('tratamientos', 'TratamientoController');
 
+
   Route::get('efectores/cambiarclave', 'EfectorController@mostrarCambiarClaveForm')->name('efectores.cambiarclave');
   Route::post('efectores/cambiarclave', 'EfectorController@cambiarClave')->name('efectores.cambiarclave');
 
@@ -84,5 +85,6 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
 
   Route::get('descargar/adjuntos/{file}', 'AdjuntoController@download')->name('adjuntos.download');
 
-  Route::get('descargar/tratamientos/{file}', 'TratamientoController@download')->name('adjuntos.download');
+  Route::get('descargar/tratamientos/{file}', 'TratamientoController@download')->name('tratamientos.download');
+  Route::post('tratamientos/adjuntar/{id}', 'TratamientoController@adjuntar')->name('tratamientos.adjuntar');
 });
