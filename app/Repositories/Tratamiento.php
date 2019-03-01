@@ -7,15 +7,47 @@
  {
     static public function attach($id)
     {
+
+      if( request()->hasfile('archivo') ){
+
         $tratamiento = ModelTratamiento::find($id);
-        if( request()->hasfile('archivo') ){
-            $tratamiento->archivo =  request()->file('archivo')->store('tratamientos');
-            $tratamiento->archivo_nombre = request()->file('archivo')->getClientOriginalName();
+
+        // getting all of the post data
+        $files = request()->file('archivo');
+        
+        
+        // recorremos cada archivo y lo subimos individualmente
+        foreach($files as $file) {
+            
+            //cargar archivo
+            $upload_success = $file->store('adjuntos');
+
+            // grabar datos adjunto
+
+            $adjunto = new \App\Models\Adjunto();
+            $adjunto->caso_id = $tratamiento->caso_id;
+            $adjunto->usuario_id = auth()->User()->id;
+            $adjunto->fecha = now();
+            $adjunto->usuario_tabla = \App\Repositories\Adjunto::getLoginTabla();
+            $adjunto->descripcion = "Adjunto de tratamiento: " . $tratamiento->evento . " - " . $tratamiento->descripcion;
+
+            $adjunto->archivo = $upload_success;
+            $adjunto->archivo_nombre = $file->getClientOriginalName();
+
+            $adjunto->save();
+
+            // asociar al tratamiento
+            $tratamiento->adjuntos()->attach($adjunto->id);
         }
-        $tratamiento->save();
+
+          //cargar archivo
+          //grabar datos adjuntos
+          //grabar relacion tratamientos adjuntos
+                
+      } //endif 
     }
 
-    static public function grabar($caso_id,$fecha,$evento,$descripcion, $archivo, $usuario_id=null)
+    static public function grabar($caso_id,$fecha,$evento,$descripcion,$usuario_id=null)
     {
       if($usuario_id == null){
         $usuario_id = auth()->User()->id;

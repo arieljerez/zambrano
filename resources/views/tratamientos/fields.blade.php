@@ -29,16 +29,4 @@
     </div>
 </div>
 
-<input class="form-control" type="hidden" name="archivo" id="archivo">
 
-<!--
-<div class="form-group row">
-    <label for="name" class="col-md-4 col-form-label text-md-right">Archivo</label>
-
-    <div class="form-group col-md-8">
-        <div class="form-check form-check-inline">
-            <input class="form-control" type="file" name="archivo" id="archivo" required>
-        </div>
-    </div>
-</div>
--->

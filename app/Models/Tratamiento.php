@@ -11,4 +11,9 @@ class Tratamiento extends Model
       return $this->belongsTo('App\Models\Efector');
   }
 
+  public function adjuntos()
+  {
+      return $this->belongsToMany('App\Models\Adjunto','tratamiento_adjunto','tratamiento_id','adjunto_id');
+  }
+
 }

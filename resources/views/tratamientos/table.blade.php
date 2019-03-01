@@ -7,7 +7,7 @@
             <th> Evento </th>
             <th> Descripcion  </th>
             <th> Archivo </th>
-            <th> Usuario </th>
+            <th> U:Efector </th>
             <th> Aprobado Por </th>
 
         </tr>
@@ -24,11 +24,11 @@
                     @isset ($tratamiento->archivo)
                         <a href="{{ url('descargar/'.$tratamiento->archivo)}}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
                     @else
-                        @if($tratamiento->estado == 'aprobado' )
-                            @auth('efector')
-                                @include('tratamientos.attach_field')
-                            @endauth
-                        @endif
+                    <div class="form-group">
+                      @include('tratamientos.attach_list')
+                      @include('tratamientos.attach_field')
+                    </div>
+                      
                     @endisset
                 </td>
                 <td>

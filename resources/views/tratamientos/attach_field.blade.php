@@ -21,7 +21,7 @@
 
               <div class="form-group col-md-10">
                   <div class="form-check form-check-inline">
-                      <input class="form-control" type="file" name="archivo" id="archivo" required>
+                      <input class="form-control" type="file" name="archivo[]" id="archivo" multiple required>
                   </div>
               </div>
           </div>
