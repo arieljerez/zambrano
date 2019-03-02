@@ -33,7 +33,7 @@
               <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
 
 
-                <form method="POST" enctype="multipart/form-data" action="{{ route('tratamientos.store') }}" aria-label="{{ __('Nuevo tratamientos') }}">
+                <form method="POST" action="{{ route('tratamientos.store') }}" aria-label="{{ __('Nuevo tratamientos') }}">
                     @csrf
                     @include('tratamientos.fields')
                     <div class="form-group row mb-0">

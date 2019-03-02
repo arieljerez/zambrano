@@ -1,11 +1,11 @@
 <!-- Button trigger modal -->
 <div class="form-inline">
-  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adjuntarListadoTratamientoModal">
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#adjuntarListadoTratamientoModal-{{ $tratamiento->id}}">
     <i class="fa fa-download fa-2x" aria-hidden="true"></i>
 </div>
 
 <!-- Modal Aprobar-->
-<div class="modal fade" id="adjuntarListadoTratamientoModal" tabindex="-1" role="dialog" aria-labelledby="aprobarModalLabel" aria-hidden="true">
+<div class="modal fade" id="adjuntarListadoTratamientoModal-{{ $tratamiento->id}}" tabindex="-1" role="dialog" aria-labelledby="aprobarModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
