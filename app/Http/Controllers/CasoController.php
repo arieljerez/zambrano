@@ -142,7 +142,9 @@ class CasoController extends Controller
      */
     public function store(Request $request)
     {
+
         $paciente =  $this->grabarPaciente($request);
+        
         $caso = Caso::create( [
                 'estado'=> 'pendiente_formulario',
                 'paciente_id' => $paciente->id,
@@ -158,7 +160,6 @@ class CasoController extends Controller
 
     public function grabarPaciente($request,$caso=0)
     {
-
         $input = $request->only('paciente');
         $paciente = $this->pacienteRepository->store($input);
         if ($caso > 0)

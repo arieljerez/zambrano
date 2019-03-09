@@ -73,15 +73,15 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-          'paciente.nombres' => 'required|string',
-          'paciente.apellidos' => 'required|string',
+          //'paciente.nombres' => 'required|string',
+          //'paciente.apellidos' => 'required|string',
           /*'paciente.fecha_nacimiento' => 'required|date',
           'paciente.domicilio' => 'required|string',
           'paciente.telefono' => 'required|string',
           'paciente.telefono_familiar' => 'required|string',*/
           'paciente.dni' => 'required|integer|unique:pacientes,dni',
          /* 'paciente.sexo' => 'required',*/
-          'paciente.region_sanitaria' => 'required'
+         // 'paciente.region_sanitaria' => 'required'
       ]);
 
       $paciente = Paciente::create($request->input('paciente'));

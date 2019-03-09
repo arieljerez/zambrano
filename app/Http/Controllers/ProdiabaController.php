@@ -131,6 +131,7 @@ class ProdiabaController extends Controller
         TratamientoRepository::aprobar($tratamiento);
         return redirect()->back();
     }
+    
     public function mostrarCambiarClaveForm()
     {
       return view('auth.prodiaba-change');

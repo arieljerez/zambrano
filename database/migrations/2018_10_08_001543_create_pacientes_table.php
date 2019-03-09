@@ -16,16 +16,20 @@ class CreatePacientesTable extends Migration
         Schema::create('pacientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('dni')->unique();
-            $table->string('apellidos')->required();
-            $table->string('nombres')->required();
-            $table->date('fecha_nacimiento')->required();
-            $table->string('domicilio')->required();
-            $table->string('telefono')->required();
-            $table->string('telefono_familiar')->required();
-            $table->enum('sexo',['M','F'])->required();
-            $table->string('region_sanitaria')->required();
+            $table->string('apellidos')->nullable();
+            $table->string('nombres')->nullable();
+            $table->date('fecha_nacimiento')->nullable(null);
+            $table->string('domicilio')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('telefono_familiar')->nullable();
+            $table->string('sexo')->nullable();
+            $table->string('region_sanitaria')->nullable();
 
             $table->timestamps();
+        });
+
+        Schema::table('pacientes', function (Blueprint $table) {
+            $table->date('fecha_nacimiento')->nullable()->change();
         });
     }
 
