@@ -2,9 +2,9 @@
 
     @if($caso->diabetologico_archivo != null)
     <div class="form-group col-md-3">
-        <a href="{{ asset('descargar/'.$caso->diabetologico_archivo) }}" class="btn btn-primary">Descargar</a>
+        <a href="{{ $caso->diabetologico_url }}" class="btn btn-primary">Descargar</a>
         @if($caso->estado == 'pendiente_formulario')
-        <a href="{{ asset('eliminar_archivo_di/'.$caso->id.'/'.$caso->diabetologico_archivo) }}" class="btn btn-danger" disabled>Eliminar</a>
+        <a href="{{ $caso->diabetologico_url_eliminar }}" class="btn btn-danger" disabled>Eliminar</a>
         @endif
     </div>
     @else

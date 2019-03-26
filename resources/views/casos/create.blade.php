@@ -8,7 +8,8 @@
                 <div class="card-header bg-success text-white">Iniciar Nuevo Caso </div>
 
                 <div class="card-body">
-
+                  @include('flash-message')
+                  
                   <div class="row">
                     <div class="col-12">
                       <a href="{{ url('casos/buscar_paciente/casos.create') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>

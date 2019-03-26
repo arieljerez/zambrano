@@ -7,9 +7,11 @@ use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Serializables\Diabetologico;
 use App\Serializables\Oftalmologico;
-use App\Repositories\Caso as CasoRepository;
+use App\Repositories\CasoRepository;
 use App\Repositories\Bitacora;
 use App\Repositories\Paciente as PacienteRepository;
+
+use Exception;
 
 class CasoController extends Controller
 {
@@ -122,7 +124,7 @@ class CasoController extends Controller
     {
         $caso = new Caso();
         $solo_lectura = false;
-         return view('casos.create',compact('paciente','caso','solo_lectura'));
+        return view('casos.create',compact('paciente','caso','solo_lectura'));
     }
 
     public function createPacienteExistente($id)
@@ -143,27 +145,31 @@ class CasoController extends Controller
     public function store(Request $request)
     {
 
-        $paciente =  $this->grabarPaciente($request);
-        
-        $caso = Caso::create( [
-                'estado'=> 'pendiente_formulario',
-                'paciente_id' => $paciente->id,
-                'oftalmologico' => '[]' ,
-                'diabetologico' => '[]',
-                'paciente' => json_encode($paciente)
-        ]);
+        try {
+          $paciente = $this->grabarPaciente($request);
 
-        Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de formularios');
+          $caso = $this->casoRepository->store([
+            'estado'=> 'pendiente_formulario',
+            'paciente_id' => $paciente->id,
+            'oftalmologico' => '[]' ,
+            'diabetologico' => '[]',
+            'paciente' => json_encode($paciente)
+          ]);
 
-        return redirect()->route('casos.edit',['id' => $caso->id]);
+          $request->session()->flash('success', 'Caso #'.$caso->id.' generado con éxito!');
+          return redirect()->route('casos.edit',['id' => $caso->id]);
+
+        } catch (Exception $e) {
+          $request->session()->flash('error', 'Caso no generado: '.$e->getMessage());
+          return redirect()->back()->withInput();
+        }
     }
 
     public function grabarPaciente($request,$caso=0)
     {
         $input = $request->only('paciente');
         $paciente = $this->pacienteRepository->store($input);
-        if ($caso > 0)
-        {
+        if ($caso > 0){
             Bitacora::grabar($caso,'Paciente','Datos del Paciente Actualizados');
         }
         return $paciente;

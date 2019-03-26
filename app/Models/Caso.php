@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Caso extends Model
 {
     protected $fillable = ['diabetologico','oftalmologo_id','diabetologo_id','paciente_id','oftalmologico','paciente','estado','diabetologico_archivo','oftalmologico_archivo','texto_rechazo','texto_aprobacion','fecha_rechazo','fecha_aprobacion','fecha_reaprobacion','texto_reaprobacion'];
-/*
-    public function setPacienteAttribute($value)
-    {
-        $this->attributes['paciente'] = json_encode($value);
-    }
-*/
+
     public function getPacienteAttribute($value)
     {
        if ($value == '[]')
@@ -22,12 +17,7 @@ class Caso extends Model
 
        return $value;
     }
-/*
-    public function setDiabetologicoAttribute($value)
-    {
-        $this->attributes['paciente'] = json_encode($value);
-    }
-*/
+
     public function getDiabetologicoAttribute($value)
     {
        if ($value == '[]')
@@ -37,6 +27,7 @@ class Caso extends Model
 
        return $value;
     }
+
     public function getOftalmologicoAttribute($value)
     {
        if ($value == '[]')
@@ -47,8 +38,23 @@ class Caso extends Model
        return $value;
     }
 
+    public function getOftalmologicoUrlAttribute()
+    {
+       return asset('descargar/'.$this->oftalmologico_archivo);
+    }
+
+    public function getDiabetologicoUrlAttribute()
+    {
+       return asset('descargar/'.$this->diabetologico_archivo);
+    }
+
+    public function getDiabetologicoUrlEliminarAttribute()
+    {
+       return asset('eliminar_archivo_di/'.$this->id.'/'.$this->diabetologico_archivo);
+    }
+
     /**
-     *
+     * relaciones
      */
     public function adjuntos()
     {

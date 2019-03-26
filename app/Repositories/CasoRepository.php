@@ -1,10 +1,10 @@
 <?php
  namespace App\Repositories;
 
- use App\Models\Caso as CasoModel;
+ use App\Models\Caso as Caso;
  use App\Repositories\Bitacora;
 
- class Caso
+ class CasoRepository
  {
    public function pendientesAprobacion($filtro = array(),$paginate = 25)
    {
@@ -67,7 +67,7 @@
 
    public function aprobar($caso_id,$fecha,$texto)
    {
-     $caso =  CasoModel::find($caso_id);
+     $caso =  Caso::find($caso_id);
      $data = ['estado' => 'aprobado','fecha_aprobacion' => $fecha, 'texto_aprobacion' => $texto];
      $caso->update($data);
      $caso->save();
@@ -76,19 +76,26 @@
 
    public function rechazar($caso_id,$fecha,$texto)
    {
-     $caso =  CasoModel::find($caso_id);
-     $data = ['estado' => 'rechazado','fecha_rechazo' => $fecha, 'texto_rechazo' => $texto];
-     $caso->update($data);
-     $caso->save();
-    Bitacora::grabar($caso->id,'Rechazado',$texto);
+      $caso =  Caso::find($caso_id);
+      $data = ['estado' => 'rechazado','fecha_rechazo' => $fecha, 'texto_rechazo' => $texto];
+      $caso->update($data);
+      $caso->save();
+      Bitacora::grabar($caso->id,'Rechazado',$texto);
    }
 
    public function reaprobar($caso_id,$fecha,$texto)
    {
-     $caso =  CasoModel::find($caso_id);
+     $caso =  Caso::find($caso_id);
      $data = ['estado' => 'aprobado','fecha_reaprobacion' => $fecha, 'texto_reaprobacion' => $texto];
      $caso->update($data);
      $caso->save();
      Bitacora::grabar($caso->id,'Aprobado',$texto);
+   }
+
+   public function store($data)
+   {
+      $caso = Caso::create($data);
+      Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de formularios');
+      return $caso;
    }
  }
