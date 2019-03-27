@@ -9,6 +9,30 @@
         </tr>
         </thead>
         <tbody>
+        @isset ($caso->diabetologico_archivo)
+            <tr>
+                <td>
+                    
+                </td>
+                <td> Archivo Diabetológico </td>
+                <td>
+                    <a href="{{ $caso->diabetologico_url }}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
+                </td>
+                <td>     </td>
+            </tr>
+        @endisset
+        
+        @isset ($caso->oftalmologico_archivo)
+            <tr>
+                <td></td>
+                <td> Archivo Oftalmológico </td>
+                <td>
+                    <a href="{{ $caso->oftalmologico_url }}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
+                </td>
+                <td></td>
+            </tr>
+        @endisset
+
         @foreach ($caso->adjuntos as $adjunto)
             <tr>
                 <td>

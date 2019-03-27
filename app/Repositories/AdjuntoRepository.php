@@ -1,25 +1,28 @@
 <?php
  namespace App\Repositories;
 
- use App\Models\Adjunto as ModelAdjunto;
+ use App\Models\Adjunto;
+ use App\Repositories\Bitacora;
 
- class Adjunto
+ class AdjuntoRepository
  {
      static public function grabar($caso_id,$fecha,$descripcion)
      {
-        $adjunto = new ModelAdjunto();
+        $adjunto = new Adjunto();
         $adjunto->caso_id = $caso_id;
         $adjunto->usuario_id = auth()->User()->id;
         $adjunto->fecha = $fecha;
-        $adjunto->usuario_tabla = Adjunto::getLoginTabla();
+        $adjunto->usuario_tabla = self::getLoginTabla();
         $adjunto->descripcion = $descripcion;
 
         if( request()->hasfile('archivo') ){
           $adjunto->archivo =  request()->file('archivo')->store('adjuntos');
           $adjunto->archivo_nombre = request()->file('archivo')->getClientOriginalName();
         }
-
         $adjunto->save();
+
+        Bitacora::grabar($caso_id,'Adjunto', 'Archivo adjuntado ['.$adjunto->archivo_nombre .']');
+
         return $adjunto;
      }
 
