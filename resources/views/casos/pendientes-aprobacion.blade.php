@@ -1,35 +1,11 @@
-@extends('layouts.app')
+@extends('casos.listado')
 
-@section('content')
+@section('card_class',config('prodiaba.casos.class.pendiente_aprobacion'))
+@section('titulo_estado', config('prodiaba.casos.estados.pendiente_aprobacion') )
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card shadow mb-5 bg-white rounded">
-                <div class="card-header bg-warning text-black">Casos: Pendientes de aprobacion</div>
-                <div class="card-body">
-
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="get" action="{{url('casos/pendientes-aprobacion')}}">
-                      @include('casos.parts.filtro_paciente')
-                    </form>
-
-                    <div class="row">
-                        @include('casos.table',['accion' => 'ver'])
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        {{ $casos->links() }}
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section('filtros')
+    <form method="get" action="{{url('casos/pendientes-aprobacion')}}">
+        @include('casos.parts.filtro_paciente')
+    </form>
 @endsection
+

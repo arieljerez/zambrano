@@ -35,7 +35,7 @@
                             <div class="col-12 col-sm-12 col-md-10 col-lg-10">
                                 <div class="tab-content" id="v-pills-tabContent">
 
-                                    <div class="tab-pane fade" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab">
+                                    <div class="tab-pane fade show active" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab">
                                       {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
                                       <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
 
@@ -54,7 +54,7 @@
                                         {!! Form::Close() !!}
                                     </div>
 
-                                    <div class="tab-pane fade show active" id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
+                                    <div class="tab-pane fade " id="v-pills-diabetologico" role="tabpanel" aria-labelledby="v-pills-diabetologico-tab">
 
                                             {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['casos.update', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
 

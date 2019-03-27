@@ -14,7 +14,7 @@
         <tbody>
         @foreach ($casos as $caso)
             <tr>
-                <td> <h5>#     {{ $caso->id }}      </h5 </td>
+                <td> <h5>#     {{ $caso->id }}      </h5> </td>
                 <td>
                   {{ $caso->estado }}
                 </td>
