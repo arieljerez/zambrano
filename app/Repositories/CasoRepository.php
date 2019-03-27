@@ -6,12 +6,30 @@
 
  class CasoRepository
  {
-   public function pendientesAprobacion($filtro = array(),$paginate = 25)
-   {
-         $query =  $this->consultaBase($filtro)
-             ->where('casos.estado','=','pendiente_aprobacion');
-         return $query->paginate($paginate);
-   }
+    function ObtenerCasos($estado,$filtro,$paginado)
+    {
+        return $this->$estado($filtro,$paginado);
+    }
+
+    public function porPaciente($filtro = array(),$paginate = 25)
+    {
+      $query = $this->consultaBase($filtro);
+      $query = $query->where('pacientes.id','=',$filtro['paciente_id']);
+      return $query->paginate($paginate);
+    }
+    public function pendientesFormulario($filtro = array(),$paginate = 25)
+    {
+        $query = $this->consultaBase($filtro)
+          ->where('casos.estado','=','pendiente_formulario');
+        return $query->paginate($paginate);
+    }
+
+    public function pendientesAprobacion($filtro = array(),$paginate = 25)
+    {
+        $query =  $this->consultaBase($filtro)
+            ->where('casos.estado','=','pendiente_aprobacion');
+        return $query->paginate($paginate);
+    }
 
    public function aprobados($filtro = array(),$paginate = 25)
    {
@@ -62,7 +80,30 @@
         if(isset($filtro['nombres'])){
           $query = $query->where('nombres','like','%'.request()->input('nombres').'%');
         }
+
+        if(isset($filtro['id'])){
+          $query = $query->where('casos.id','=',request()->input('id'));
+        }
+
+        if(isset($filtro['fecha_desde'])){
+          $query = $query->where('casos.created_at','>=',request()->input('fecha_desde'));
+        }
+
+        if(isset($filtro['fecha_hasta'])){
+          $query = $query->where('casos.created_at','<=',request()->input('fecha_hasta'));
+        }
     return $query;
+   }
+
+   /**
+    * Estados
+    */
+
+   public function aPendienteAprobacion($caso)
+   {
+      $caso->update(['estado' => 'pendiente_aprobacion']);
+      Bitacora::grabar($caso->id,'Cambio estado','Pasa a Pendiente aprobación');
+      return $caso;
    }
 
    public function aprobar($caso_id,$fecha,$texto)
@@ -70,7 +111,7 @@
      $caso =  Caso::find($caso_id);
      $data = ['estado' => 'aprobado','fecha_aprobacion' => $fecha, 'texto_aprobacion' => $texto];
      $caso->update($data);
-     $caso->save();
+     //$caso->save();
      Bitacora::grabar($caso->id,'Aprobado',$texto);
    }
 
@@ -79,7 +120,7 @@
       $caso =  Caso::find($caso_id);
       $data = ['estado' => 'rechazado','fecha_rechazo' => $fecha, 'texto_rechazo' => $texto];
       $caso->update($data);
-      $caso->save();
+      //$caso->save();
       Bitacora::grabar($caso->id,'Rechazado',$texto);
    }
 
@@ -88,7 +129,7 @@
      $caso =  Caso::find($caso_id);
      $data = ['estado' => 'aprobado','fecha_reaprobacion' => $fecha, 'texto_reaprobacion' => $texto];
      $caso->update($data);
-     $caso->save();
+     //$caso->save();
      Bitacora::grabar($caso->id,'Aprobado',$texto);
    }
 

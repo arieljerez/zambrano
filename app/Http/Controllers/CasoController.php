@@ -30,88 +30,54 @@ class CasoController extends Controller
      */
     public function index()
     {
-        $casos = $this->consultaBase()
-                ->paginate(25);
+        $filtro = request()->only(['dni','apellidos','nombres','id','fecha_desde','fecha_hasta']); 
+        $paginado = request()->input('paginacion') != null ? request()->input('paginacion'): 25;
+        $casos = $this->casoRepository->consultaBase($filtro)
+                ->paginate($paginado);
+        request()->flash();
         return view('casos.index',compact('casos'));
     }
 
-    public function consultaBase($filtro = [])
+    public function consultaBase($estado)
     {
-        $query = $this->casoRepository->consultabase($filtro);
-        if(request()->has('dni')){
-          $query = $query->where('pacientes.dni','like','%'.request()->input('dni').'%');
-        }
-
-        if(request()->has('apellidos')){
-          $query = $query->where('pacientes.apellidos','like','%'.request()->input('apellidos').'%');
-        }
-
-        if(request()->has('nombres')){
-          $query = $query->where('pacientes.nombres','like','%'.request()->input('nombres').'%');
-        }
-        //--
-
-        if(request()->input('id') > 0){
-          $query = $query->where('casos.id','=',request()->input('id'));
-        }
-
-        if(request()->input('fecha_desde') != ""){
-          $query = $query->where('casos.created_at','>=',request()->input('fecha_desde'));
-        }
-
-        if(request()->input('fecha_hasta') != ""){
-          $query = $query->where('casos.created_at','<=',request()->input('fecha_hasta'));
-        }
-
-        return $query;
+      $filtro = request()->only(['dni','apellidos','nombres']);
+      $paginado = request()->input('paginacion') != null ? request()->input('paginacion'): 25;
+      return $this->casoRepository->ObtenerCasos($estado,$filtro,$paginado);
     }
-
     public function pendientesFormulario()
     {
-        $query = $this->consultaBase()
-            ->where('casos.estado','=','pendiente_formulario');
-        $casos = $query->paginate(25);
-        return view('casos.pendientes-formulario',compact('casos'));
+      $casos = $this->consultaBase(__FUNCTION__);
+      return view('casos.pendientes-formulario',compact('casos'));
     }
 
     public function pendientesAprobacion()
     {
-        $query = $this->consultaBase()
-            ->where('casos.estado','=','pendiente_aprobacion');
-
-        $casos = $query->paginate(25);
-        return view('casos.pendientes-aprobacion',compact('casos'));
+      $casos = $this->consultaBase(__FUNCTION__);
+      return view('casos.pendientes-aprobacion',compact('casos'));
     }
 
     public function aprobados()
     {
-        $casos = $this->consultaBase()
-            ->where('casos.estado','=','aprobado')
-            ->paginate(25);
-        return view('casos.aprobados',compact('casos'));
+      $casos = $this->consultaBase(__FUNCTION__);
+      return view('casos.aprobados',compact('casos'));
     }
 
     public function vencidos()
     {
-        $casos = $this->consultaBase()
-            ->where('casos.estado','=','vencido')
-            ->paginate(25);
-        return view('casos.vencidos',compact('casos'));
+      $casos = $this->consultaBase(__FUNCTION__);
+      return view('casos.vencidos',compact('casos'));
     }
 
     public function rechazados()
     {
-        $casos = $this->consultaBase()
-            ->where('casos.estado','=','rechazado')
-            ->paginate(25);
-        return view('casos.rechazados',compact('casos'));
+      $casos = $this->consultaBase(__FUNCTION__);
+      return view('casos.rechazados',compact('casos'));
     }
 
     public function porPaciente($id = 0)
     {
-          $query = $this->consultaBase([]);
-          $query = $query->where('pacientes.id','=',$id);
-          $casos = $query->paginate(25);
+          $filtro = array_merge(request()->only(['dni','apellidos','nombres']),['paciente_id' => $id]);
+          $casos = $this->casoRepository->porPaciente($filtro);
           return view('casos.por_paciente',compact('casos'));
     }
 
@@ -203,12 +169,12 @@ class CasoController extends Controller
       if( $request->hasfile('archivo')){
         $diabetologico_archivo =  $request->file('archivo')->store('diabetologicos');
         $caso->update(['diabetologico'=> '[]', 'diabetologico_archivo' => $diabetologico_archivo]);
-        $caso->save();
+
         Bitacora::grabar($caso->id,'Diabetologico','Archivo Diabetologico Actualizado');
       }else{
         $diabetologico = json_encode($request->input('diabetologico'));
         $caso->update(['diabetologico'=> $diabetologico]);
-        $caso->save();
+
         Bitacora::grabar($caso->id,'Diabetologico','Formulario Diabetologico Actualizado');
       }
   }
@@ -218,12 +184,12 @@ class CasoController extends Controller
     if( $request->hasfile('archivo')){
         $oftalmologico_archivo =  $request->file('archivo')->store('oftalmologicos');
         $caso->update(['oftalmologico'=> '[]', 'oftalmologico_archivo' => $oftalmologico_archivo]);
-        $caso->save();
+
         Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
       }else{
         $oftalmologico = json_encode($request->input('oftalmologico'));
         $caso->update(['oftalmologico'=> $oftalmologico]);
-        $caso->save();
+
         Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
     }
   }
@@ -244,7 +210,6 @@ class CasoController extends Controller
           case 'paciente':
             $paciente = $this->grabarPaciente($request, $caso->id);
             $caso->update( ['paciente' => json_encode($paciente) ]);
-            $caso->save();
             break;
           case 'diabetologico':
             $this->grabarDiabetologico($request, $caso);
@@ -260,34 +225,14 @@ class CasoController extends Controller
         return redirect()->route('casos.edit',['id' => $caso->id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Caso  $caso
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Caso $caso)
-    {
-        //
-    }
-
     public function cambiarEstado(Caso $caso, $estado)
     {
-         // TODO: pasara a repositorie
+         // TODO: pasara a repositorio
         if ($estado == 'pendiente_formulario'){
-            $caso->update(['estado' => 'pendiente_aprobacion']);
-            $caso->save();
-            Bitacora::grabar($caso->id,'Cambio estado','Pasa a Pendiente aprobación');
+            $caso = $this->casoRepository->aPendienteAprobacion($caso);
+            Request()->session()->flash('success', 'Caso #'.$caso->id.' actualizado con éxito!');
             return redirect()->route('casos.pendientes-aprobacion');
         }
-
-        if ($estado == 'rechazado'){
-            $caso->update(['estado' => 'rechazado']);
-            $caso->save();
-            Bitacora::grabar($caso->id,'Cambio estado','Caso Rechazado');
-            return redirect()->route('casos.rechazados');
-        }
-
     }
 
     public function eliminarArchivoOf($caso_id,$file)

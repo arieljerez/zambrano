@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Caso as CasoRepository;
+use App\Repositories\CasoRepository;
 use App\Models\Caso;
 use App\Models\Prodiaba;
 use App\Models\Tratamiento;
