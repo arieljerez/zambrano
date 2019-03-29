@@ -136,11 +136,11 @@
     </div>
 
     <div class="form-group col-md-3">
-        <input type="date" name="fecha" class="form-control"/>
-        <label for="fecha" class="col-form-label text-md-left">{{ __('Fecha') }}</label>
-        @if ($errors->has('fecha'))
+    <input type="date" name="diabetologico[fecha]" class="form-control" value="{{ old('diabetologico[fecha]',$diabetologico->fecha)}}">
+        <label for="diabetologico[fecha]" class="col-form-label text-md-left">{{ __('Fecha') }}</label>
+        @if ($errors->has('diabetologico.fecha'))
             <span class="invalid-feedback" role="alert">
-          <strong>{{ $errors->first('fecha') }}</strong>
+          <strong>{{ $errors->first('diabetologico.fecha') }}</strong>
       </span>
         @endif
     </div>
@@ -252,7 +252,8 @@
         <label class="form-check-label" for="observaciones">Observaciones</label>
     </div>
     <div class="form-group col-md-9">
-        <textarea class="form-control" type="texta" name="diabetologico[observaciones]*" id="Observaciones" rows="5"></textarea>
+    <textarea class="form-control" name="diabetologico[observaciones]" id="diabetologico[observaciones]" rows="5">{{  old('diabetologico.observaciones', $diabetologico->observaciones )  }}
+    </textarea>
     </div>
 </div>
 

@@ -15,14 +15,14 @@
         <tbody>
         @foreach ($caso->tratamientos as $tratamiento)
             <tr>
-                <td> <h5>     {{ \Carbon\Carbon::parse($tratamiento->fecha)->format('d/m/Y')  }}       </h5>
+                <td> <h5>     {{ fecha($tratamiento->fecha) }}       </h5>
                     <small> Registro: {{  \Carbon\Carbon::parse($tratamiento->created_at)->format('d/m/Y H:i') }} </small></td>
                 <td>   {{ config('prodiaba.tratamientos.estados.'.$tratamiento->estado) }}      </td>
                 <td>   {{ $tratamiento->evento }}      </td>
                 <td>       {{ $tratamiento->descripcion }}       </td>
                 <td>
                     @isset ($tratamiento->archivo)
-                        <a href="{{ url('descargar/'.$tratamiento->archivo)}}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
+                      <a href="{{ url('descargar/'.$tratamiento->archivo)}}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
                     @else
                     <div class="form-group">
                       @include('tratamientos.attach_list')

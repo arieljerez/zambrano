@@ -3,11 +3,8 @@
 return [
     'tratamientos' => [
       'eventos' =>  [
-          'procedimientos' => 'Procedimientos',
-          'imagenes' => 'Imagenes',
-          'laboratorio' => 'Laboratorio',
-          'consulta' => 'Consultas',
-          'otros' => 'Otros'
+          'solicitud' => 'Solicitud',
+          'informe' => 'Informe'
         ],
       'estados' => [
         'solicitado' => 'Solicitado',

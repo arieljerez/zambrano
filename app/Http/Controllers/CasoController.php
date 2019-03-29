@@ -9,7 +9,7 @@ use App\Serializables\Diabetologico;
 use App\Serializables\Oftalmologico;
 use App\Repositories\CasoRepository;
 use App\Repositories\Bitacora;
-use App\Repositories\Paciente as PacienteRepository;
+use App\Repositories\PacienteRepository;
 
 use Exception;
 
@@ -148,6 +148,16 @@ class CasoController extends Controller
         return view($this->vistas['create'],compact(['paciente','caso']));
     }
   
+    public function updatePaciente($caso_id)
+    {
+      $datos = Request()->only('paciente');
+      $paciente = $this->pacienteRepository->storePorCaso($datos,$caso_id);
+      $caso = Caso::find($caso_id);
+      $caso->update( ['paciente' => json_encode($paciente) ]);
+
+      Request()->session()->flash('success', 'Caso #'.$caso->id.' - Paciente Actualizado');
+      return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso_id]);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -158,27 +168,24 @@ class CasoController extends Controller
     public function edit($id)
     {
         $caso = Caso::find($id);
-        $paciente =  json_decode($caso->paciente);
+        $paciente = json_decode($caso->paciente);
         $diabetologico = new Diabetologico(json_decode($caso->diabetologico,true));
         $oftalmologico = new Oftalmologico(json_decode($caso->oftalmologico,true));
 
         return view($this->vistas['edit'], compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
 
-  public function grabarDiabetologico(Request $request, Caso $caso)
-  {
-      if( $request->hasfile('archivo')){
-        $diabetologico_archivo =  $request->file('archivo')->store('diabetologicos');
-        $caso->update(['diabetologico'=> '[]', 'diabetologico_archivo' => $diabetologico_archivo]);
-
-        Bitacora::grabar($caso->id,'Diabetologico','Archivo Diabetologico Actualizado');
-      }else{
-        $diabetologico = json_encode($request->input('diabetologico'));
-        $caso->update(['diabetologico'=> $diabetologico]);
-
-        Bitacora::grabar($caso->id,'Diabetologico','Formulario Diabetologico Actualizado');
-      }
-  }
+    public function updateDiabetologico($caso_id)
+    {
+        if( Request()->hasfile('archivo')){
+          $caso = $this->casoRepository->subirArchivoDi($caso_id);
+          flash_success('Caso #'.$caso->id.' - Archivo Diabetológico Subido');  
+        }else{       
+          $caso = $this->casoRepository->grabarFormularioDi($caso_id, Request()->input('diabetologico') );
+          flash_success('Caso #'.$caso->id.' - Formulario Diabetológico Actualizado');  
+        }
+        return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
+    }
 
   public function grabarOftalmologico(Request $request, Caso $caso)
   {
@@ -201,44 +208,34 @@ class CasoController extends Controller
      * @param  \App\Caso  $caso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $caso = Caso::find($id);
+    // public function update(Request $request, $id)
+    // {
+    //     $caso = Caso::find($id);
 
-        if ($request->has('cambiar_estado')){
-            return $this->cambiarEstado ($caso, $request->input('cambiar_estado'));
-        }
+    //     if ($request->has('cambiar_estado')){
+    //         return $this->cambiarEstado ($caso, $request->input('cambiar_estado'));
+    //     }
 
-        switch ($request->input('destino')) {
-          case 'paciente':
-            $paciente = $this->grabarPaciente($request, $caso->id);
-            $caso->update( ['paciente' => json_encode($paciente) ]);
-            break;
-          case 'diabetologico':
-            $this->grabarDiabetologico($request, $caso);
-            break;
-          case 'oftalmologico':
-            $this->grabarOftalmologico($request, $caso);
-            break;
-          default:
-            // code...
-            break;
-        }
+    //     switch ($request->input('destino')) {
+    //       case 'paciente':
+    //         $paciente = $this->grabarPaciente($request, $caso->id);
+    //         $caso->update( ['paciente' => json_encode($paciente) ]);
+    //         break;
+    //       case 'diabetologico':
+    //         $this->grabarDiabetologico($request, $caso);
+    //         break;
+    //       case 'oftalmologico':
+    //         $this->grabarOftalmologico($request, $caso);
+    //         break;
+    //       default:
+    //         // code...
+    //         break;
+    //     }
 
-        return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
-    }
+    //     return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
+    // }
 
-    public function updatePaciente($caso_id)
-    {
-      $datos = Request()->only('paciente');
-      $paciente = $this->pacienteRepository->store($datos);
-      $caso = Caso::find($caso_id);
-      $caso->update( ['paciente' => json_encode($paciente) ]);
 
-      Bitacora::grabar($caso_id,'Paciente','Datos del Paciente Actualizados');
-
-      return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso_id]);
-    }
 
     public function cambiarEstado(Caso $caso, $estado)
     {
@@ -261,10 +258,8 @@ class CasoController extends Controller
 
     public function eliminarArchivoDi($caso_id,$file)
     {
-        \Storage::delete($file);
-        $caso = App\Models\Caso::find($caso_id);
-        $caso->update(['diabetologico_archivo'=> '']);
-        $caso->save();
+        $caso = $this->casoRepository->eliminarArchivoDi($caso_id,$file);
+        flash_success('Caso #'.$caso->id.' Archivo Diabetologico eliminado');
         return back();
     }
 
@@ -277,4 +272,5 @@ class CasoController extends Controller
     {
       return \Storage::download('oftalmologicos/'.$file);
     }
+
 }

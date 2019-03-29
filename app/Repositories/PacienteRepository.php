@@ -2,19 +2,21 @@
 
 namespace App\Repositories;
 
-use App\Models\Paciente as ModelPaciente;
+use App\Models\Paciente;
 use Illuminate\Support\Facades\Validator;
 
-class Paciente
+class PacienteRepository
 {
-    public function store($input)
+    public function storePorCaso($input,$caso_id)
     {
         $this->validarPaciente($input);
 
         $paciente_data = $input['paciente'];
 
-        $paciente = ModelPaciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
+        $paciente = Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
 
+        Bitacora::grabar($caso_id,'Paciente','Datos del Paciente Actualizados');
+        
         return $paciente;
     }
 

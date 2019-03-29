@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\CasoRepository;
-use App\Repositories\Paciente as PacienteRepository;
+use App\Repositories\PacienteRepository;
 
 class MedicoCasoController extends CasoController
 {

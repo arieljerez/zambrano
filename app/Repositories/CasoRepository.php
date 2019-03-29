@@ -139,4 +139,33 @@
       Bitacora::grabar($caso->id,'Caso Iniciado','Caso pendiente de formularios');
       return $caso;
    }
+
+   public function eliminarArchivoDi($caso_id,$file)
+   {
+      \Storage::delete($file);
+      $caso = Caso::find($caso_id);
+      $caso->update(['diabetologico_archivo'=> null]);
+      Bitacora::grabar($caso->id,'Diabetológico','Archivo Eliminado');
+      return $caso;
+   }
+
+   public function subirArchivoDi($caso_id)
+   {
+      $caso = Caso::find($caso_id);
+      $diabetologico_archivo =  Request()->file('archivo')->store('diabetologicos');
+      $caso->update(['diabetologico'=> '[]', 'diabetologico_archivo' => $diabetologico_archivo]);
+      Bitacora::grabar($caso->id,'Diabetologico','Archivo Diabetológico Subido');
+
+      return $caso;
+   }
+
+   public function grabarFormularioDi($caso_id, $datos)
+   {
+      $caso = Caso::find($caso_id);
+      $diabetologico = json_encode($datos);
+      $caso->update(['diabetologico'=> $diabetologico]);
+      Bitacora::grabar($caso->id,'Diabetologico','Formulario Diabetológico Actualizado');
+
+      return $caso;
+   }
  }

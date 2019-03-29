@@ -27,3 +27,13 @@ function estado($estado)
 {
     return config('prodiaba.casos.estados.'.$estado);
 }
+
+function flash($tipo,$mensaje)
+{
+  Request()->session()->flash($tipo,$mensaje);
+}
+
+function flash_success($mensaje)
+{
+    Request()->session()->flash('success',$mensaje);
+}
