@@ -12,7 +12,7 @@
                   
                   <div class="row">
                     <div class="col-12">
-                      <a href="{{ url('casos/buscar_paciente/casos.create') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>
+                      <a href="{{ url('casos/buscar_paciente/medico.create') }}" class="btn btn-primary"> <i class="fas fa-search"></i> Buscar Paciente</a>
                     </div>
                     <div class="col-12">
                       &nbsp;
@@ -24,11 +24,8 @@
                         </div>
                     @endif
 
-                       {!! Form::model($caso, ['route' => ['casos.store', $caso], 'aria-label' => __('Nuevo Caso')])  !!}
-                       <fieldset {{ $solo_lectura == false ? '' : 'disabled' }} d>
+                       {!! Form::model($caso, ['route' => ['medico.store', $caso], 'aria-label' => __('Nuevo Caso')])  !!}
                          @include('casos.paciente')
-                       </fieldset>
-
                         <div class="row"><div class="col-md-12">&nbsp;</div></div>
                         <div class="row">
                         <div class="col-md-6">

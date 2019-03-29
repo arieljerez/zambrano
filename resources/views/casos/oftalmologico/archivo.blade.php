@@ -12,9 +12,7 @@
           <label class="form-check-label" for="archivo">Subir archivo:</label>
       </div>
       <div class="form-group col-md-6">
-          <fieldset {{ $solo_lectura == true ? 'disabled':''}}>
-              <input class="form-control" type="file" name="archivo" id="oftalmologico_archivo">
-          </fieldset>
+        <input class="form-control" type="file" name="archivo" id="oftalmologico_archivo">
       </div>
     @endif
 

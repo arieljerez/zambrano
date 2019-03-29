@@ -12,7 +12,7 @@ class Caso extends Model
     {
        if ($value == '[]')
        {
-           $value = '{"id": 0, "dni": "", "sexo": "", "nombres": "", "telefono": "", "apellidos": "", "domicilio": "", "created_at": "", "updated_at": "", "fecha_nacimiento": "", "telefono_familiar": ""}';
+           $value = '{"id": 0, "dni": "", "sexo": "", "nombres": "", "telefono": "", "apellidos": "", "domicilio": "", "created_at": "", "updated_at": "", "fecha_nacimiento": "", "telefono_familiar": "", edad:""}';
        }
 
        return $value;

@@ -22,8 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/prodiaba/home', 'ProdiabaController@home')->name('prodiaba.home');
 Route::get('/efector/home', 'EfectorController@home')->name('efector.home');
 
-
-
 Route::prefix('prodiaba')->group(function() {
     Route::get('/login', 'Auth\ProdiabaLoginController@showLoginForm')->name('prodiaba.login');
     Route::post('/login', 'Auth\ProdiabaLoginController@login')->name('prodiaba.login.submit');
@@ -47,6 +45,32 @@ Route::prefix('efector')->group(function() {
     Route::post('/logout', 'Auth\EfectorLoginController@logout')->name('efector.logout');
 });
 
+/************************
+ *  Rutas de medicos 
+ ********************** */
+Route::group(['middleware' => 'auth:web'], function () {
+  Route::prefix ('medico/listado')->name('medico.listado.')->group( function() {
+    Route::get('pendiente-formulario', 'MedicoCasoController@pendientesFormulario')->name('pendiente-formulario');
+    Route::get('pendiente-aprobacion', 'MedicoCasoController@pendientesAprobacion')->name('pendiente-aprobacion');
+    Route::get('aprobado', 'MedicoCasoController@aprobados')->name('aprobado');
+    Route::get('rechazado', 'MedicoCasoController@rechazados')->name('rechazado');
+    Route::get('vencido', 'MedicoCasoController@vencidos')->name('vencido');
+    Route::get('por-paciente/{id?}',['uses'=> 'MedicoCasoController@porPaciente'])->name('por-paciente');
+    Route::get('/',['uses'=> 'MedicoCasoController@index'])->name('index');
+    Route::get('create/{id}', 'MedicoCasoController@createPacienteExistente');
+  });
+
+  Route::prefix ('medico')->name('medico.')->group( function() {
+    Route::put('update-paciente/{id}', 'MedicoCasoController@updatePaciente')->name('update-paciente');
+
+    Route::put('update-diabetologico/{id}', 'MedicoCasoController@updateDiabetologico')->name('update-diabetologico');
+    Route::put('update-oftalmologico/{id}', 'MedicoCasoController@updateOftalmologico')->name('update-oftalmologico');
+  });
+
+  Route::Resource('medico', 'MedicoCasoController');
+});
+
+
 Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
 
   Route::get('prodiaba/cambiarclave', 'ProdiabaController@mostrarCambiarClaveForm')->name('prodiaba.cambiarclave');
@@ -54,8 +78,6 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::Resource('prodiaba', 'ProdiabaController');
   Route::Resource('efector', 'EfectorController');
  
-
-
   Route::get('efectores/cambiarclave', 'EfectorController@mostrarCambiarClaveForm')->name('efectores.cambiarclave');
   Route::post('efectores/cambiarclave', 'EfectorController@cambiarClave')->name('efectores.cambiarclave');
 
@@ -67,7 +89,7 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
 
   Route::get('casos/buscar_paciente/{url}', ['uses'=>'PacienteController@buscar']);
 
-  Route::get('casos/create/{id}', 'CasoController@createPacienteExistente');
+ 
 
   Route::get('casos/pendientes-formulario', 'CasoController@pendientesFormulario')->name('casos.pendientes-formulario');
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');

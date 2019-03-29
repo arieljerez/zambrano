@@ -17,6 +17,23 @@ class CasoController extends Controller
 {
     protected $pacienteRepository;
 
+    protected $vistas = [
+      'index' => 'casos.index',
+      'create' => 'casos.create',
+      'edit' => 'casos.edit',
+      'show' => 'casos.show',
+      'pendientes_formulario' => 'casos.pendientes_formulario',
+      'pendientes_aprobacion' => 'casos.pendientes_aprobacion',
+      'aprobados' => 'casos.aprobados',
+      'vencidos' => 'casos.vencidos',
+      'rechazados' => 'casos.rechazados',
+    ];
+
+    protected $redirigirDespuesDe = [
+      'store' => 'casos.show', 
+      'update' => 'casos.edit',
+    ];
+
     public function __construct(CasoRepository $casoRepository,PacienteRepository $paciente)
     {
       $this->middleware('auth');
@@ -35,7 +52,7 @@ class CasoController extends Controller
         $casos = $this->casoRepository->consultaBase($filtro)
                 ->paginate($paginado);
         request()->flash();
-        return view('casos.index',compact('casos'));
+        return view($this->vistas['index'],compact('casos'));
     }
 
     public function consultaBase($estado)
@@ -47,61 +64,48 @@ class CasoController extends Controller
     public function pendientesFormulario()
     {
       $casos = $this->consultaBase(__FUNCTION__);
-      return view('casos.pendientes-formulario',compact('casos'));
+      $estado = 'pendiente_formulario';
+      return view($this->vistas['pendientes_formulario'],compact('casos','estado'));
     }
 
     public function pendientesAprobacion()
     {
       $casos = $this->consultaBase(__FUNCTION__);
-      return view('casos.pendientes-aprobacion',compact('casos'));
+      $estado = 'pendiente_aprobacion';
+      return view($this->vistas['pendientes_aprobacion'],compact('casos','estado'));
     }
 
     public function aprobados()
     {
       $casos = $this->consultaBase(__FUNCTION__);
-      return view('casos.aprobados',compact('casos'));
+      $estado = 'aprobado';
+      return view($this->vistas['aprobados'],compact('casos','estado'));
     }
 
     public function vencidos()
     {
       $casos = $this->consultaBase(__FUNCTION__);
-      return view('casos.vencidos',compact('casos'));
+      $estado = 'vencido';
+      return view($this->vistas['vencidos'],compact('casos','estado'));
     }
 
     public function rechazados()
     {
       $casos = $this->consultaBase(__FUNCTION__);
-      return view('casos.rechazados',compact('casos'));
+      $estado = 'rechazado';
+      return view($this->vistas['rechazados'],compact('casos','estado'));
     }
 
     public function porPaciente($id = 0)
     {
           $filtro = array_merge(request()->only(['dni','apellidos','nombres']),['paciente_id' => $id]);
           $casos = $this->casoRepository->porPaciente($filtro);
-          return view('casos.por_paciente',compact('casos'));
+          return view($this->vistas['por_paciente'],compact('casos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Paciente $paciente)
-    {
-        $caso = new Caso();
-        $solo_lectura = false;
-        return view('casos.create',compact('paciente','caso','solo_lectura'));
-    }
-
-    public function createPacienteExistente($id)
-    {
-      $paciente = \App\Models\Paciente::find($id);
-      $caso = new \App\Models\Caso();
-      $solo_lectura = false;
-
-      return view('casos.create',compact(['paciente','caso','solo_lectura']));
-    }
-
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -110,7 +114,6 @@ class CasoController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
           $paciente = $this->grabarPaciente($request);
 
@@ -123,7 +126,7 @@ class CasoController extends Controller
           ]);
 
           $request->session()->flash('success', 'Caso #'.$caso->id.' generado con éxito!');
-          return redirect()->route('casos.edit',['id' => $caso->id]);
+          return redirect()->route($this->redirigirDespuesDe['store'],['id' => $caso->id]);
 
         } catch (Exception $e) {
           $request->session()->flash('error', 'Caso no generado: '.$e->getMessage());
@@ -131,37 +134,35 @@ class CasoController extends Controller
         }
     }
 
-    public function grabarPaciente($request,$caso=0)
+    public function create()
     {
-        $input = $request->only('paciente');
-        $paciente = $this->pacienteRepository->store($input);
-        if ($caso > 0){
-            Bitacora::grabar($caso,'Paciente','Datos del Paciente Actualizados');
-        }
-        return $paciente;
+        $caso = new Caso();
+        $paciente = new Paciente();
+        return view($this->vistas['create'],compact('paciente','caso'));
     }
 
-
+    public function createPacienteExistente($id)
+    {
+        $paciente = Paciente::find($id);
+        $caso = new Caso();
+        return view($this->vistas['create'],compact(['paciente','caso']));
+    }
+  
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Caso  $caso
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Caso $caso)
+    public function edit($id)
     {
-        $solo_lectura = false;
+        $caso = Caso::find($id);
         $paciente =  json_decode($caso->paciente);
         $diabetologico = new Diabetologico(json_decode($caso->diabetologico,true));
         $oftalmologico = new Oftalmologico(json_decode($caso->oftalmologico,true));
 
-        if($caso->estado != 'pendiente_formulario')
-        {
-          $solo_lectura = true;
-        }
-
-        return view('casos.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
+        return view($this->vistas['edit'], compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
 
   public function grabarDiabetologico(Request $request, Caso $caso)
@@ -200,8 +201,10 @@ class CasoController extends Controller
      * @param  \App\Caso  $caso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Caso $caso)
+    public function update(Request $request, $id)
     {
+        $caso = Caso::find($id);
+
         if ($request->has('cambiar_estado')){
             return $this->cambiarEstado ($caso, $request->input('cambiar_estado'));
         }
@@ -222,7 +225,19 @@ class CasoController extends Controller
             break;
         }
 
-        return redirect()->route('casos.edit',['id' => $caso->id]);
+        return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
+    }
+
+    public function updatePaciente($caso_id)
+    {
+      $datos = Request()->only('paciente');
+      $paciente = $this->pacienteRepository->store($datos);
+      $caso = Caso::find($caso_id);
+      $caso->update( ['paciente' => json_encode($paciente) ]);
+
+      Bitacora::grabar($caso_id,'Paciente','Datos del Paciente Actualizados');
+
+      return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso_id]);
     }
 
     public function cambiarEstado(Caso $caso, $estado)

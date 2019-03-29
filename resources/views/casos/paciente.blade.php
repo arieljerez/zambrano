@@ -37,7 +37,7 @@
 
         <div class="row">
             <div class="form-group col-md-2">
-                <input type="text" name="paciente[edad]" class="form-control{{ $errors->has('paciente.edad') ? ' is-invalid' : '' }}" value="{{ old('paciente.edad') }}"/>
+                <input type="text" name="paciente[edad]" class="form-control{{ $errors->has('paciente.edad') ? ' is-invalid' : '' }}" value="{{ old('paciente.edad',edad($paciente->fecha_nacimiento)) }}" disabled />
                 <label for="paciente[edad]" class="col-form-label text-md-left">{{ __('Edad') }}</label>
                 @if ($errors->has('paciente.edad'))
                     <span class="invalid-feedback" role="alert">

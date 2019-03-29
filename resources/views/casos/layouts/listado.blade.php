@@ -11,18 +11,20 @@
 
                     @include('flash-message')
 
-                    @yield('filtros')
-                    
                     <div class="row">
-                      @auth('web')
-                        @include('casos.table',['accion' => 'editar'])
-                      @endauth
-
-                      @auth('efector')
-                        @include('casos.table',['accion' => 'ver'])
-                      @endauth
+                        <div class="col-12">
+                            @yield('filtros')
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            @section('table')
+                    
+                            @show
+                        </div>
                     </div>
 
+                    
                     <div class="row">
                       <div class="col">
                         {{ $casos->links() }}

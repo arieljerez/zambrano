@@ -12,3 +12,18 @@ function getGuardName()
     $guardName = implode("_",$parts);
     return $guardName;
 }
+
+function edad($fecha_nacimiento)
+{
+    return \Carbon\Carbon::parse($fecha_nacimiento)->age;
+}
+
+function fecha($fecha)
+{
+    return \Carbon\Carbon::parse($fecha)->format('d/m/Y');
+}
+
+function estado($estado)
+{
+    return config('prodiaba.casos.estados.'.$estado);
+}

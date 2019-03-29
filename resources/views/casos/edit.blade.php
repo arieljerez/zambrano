@@ -3,10 +3,11 @@
 @section('content')
 
 @auth('efector')
- @php
-  $solo_lectura = true;
- @endphp
+    @php
+    $solo_lectura = false;
+    @endphp
 @endauth
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
@@ -15,7 +16,7 @@
                         <span class="float-left">Caso # {{ $caso->id }} <p>
                       Estado: {{ config('prodiaba.casos.estados.'.$caso->estado) }}
                     </p>
-</span>
+                        </span>
                 <span class="float-right">
                     @if ($caso->estado == 'pendiente_formulario')
                       @include('casos.parts.caso_aaprobacion_form')

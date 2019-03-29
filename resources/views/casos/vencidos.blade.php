@@ -1,4 +1,4 @@
-@extends('casos.listado')
+@extends('casos.layouts.listado')
 
 @section('card_class',config('prodiaba.casos.class.vencido'))
 @section('titulo_estado', config('prodiaba.casos.estados.vencido') )
