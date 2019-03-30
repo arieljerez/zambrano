@@ -15,15 +15,15 @@
         Efector
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('casos.pendientes-formulario')}}">Pendientes Formulario</a>
-        <a class="dropdown-item" href="{{ route('casos.pendientes-aprobacion')}}">Pendientes Aprobación</a>
+        <a class="dropdown-item" href="{{ route('efector.listado.pendiente-formulario')}}">Pendientes Formulario</a>
+        <a class="dropdown-item" href="{{ route('efector.listado.pendiente-aprobacion')}}">Pendientes Aprobación</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('casos.aprobados')}}">Aprobados</a>
-        <a class="dropdown-item" href="{{ route('casos.rechazados')}}">Rechazados</a>
-        <a class="dropdown-item" href="{{ route('casos.vencidos')}}">Vencidos</a>
+        <a class="dropdown-item" href="{{ route('efector.listado.aprobado')}}">Aprobados</a>
+        <a class="dropdown-item" href="{{ route('efector.listado.rechazado')}}">Rechazados</a>
+        <a class="dropdown-item" href="{{ route('efector.listado.vencido')}}">Vencidos</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('casos.por_paciente')}}">Por Paciente</a>
-        <a class="dropdown-item" href="{{ route('casos.index')}}">Todos</a>
+        <a class="dropdown-item" href="{{ route('efector.listado.por-paciente')}}">Por Paciente</a>
+        <a class="dropdown-item" href="{{ route('efector.listado.index')}}">Todos</a>
         </div>
     </li>
 @endauth

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PacienteRepository
 {
-    public function storePorCaso($input,$caso_id)
+    public function storePorCaso($input,$caso_id=0)
     {
         $this->validarPaciente($input);
 
@@ -15,8 +15,11 @@ class PacienteRepository
 
         $paciente = Paciente::updateOrCreate(['dni' => $paciente_data['dni']],$paciente_data);
 
-        Bitacora::grabar($caso_id,'Paciente','Datos del Paciente Actualizados');
-        
+
+        if($caso_id > 0 ){
+            Bitacora::grabar($caso_id,'Paciente','Datos del Paciente Actualizados');
+        }
+
         return $paciente;
     }
 

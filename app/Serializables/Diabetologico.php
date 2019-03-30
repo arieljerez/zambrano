@@ -34,6 +34,7 @@ Class Diabetologico
   public $educacion_terapeutica_texto = "";
   public $automonitoreo_glucemico_texto = "";
   public $otras_medidas_terapeuticas_texto = "";
+  public $fecha = "";
 
   public function __construct(array $data)
   {

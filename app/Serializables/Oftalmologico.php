@@ -37,6 +37,7 @@ Class Oftalmologico
 
   public $derivante_telefono = null;
   public $tratamiento_actual = null;
+  public $cirugias_previas = "";
   public $cirugias_previas_od = 0;
   public $cirugias_previas_oi = 0;
   public $motivo_derivacion = null;

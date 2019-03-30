@@ -30,7 +30,7 @@ class CasoController extends Controller
     ];
 
     protected $redirigirDespuesDe = [
-      'store' => 'casos.show', 
+      'store' => 'casos.edit', 
       'update' => 'casos.edit',
     ];
 
@@ -45,14 +45,14 @@ class CasoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($prefix_url='casos')
     {
         $filtro = request()->only(['dni','apellidos','nombres','id','fecha_desde','fecha_hasta']); 
         $paginado = request()->input('paginacion') != null ? request()->input('paginacion'): 25;
         $casos = $this->casoRepository->consultaBase($filtro)
                 ->paginate($paginado);
         request()->flash();
-        return view($this->vistas['index'],compact('casos'));
+        return view($this->vistas['index'],compact('casos','prefix_url'));
     }
 
     public function consultaBase($estado)
@@ -115,7 +115,7 @@ class CasoController extends Controller
     public function store(Request $request)
     {
         try {
-          $paciente = $this->grabarPaciente($request);
+          $paciente = $this->pacienteRepository->storePorCaso($request->only('paciente'));
 
           $caso = $this->casoRepository->store([
             'estado'=> 'pendiente_formulario',
@@ -184,82 +184,37 @@ class CasoController extends Controller
           $caso = $this->casoRepository->grabarFormularioDi($caso_id, Request()->input('diabetologico') );
           flash_success('Caso #'.$caso->id.' - Formulario Diabetológico Actualizado');  
         }
+        Request()->session()->flash('tab-diabetologico',true);
         return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
     }
 
-  public function grabarOftalmologico(Request $request, Caso $caso)
-  {
-    if( $request->hasfile('archivo')){
-        $oftalmologico_archivo =  $request->file('archivo')->store('oftalmologicos');
-        $caso->update(['oftalmologico'=> '[]', 'oftalmologico_archivo' => $oftalmologico_archivo]);
-
-        Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
-      }else{
-        $oftalmologico = json_encode($request->input('oftalmologico'));
-        $caso->update(['oftalmologico'=> $oftalmologico]);
-
-        Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
-    }
-  }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Caso  $caso
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request, $id)
-    // {
-    //     $caso = Caso::find($id);
-
-    //     if ($request->has('cambiar_estado')){
-    //         return $this->cambiarEstado ($caso, $request->input('cambiar_estado'));
-    //     }
-
-    //     switch ($request->input('destino')) {
-    //       case 'paciente':
-    //         $paciente = $this->grabarPaciente($request, $caso->id);
-    //         $caso->update( ['paciente' => json_encode($paciente) ]);
-    //         break;
-    //       case 'diabetologico':
-    //         $this->grabarDiabetologico($request, $caso);
-    //         break;
-    //       case 'oftalmologico':
-    //         $this->grabarOftalmologico($request, $caso);
-    //         break;
-    //       default:
-    //         // code...
-    //         break;
-    //     }
-
-    //     return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
-    // }
-
-
-
-    public function cambiarEstado(Caso $caso, $estado)
+    public function updateOftalmologico($caso_id)
     {
-         // TODO: pasara a repositorio
-        if ($estado == 'pendiente_formulario'){
-            $caso = $this->casoRepository->aPendienteAprobacion($caso);
-            Request()->session()->flash('success', 'Caso #'.$caso->id.' actualizado con éxito!');
-            return redirect()->route('casos.pendientes-aprobacion');
-        }
+      if( Request()->hasfile('archivo')){
+        $caso = $this->casoRepository->subirArchivoOf($caso_id);
+        flash_success('Caso #'.$caso->id.' - Archivo Oftalmológico Subido'); 
+      }else{
+        $caso = $this->casoRepository->grabarFormularioOf($caso_id, Request()->input('oftalmologico') );
+        flash_success('Caso #'.$caso->id.' - Formulario Oftalmológico Actualizado'); 
+      }
+      Request()->session()->flash('tab-oftalmologico',true);
+      return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
     }
 
     public function eliminarArchivoOf($caso_id,$file)
     {
-        \Storage::delete($file);
-        $caso = \App\Models\Caso::find($caso_id);
-        $caso->update(['oftalmologico_archivo'=> '']);
-        $caso->save();
+        $caso = $this->casoRepository->eliminarArchivoOf($caso_id,$file);
+        flash_success('Caso #'.$caso->id.' Archivo Oftalmológico eliminado');
+
+        Request()->session()->flash('tab-oftalmologico',true);
         return back();
     }
 
     public function eliminarArchivoDi($caso_id,$file)
     {
         $caso = $this->casoRepository->eliminarArchivoDi($caso_id,$file);
-        flash_success('Caso #'.$caso->id.' Archivo Diabetologico eliminado');
+        flash_success('Caso #'.$caso->id.' Archivo Diabetológico eliminado');
+        Request()->session()->flash('tab-diabetologico',true);
         return back();
     }
 
@@ -273,4 +228,13 @@ class CasoController extends Controller
       return \Storage::download('oftalmologicos/'.$file);
     }
 
+    public function cambiarEstado(Caso $caso, $estado)
+    {
+         // TODO: pasara a repositorio
+        if ($estado == 'pendiente_formulario'){
+            $caso = $this->casoRepository->aPendienteAprobacion($caso);
+            Request()->session()->flash('success', 'Caso #'.$caso->id.' actualizado con éxito!');
+            return redirect()->route('casos.pendientes-aprobacion');
+        }
+    }
 }

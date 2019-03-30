@@ -27,7 +27,7 @@
         <label class="form-check-label" for="oi">OI</label>
         <input type="checkbox" class="form-check-inline" name="oftalmologico[cirugias_previas_oi]" value="1"  {{ old('oftalmologico.cirugias_previas_od',$oftalmologico->cirugias_previas_oi ) == 1 ? 'checked':''}}>
         Completar detalles (Tipo de cirugia, fecha, etc)
-        <textarea class="form-control" name="CirugiasPrevias" id="CirugiasPrevias"></textarea>
+        <textarea class="form-control" name="oftalmologico[cirugias_previas]" id="CirugiasPrevias">{{ old('oftalmologico.cirugias_previas',$oftalmologico->cirugias_previas ) }}</textarea>
     </div>
 </div>
 

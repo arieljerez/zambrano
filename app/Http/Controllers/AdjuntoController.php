@@ -19,6 +19,10 @@ class AdjuntoController extends Controller
     {
         $data = request()->all();
         $this->repository::grabar($data['caso_id'],$data['fecha'],$data['descripcion']);
+
+        Request()->session()->flash('tab-adjuntos',true);
+        flash_success('Caso #'.$data['caso_id'].' - Adjunto Subido');  
+
         return back();
     }
 

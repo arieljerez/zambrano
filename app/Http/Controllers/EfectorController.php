@@ -151,6 +151,7 @@ class EfectorController extends Controller
       return redirect()->route('efectores.index')
                     ->with('success','Usuario Efector eliminado');
     }
+    
     public function mostrarCambiarClaveForm()
     {
       return view('auth.efector-change');

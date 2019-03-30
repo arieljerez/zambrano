@@ -22,7 +22,7 @@ class MedicoCasoController extends CasoController
     ];
   
     protected $redirigirDespuesDe = [
-        'store' => 'medico.show', 
+        'store' => 'medico.edit', 
         'update' => 'medico.edit',
     ];
     

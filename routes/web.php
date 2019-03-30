@@ -49,6 +49,7 @@ Route::prefix('efector')->group(function() {
  *  Rutas de medicos 
  ********************** */
 Route::group(['middleware' => 'auth:web'], function () {
+
   Route::prefix ('medico/listado')->name('medico.listado.')->group( function() {
     Route::get('pendiente-formulario', 'MedicoCasoController@pendientesFormulario')->name('pendiente-formulario');
     Route::get('pendiente-aprobacion', 'MedicoCasoController@pendientesAprobacion')->name('pendiente-aprobacion');
@@ -57,10 +58,11 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('vencido', 'MedicoCasoController@vencidos')->name('vencido');
     Route::get('por-paciente/{id?}',['uses'=> 'MedicoCasoController@porPaciente'])->name('por-paciente');
     Route::get('/',['uses'=> 'MedicoCasoController@index'])->name('index');
-    Route::get('create/{id}', 'MedicoCasoController@createPacienteExistente');
+
   });
 
   Route::prefix ('medico')->name('medico.')->group( function() {
+    Route::get('create/{id}', 'MedicoCasoController@createPacienteExistente');
     Route::put('update-paciente/{id}', 'MedicoCasoController@updatePaciente')->name('update-paciente');
 
     Route::put('update-diabetologico/{id}', 'MedicoCasoController@updateDiabetologico')->name('update-diabetologico');
@@ -69,6 +71,33 @@ Route::group(['middleware' => 'auth:web'], function () {
 
   Route::Resource('medico', 'MedicoCasoController');
 });
+/**
+ * ===================================================================================================================
+ */
+
+/**
+ *  Efector 
+ */
+Route::group(['middleware' => 'auth:efector'], function () {
+
+  Route::prefix ('efector/listado')->name('efector.listado.')->group( function() {
+    Route::get('pendiente-formulario', 'EfectorCasoController@pendientesFormulario')->name('pendiente-formulario');
+    Route::get('pendiente-aprobacion', 'EfectorCasoController@pendientesAprobacion')->name('pendiente-aprobacion');
+    Route::get('aprobado', 'EfectorCasoController@aprobados')->name('aprobado');
+    Route::get('rechazado', 'EfectorCasoController@rechazados')->name('rechazado');
+    Route::get('vencido', 'EfectorCasoController@vencidos')->name('vencido');
+    Route::get('por-paciente/{id?}',['uses'=> 'EfectorCasoController@porPaciente'])->name('por-paciente');
+    Route::get('/',['uses'=> 'EfectorCasoController@index'])->name('index');
+  });
+
+  Route::prefix ('efector')->name('efector.')->group( function() {
+    Route::put('update-paciente/{id}', 'EfectorCasoController@updatePaciente')->name('update-paciente');
+    Route::put('update-diabetologico/{id}', 'EfectorCasoController@updateDiabetologico')->name('update-diabetologico');
+    Route::put('update-oftalmologico/{id}', 'EfectorCasoController@updateOftalmologico')->name('update-oftalmologico');
+  });
+
+  Route::Resource('efector', 'EfectorCasoController');
+});
 
 
 Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
@@ -76,7 +105,7 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('prodiaba/cambiarclave', 'ProdiabaController@mostrarCambiarClaveForm')->name('prodiaba.cambiarclave');
   Route::post('prodiaba/cambiarclave', 'ProdiabaController@cambiarClave')->name('prodiaba.cambiarclave');
   Route::Resource('prodiaba', 'ProdiabaController');
-  Route::Resource('efector', 'EfectorController');
+  //Route::Resource('efector', 'EfectorController');
  
   Route::get('efectores/cambiarclave', 'EfectorController@mostrarCambiarClaveForm')->name('efectores.cambiarclave');
   Route::post('efectores/cambiarclave', 'EfectorController@cambiarClave')->name('efectores.cambiarclave');

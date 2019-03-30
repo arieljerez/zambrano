@@ -18,27 +18,6 @@ class TratamientoController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return "ok";
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $tratamiento = new Tratamiento();
-        return view('tratamientos.create',compact('tratamiento'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -50,76 +29,15 @@ class TratamientoController extends Controller
 
         $caso = Caso::find($datos['caso_id']);
 
-        //TODO: pasar schedule 
-        /*
-        protected function schedule(Schedule $schedule)
-        {
-            $schedule->call(function () {
-                DB::table('recent_users')->delete();
-            })->daily();
-        }
-        */
-
-        if($caso->estado == 'aprobado' && env('APP_DIAS_VENCIMIENTO', 0)) // 0 no vence
-        {
-          if( !isset($caso->fecha_reaprobacion) && \Carbon\Carbon::parse($caso->fecha_aprobacion)->diffInDays(\Carbon\Carbon::now()) > env('APP_DIAS_VENCIMIENTO', 60))
-          {
-              $caso->estado = 'vencido';
-              $caso->save();
-              Bitacora::grabar($datos['caso_id'],'Vencido','El caso pasa a vencido');
-          }
-        }
-
         $tratamiento = $this->repository->grabar($datos['caso_id'],$datos['fecha'],$datos['evento'],$datos['descripcion']);
         Bitacora::grabar($datos['caso_id'],'Tratamiento',$datos['evento'] . ': '. $datos['descripcion']);
 
+        Request()->session()->flash('tab-tratamientos',true);
+        flash_success('Caso #'.$caso->id.' - Tratamiento Cargado');  
+
         return redirect()->back();
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tratamiento  $tratamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tratamiento $tratamiento)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tratamiento  $tratamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tratamiento $tratamiento)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tratamiento  $tratamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tratamiento $tratamiento)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tratamiento  $tratamiento
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tratamiento $tratamiento)
-    {
-        //
-    }
-
+   
     public function download($file)
     {
         return \Storage::download('tratamientos/'.$file);

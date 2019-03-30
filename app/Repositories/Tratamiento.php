@@ -2,6 +2,8 @@
  namespace App\Repositories;
 
  use App\Models\Tratamiento as ModelTratamiento;
+ use App\Models\Adjunto;
+ use App\Repositories\AdjuntoRepository;
 
  class Tratamiento
  {
@@ -24,11 +26,11 @@
 
             // grabar datos adjunto
 
-            $adjunto = new \App\Models\Adjunto();
+            $adjunto = new Adjunto();
             $adjunto->caso_id = $tratamiento->caso_id;
             $adjunto->usuario_id = auth()->User()->id;
             $adjunto->fecha = now();
-            $adjunto->usuario_tabla = \App\Repositories\Adjunto::getLoginTabla();
+            $adjunto->usuario_tabla = AdjuntoRepository::getLoginTabla();
             $adjunto->descripcion = "Adjunto de tratamiento: " . $tratamiento->evento . " - " . $tratamiento->descripcion;
 
             $adjunto->archivo = $upload_success;

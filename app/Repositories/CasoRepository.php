@@ -149,6 +149,14 @@
       return $caso;
    }
 
+   public function eliminarArchivoOf($caso_id,$file)
+   {
+      \Storage::delete($file);
+      $caso = Caso::find($caso_id);
+      $caso->update(['oftalmologico_archivo'=> null]);
+      Bitacora::grabar($caso->id,'Oftalmologico','Archivo Eliminado');
+      return back();
+   }
    public function subirArchivoDi($caso_id)
    {
       $caso = Caso::find($caso_id);
@@ -165,6 +173,28 @@
       $diabetologico = json_encode($datos);
       $caso->update(['diabetologico'=> $diabetologico]);
       Bitacora::grabar($caso->id,'Diabetologico','Formulario Diabetológico Actualizado');
+
+      return $caso;
+   }
+
+   public function grabarFormularioOf($caso_id,$datos)
+   {
+      $caso = Caso::find($caso_id);
+      $oftalmologico = json_encode($datos);
+      $caso->update(['oftalmologico'=> $oftalmologico]);
+
+      Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
+      
+      return $caso;
+   }
+
+   public function subirArchivoOf($caso_id)
+   {
+      $caso = Caso::find($caso_id);
+      $oftalmologico_archivo =  Request()->file('archivo')->store('oftalmologicos');
+      $caso->update(['oftalmologico'=> '[]', 'oftalmologico_archivo' => $oftalmologico_archivo]);
+
+      Bitacora::grabar($caso->id,'Oftalmologico','Archivo Oftalmologico Subido');
 
       return $caso;
    }

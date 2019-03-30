@@ -37,3 +37,11 @@ function flash_success($mensaje)
 {
     Request()->session()->flash('success',$mensaje);
 }
+
+function set_tab_caso($tab)
+{
+    if ($tab == 'adjuntos'){
+        return Request()->session()->flash('tab_ajuntos','');
+    }
+  
+}

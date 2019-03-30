@@ -25,7 +25,9 @@
                       <a href="{{ url('descargar/'.$tratamiento->archivo)}}" class="btn btn-default"> <i class="fa fa-download fa-2x"></i> </a>
                     @else
                     <div class="form-group">
-                      @include('tratamientos.attach_list')
+                      @if($tratamiento->adjuntos->count() > 0)
+                       @include('tratamientos.attach_list')
+                      @endif
                       @include('tratamientos.attach_field')
                     </div>
                       
@@ -38,7 +40,7 @@
                   @if($tratamiento->fecha_aprobacion)
                     <p>
                       {{  $tratamiento->usuario_aprobacion }}
-                    </p> <small>Fecha: {{ \Carbon\Carbon::parse($tratamiento->fecha_aprobacion)->format('d/m/Y')  }} </small><br />
+                    </p> <small>Fecha: {{ fecha($tratamiento->fecha_aprobacion) }} </small><br />
                     <small>Descripción: {{ $tratamiento->texto_aprobacion }} </small>
                   @else
                     @auth('prodiaba')
