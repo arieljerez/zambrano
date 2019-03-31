@@ -17,6 +17,7 @@
       $query = $query->where('pacientes.id','=',$filtro['paciente_id']);
       return $query->paginate($paginate);
     }
+
     public function pendientesFormulario($filtro = array(),$paginate = 25)
     {
         $query = $this->consultaBase($filtro)
@@ -197,5 +198,24 @@
       Bitacora::grabar($caso->id,'Oftalmologico','Archivo Oftalmologico Subido');
 
       return $caso;
+   }
+
+   public static function actualizarVencidos()
+   {
+      $tiempo_inicio = microtime(true);
+
+      $query = Caso::where([
+                              ['estado','=','aprobado'],
+                              ['fecha_reaprobacion','=',null],
+                              [\DB::Raw('DATEDIFF(CURDATE(), fecha_aprobacion)'), '>',env('APP_DIAS_VENCIMIENTO', 60)]
+                          ]);
+      foreach ($query->cursor() as $caso) {
+          Bitacora::grabar($caso->id,'Vencido','El Caso se encuentra ´vencido´ y requiere reaprobación',1);
+          $caso->update(['estado' => 'vencido']);
+      }
+
+      $tiempo_fin = microtime(true);
+
+      echo "Tiempo empleado: " . (round($tiempo_fin - $tiempo_inicio, 4));
    }
  }

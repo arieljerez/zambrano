@@ -6,6 +6,8 @@ use DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Repositories\CasoRepository;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -26,13 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            \DB::table('casos')
-            ->where([
-                        ['estado','=','aprobado'],
-                        ['fecha_reaprobacion','=',null],
-                        [\DB::Raw('DATEDIFF(CURDATE(), fecha_aprobacion)'), '>',env('APP_DIAS_VENCIMIENTO', 60)]
-                    ])
-            ->update(['estado' => 'vencido']);
+            CasoRepository::actualizarVencidos();
         })->everyMinute();
     }
 
