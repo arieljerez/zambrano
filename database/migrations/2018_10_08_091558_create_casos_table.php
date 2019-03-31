@@ -38,6 +38,8 @@ class CreateCasosTable extends Migration
             $table->foreign('diabetologo_id')->references('id')->on('usuarios');
             $table->foreign('oftalmologo_id')->references('id')->on('usuarios');
             $table->foreign('paciente_id')->references('id')->on('pacientes');
+
+            $table->index(['estado']);
         });
 
 

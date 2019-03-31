@@ -3,6 +3,7 @@
 
  use App\Models\Caso as Caso;
  use App\Repositories\Bitacora;
+ use Auth;
 
  class CasoRepository
  {
@@ -202,6 +203,8 @@
 
    public static function actualizarVencidos()
    {
+      Auth::loginUsingId(1);
+
       $tiempo_inicio = microtime(true);
 
       $query = Caso::where([
@@ -209,6 +212,7 @@
                               ['fecha_reaprobacion','=',null],
                               [\DB::Raw('DATEDIFF(CURDATE(), fecha_aprobacion)'), '>',env('APP_DIAS_VENCIMIENTO', 60)]
                           ]);
+
       foreach ($query->cursor() as $caso) {
           Bitacora::grabar($caso->id,'Vencido','El Caso se encuentra ´vencido´ y requiere reaprobación',1);
           $caso->update(['estado' => 'vencido']);
@@ -217,5 +221,7 @@
       $tiempo_fin = microtime(true);
 
       echo "Tiempo empleado: " . (round($tiempo_fin - $tiempo_inicio, 4));
+
+      \Auth::logout();
    }
  }

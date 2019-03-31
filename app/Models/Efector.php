@@ -9,7 +9,7 @@ class Efector extends Authenticatable
 {
   use Notifiable;
   protected $table = 'efectores';
-// The authentication guard for prodiaba
+
   protected $guard = 'efector';
 
   protected $fillable = ['email', 'password','usuario'];
