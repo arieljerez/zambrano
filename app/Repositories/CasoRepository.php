@@ -157,44 +157,74 @@
       $caso = Caso::find($caso_id);
       $caso->update(['oftalmologico_archivo'=> null]);
       Bitacora::grabar($caso->id,'Oftalmologico','Archivo Eliminado');
-      return back();
+      return $caso;
    }
+
+    /**
+    *  Adjunta formulario Diabetologico. Se asume que quien adjunta es un usuario medico diabetologo
+    */
    public function subirArchivoDi($caso_id)
    {
       $caso = Caso::find($caso_id);
       $diabetologico_archivo =  Request()->file('archivo')->store('diabetologicos');
-      $caso->update(['diabetologico'=> '[]', 'diabetologico_archivo' => $diabetologico_archivo]);
+      $caso->update([
+                    'diabetologico'=> '[]', 
+                    'diabetologico_archivo' => $diabetologico_archivo,
+                    'diabetologo_id' => Auth()->User()->id
+                    ]);
       Bitacora::grabar($caso->id,'Diabetologico','Archivo Diabetológico Subido');
 
       return $caso;
    }
 
+   /**
+    *  Graba datos del formulario Diabetologico. Se asume que quien graba es un usuario medico diabetologo
+    */
    public function grabarFormularioDi($caso_id, $datos)
    {
       $caso = Caso::find($caso_id);
       $diabetologico = json_encode($datos);
-      $caso->update(['diabetologico'=> $diabetologico]);
+      $caso->update([
+                    'diabetologico'=> $diabetologico,
+                    'diabetologico_archivo' => null,
+                    'diabetologo_id' => Auth()->User()->id
+                    ]);
       Bitacora::grabar($caso->id,'Diabetologico','Formulario Diabetológico Actualizado');
 
       return $caso;
    }
 
+   /**
+    *  Graba datos del formulario Oftalmologico. Se asume que quien graba es un usuario medico oftalmologo
+    */
+
    public function grabarFormularioOf($caso_id,$datos)
    {
       $caso = Caso::find($caso_id);
       $oftalmologico = json_encode($datos);
-      $caso->update(['oftalmologico'=> $oftalmologico]);
+      $caso->update([
+                      'oftalmologico'=> $oftalmologico,
+                      'oftalmologico_archivo' => null,
+                      'oftalmologico_id' => Auth()->User()->id
+                    ]);
 
       Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');
       
       return $caso;
    }
 
+   /**
+    *  Adjunta formulario Oftalmologico. Se asume que quien graba es un usuario medico oftalmologo
+    */
    public function subirArchivoOf($caso_id)
    {
       $caso = Caso::find($caso_id);
       $oftalmologico_archivo =  Request()->file('archivo')->store('oftalmologicos');
-      $caso->update(['oftalmologico'=> '[]', 'oftalmologico_archivo' => $oftalmologico_archivo]);
+      $caso->update([
+                      'oftalmologico'=> '[]', 
+                      'oftalmologico_archivo' => $oftalmologico_archivo,
+                      'oftalmologico_id' => Auth()->User()->id
+                    ]);
 
       Bitacora::grabar($caso->id,'Oftalmologico','Archivo Oftalmologico Subido');
 

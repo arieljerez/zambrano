@@ -18,7 +18,8 @@ class MedicoCasoController extends CasoController
         'aprobados' => 'medico.listado',
         'vencidos' => 'medico.listado',
         'rechazados' => 'medico.listado',
-        'por_paciente' => 'medico.por_paciente'
+        'por_paciente' => 'medico.por_paciente',
+        'home' => 'medico.home'
     ];
   
     protected $redirigirDespuesDe = [

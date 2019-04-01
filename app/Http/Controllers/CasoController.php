@@ -27,6 +27,7 @@ class CasoController extends Controller
       'aprobados' => 'casos.aprobados',
       'vencidos' => 'casos.vencidos',
       'rechazados' => 'casos.rechazados',
+      'home' => 'casos.home'
     ];
 
     protected $redirigirDespuesDe = [
@@ -40,6 +41,17 @@ class CasoController extends Controller
       $this->casoRepository = $casoRepository;
       $this->pacienteRepository = $paciente;
     }
+
+    public function home()
+    {
+      $aprobados = Caso::where('estado','=','aprobado')->count();
+      $rechazados = Caso::where('estado','=','rechazado')->count();
+      $pendientes_aprobacion = Caso::where('estado','=','pendiente_aprobacion')->count();
+      $pendientes_formulario = Caso::where('estado','=','pendiente_formulario')->count();
+      $vencidos = Caso::where('estado','=','vencido')->count();
+      return view($this->vistas['home'],compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -18,7 +18,8 @@ class EfectorCasoController extends CasoController
         'aprobados' => 'efector.listado',
         'vencidos' => 'efector.listado',
         'rechazados' => 'efector.listado',
-        'por_paciente' => 'efector.por_paciente'
+        'por_paciente' => 'efector.por_paciente',
+        'home' => 'efector.home'
     ];
   
     protected $redirigirDespuesDe = [
@@ -26,6 +27,8 @@ class EfectorCasoController extends CasoController
         'update' => 'efector.edit',
     ];
     
+
+
     public function __construct(CasoRepository $casoRepository,PacienteRepository $paciente)
     {
       parent::__construct($casoRepository,$paciente);

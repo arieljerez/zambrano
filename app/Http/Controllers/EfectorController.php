@@ -19,15 +19,7 @@ class EfectorController extends Controller
         $this->middleware('auth:efector');
     }
 
-    public function home()
-    {
-      $aprobados = Caso::where('estado','=','aprobado')->count();
-      $rechazados = Caso::where('estado','=','rechazado')->count();
-      $pendientes_aprobacion = Caso::where('estado','=','pendiente_aprobacion')->count();
-      $pendientes_formulario = Caso::where('estado','=','pendiente_formulario')->count();
-      $vencidos = Caso::where('estado','=','vencido')->count();
-      return view('efector.home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
-    }
+
     /**
      * Display a listing of the resource.
      *

@@ -18,9 +18,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/prodiaba/home', 'ProdiabaController@home')->name('prodiaba.home');
-Route::get('/efector/home', 'EfectorController@home')->name('efector.home');
+/********************************************************************************************
+ *  Prodiaba
+ *********************************************************************************************/
 
 Route::prefix('prodiaba')->group(function() {
     Route::get('/login', 'Auth\ProdiabaLoginController@showLoginForm')->name('prodiaba.login');
@@ -37,17 +37,15 @@ Route::prefix('prodiaba')->group(function() {
     Route::post('/reaprobar', 'ProdiabaController@reaprobar')->name('prodiaba.reaprobar');
     Route::get('/tratamientos-solicitados', 'ProdiabaController@tratamientosSolicitados')->name('prodiaba.tratamientos_solicitados');
     Route::post('/aprobar-tratamiento', 'ProdiabaController@aprobarTratamiento')->name('prodiaba.aprobar-tratamiento');
-});
+    Route::get('/prodiaba/home', 'ProdiabaController@home')->name('prodiaba.home');
 
-Route::prefix('efector')->group(function() {
-    Route::get('/login', 'Auth\EfectorLoginController@showLoginForm')->name('efector.login');
-    Route::post('/login', 'Auth\EfectorLoginController@login')->name('efector.login.submit');
-    Route::post('/logout', 'Auth\EfectorLoginController@logout')->name('efector.logout');
-});
+    Route::Resource('prodiaba', 'ProdiabaController');
+  });
 
-/************************
+
+/*******************************************************************************************
  *  Rutas de medicos 
- ********************** */
+ *******************************************************************************************/
 Route::group(['middleware' => 'auth:web'], function () {
 
   Route::prefix ('medico/listado')->name('medico.listado.')->group( function() {
@@ -67,17 +65,19 @@ Route::group(['middleware' => 'auth:web'], function () {
 
     Route::put('update-diabetologico/{id}', 'MedicoCasoController@updateDiabetologico')->name('update-diabetologico');
     Route::put('update-oftalmologico/{id}', 'MedicoCasoController@updateOftalmologico')->name('update-oftalmologico');
+
+    Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\LoginController@login')->name('submit');
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('home', 'MedicoCasoController@home')->name('home');
   });
 
   Route::Resource('medico', 'MedicoCasoController');
 });
-/**
- * ===================================================================================================================
- */
 
-/**
+/*********************************************************************************************
  *  Efector 
- */
+ *********************************************************************************************/
 Route::group(['middleware' => 'auth:efector'], function () {
 
   Route::prefix ('efector/listado')->name('efector.listado.')->group( function() {
@@ -94,18 +94,24 @@ Route::group(['middleware' => 'auth:efector'], function () {
     Route::put('update-paciente/{id}', 'EfectorCasoController@updatePaciente')->name('update-paciente');
     Route::put('update-diabetologico/{id}', 'EfectorCasoController@updateDiabetologico')->name('update-diabetologico');
     Route::put('update-oftalmologico/{id}', 'EfectorCasoController@updateOftalmologico')->name('update-oftalmologico');
+
+    Route::get('login', 'Auth\EfectorLoginController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\EfectorLoginController@login')->name('submit');
+    Route::post('logout', 'Auth\EfectorLoginController@logout')->name('logout');
+    Route::get('home', 'EfectorCasoControllerController@home')->name('home');
   });
 
   Route::Resource('efector', 'EfectorCasoController');
 });
 
-
+/*******************************************************************************
+ * 
+ * **************************************************************************** */
 Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
 
   Route::get('prodiaba/cambiarclave', 'ProdiabaController@mostrarCambiarClaveForm')->name('prodiaba.cambiarclave');
   Route::post('prodiaba/cambiarclave', 'ProdiabaController@cambiarClave')->name('prodiaba.cambiarclave');
-  Route::Resource('prodiaba', 'ProdiabaController');
-  //Route::Resource('efector', 'EfectorController');
+
  
   Route::get('efectores/cambiarclave', 'EfectorController@mostrarCambiarClaveForm')->name('efectores.cambiarclave');
   Route::post('efectores/cambiarclave', 'EfectorController@cambiarClave')->name('efectores.cambiarclave');
@@ -117,9 +123,7 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::Resource('tratamientos', 'TratamientoController');
 
   Route::get('casos/buscar_paciente/{url}', ['uses'=>'PacienteController@buscar']);
-
- 
-
+/*
   Route::get('casos/pendientes-formulario', 'CasoController@pendientesFormulario')->name('casos.pendientes-formulario');
   Route::get('casos/pendientes-aprobacion', 'CasoController@pendientesAprobacion')->name('casos.pendientes-aprobacion');
   Route::get('casos/aprobados', 'CasoController@aprobados')->name('casos.aprobados');
@@ -129,9 +133,8 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::get('casos/por-paciente/{id?}',['uses'=> 'CasoController@porPaciente'])->name('casos.por_paciente');
 
   Route::Resource('casos', 'CasoController');
-
+*/
   Route::get('eliminar_archivo_of/{caso_id}/oftalmologicos/{file}', 'CasoController@eliminarArchivoOf');
-
   Route::get('eliminar_archivo_di/{caso_id}/diabetologicos/{file}', 'CasoController@eliminarArchivoDi');
 
   Route::get('descargar/diabetologicos/{file}', 'CasoController@descargarArchivoDi');
@@ -140,7 +143,7 @@ Route::group(['middleware' => 'auth:web,efector,prodiaba'], function () {
   Route::resource('adjuntos', 'AdjuntoController')->only('store');
 
   Route::get('descargar/adjuntos/{file}', 'AdjuntoController@download')->name('adjuntos.download');
-
   Route::get('descargar/tratamientos/{file}', 'TratamientoController@download')->name('tratamientos.download');
+
   Route::post('tratamientos/adjuntar/{id}', 'TratamientoController@adjuntar')->name('tratamientos.adjuntar');
 });
