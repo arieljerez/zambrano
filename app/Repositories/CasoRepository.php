@@ -206,7 +206,7 @@
       $caso->update([
                       'oftalmologico'=> $oftalmologico,
                       'oftalmologico_archivo' => null,
-                      'oftalmologico_id' => Auth()->User()->id
+                      'oftalmologo_id' => Auth()->User()->id
                     ]);
 
       Bitacora::grabar($caso->id,'Oftalmologico','Formulario Oftalmologico Actualizado');

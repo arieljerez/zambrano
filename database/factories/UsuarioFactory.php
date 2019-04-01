@@ -15,7 +15,6 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Usuario::class, function (Faker $faker) {
     return [
-        'usuario' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => bcrypt('1234'), // secret

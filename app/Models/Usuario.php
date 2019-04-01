@@ -16,7 +16,7 @@ class Usuario extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'usuario', 'email', 'password','dni','matricula','apellidos','nombres'
+        'email', 'password','dni','matricula','apellidos','nombres'
     ];
 
     /**
@@ -27,4 +27,9 @@ class Usuario extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getUsuarioAttribute()
+    {
+        return $this->apellidos .', '. $this->nombres;
+    }
 }

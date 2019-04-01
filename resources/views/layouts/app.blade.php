@@ -31,7 +31,7 @@
                  <img src="{{ asset('images/BA-gris.png') }}"  class="d-inline-block align-top" alt="">
                </a>
                @auth('web')
-               <a class="navbar-brand" href="{{ url('/home') }}">
+               <a class="navbar-brand" href="{{ url('/medico/home') }}">
                    {{ config('app.name', 'Laravel') }}
                </a>
                @endauth

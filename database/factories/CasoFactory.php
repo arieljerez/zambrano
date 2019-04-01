@@ -7,8 +7,8 @@ $factory->define(App\Models\Caso::class, function (Faker $faker) {
 	$paciente_json = json_encode( DB::table('pacientes')->where('id','=',$paciente_id)->first());
     return [
 		'paciente_id' => $paciente_id,
-		'diabetologico' => json_encode(new App\Serializables\Diabetologico([])),
-    'oftalmologico' => json_encode(new App\Serializables\Oftalmologico([])),
+		'diabetologico' => '[]',
+    'oftalmologico' => '[]',
 		'oftalmologico_archivo' => null,
 		'diabetologico_archivo' => null,
 		'paciente' => $paciente_json,
