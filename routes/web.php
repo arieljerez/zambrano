@@ -18,6 +18,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::prefix ('efector')->name('efector.')->group( function() {
+  Route::get('login', 'Auth\EfectorLoginController@showLoginForm')->name('login');
+  Route::post('login', 'Auth\EfectorLoginController@login')->name('login.submit');
+  Route::post('logout', 'Auth\EfectorLoginController@logout')->name('logout');
+});
+
 /********************************************************************************************
  *  Prodiaba
  *********************************************************************************************/
@@ -56,7 +62,6 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('vencido', 'MedicoCasoController@vencidos')->name('vencido');
     Route::get('por-paciente/{id?}',['uses'=> 'MedicoCasoController@porPaciente'])->name('por-paciente');
     Route::get('/',['uses'=> 'MedicoCasoController@index'])->name('index');
-
   });
 
   Route::prefix ('medico')->name('medico.')->group( function() {
@@ -73,6 +78,7 @@ Route::group(['middleware' => 'auth:web'], function () {
   });
 
   Route::Resource('medico', 'MedicoCasoController');
+
 });
 
 /*********************************************************************************************
@@ -94,15 +100,16 @@ Route::group(['middleware' => 'auth:efector'], function () {
     Route::put('update-paciente/{id}', 'EfectorCasoController@updatePaciente')->name('update-paciente');
     Route::put('update-diabetologico/{id}', 'EfectorCasoController@updateDiabetologico')->name('update-diabetologico');
     Route::put('update-oftalmologico/{id}', 'EfectorCasoController@updateOftalmologico')->name('update-oftalmologico');
+    Route::get('home', 'EfectorCasoController@home')->name('home');
 
-    Route::get('login', 'Auth\EfectorLoginController@showLoginForm')->name('login');
-    Route::post('login', 'Auth\EfectorLoginController@login')->name('submit');
-    Route::post('logout', 'Auth\EfectorLoginController@logout')->name('logout');
-    Route::get('home', 'EfectorCasoControllerController@home')->name('home');
+    Route::get('cambiarclave', 'EfectorController@mostrarCambiarClaveForm')->name('cambiarclave');
+    Route::post('cambiarclave', 'EfectorController@cambiarClave')->name('cambiarclave.submit');
+  
   });
 
   Route::Resource('efector', 'EfectorCasoController');
 });
+
 
 /*******************************************************************************
  * 

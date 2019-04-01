@@ -3,13 +3,28 @@
 @section('content')
 
 <div class="container">
+    <div class="row">
+        <span class="float-right">
+            @if ($caso->estado == 'pendiente_formulario')
+                @include('casos.parts.caso_aaprobacion_form')
+            @endif
+        </span>
+    </div>
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card shadow mb-5 bg-white rounded">
                 <div class="card-header {{ config('prodiaba.casos.class.'.$caso->estado) }} ">
                     @section('form-header')
-                        <span class="float-left">Caso # {{ $caso->id }} 
-                            <p>Estado: {{ config('prodiaba.casos.estados.'.$caso->estado) }}</p>
+                        <span class="float-left"><h4><strong>Caso # </strong>{{ $caso->id }} </h4>
+                            <p><strong>Estado: </strong> {{ config('prodiaba.casos.estados.'.$caso->estado) }}<br/>
+                                @isset($caso->diabetologo)
+                                   <strong> Diabetologo: </strong> {{$caso->diabetologo->apellidos}}, {{$caso->diabetologo->nombres }} <br/>
+                                @endisset
+
+                                @isset($caso->oftalmologo)
+                                  <strong> Oftalmologo: </strong>   {{$caso->oftalmologo->apellidos}}, {{$caso->oftalmologo->nombres }}
+                                @endisset
+                            </p>
                         </span>
                     @show 
                 </div>

@@ -13,7 +13,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Rechazados</h4>
                     <p class="card-text"><h1>{{ $rechazados }}</h1></p>
-                    <a href="{{ route('casos.rechazados') }}" class="btn btn-primary">Ver</a>
+                    <a href="{{ route('efector.listado.rechazado') }}" class="btn btn-primary">Ver</a>
                   </div>
                 </div>
               </div>
@@ -22,7 +22,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Vencidos</h4>
                       <p class="card-text"><h1>{{ $vencidos }}</h1></p>
-                    <a href="{{ route('casos.vencidos') }}" class="btn btn-primary">Ver</a>
+                    <a href="{{ route('efector.listado.vencido') }}" class="btn btn-primary">Ver</a>
                   </div>
                 </div>
               </div>
@@ -31,7 +31,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Pendientes Aprobación</h4>
                       <p class="card-text"><h1>{{ $pendientes_aprobacion }}</h1></p>
-                    <a href="{{ route('casos.pendientes-aprobacion') }}" class="btn btn-primary">Ver</a>
+                    <a href="{{ route('efector.listado.pendiente-aprobacion') }}" class="btn btn-primary">Ver</a>
                   </div>
                 </div>
               </div>
@@ -42,7 +42,7 @@
                       <div class="card-body">
                         <h4 class="card-title">Aprobados</h4>
                         <p class="card-text"><h1>{{$aprobados}}</h1></p>
-                        <a href="{{ route('casos.aprobados') }}" class="btn btn-primary">Ver</a>
+                        <a href="{{ route('efector.listado.aprobado') }}" class="btn btn-primary">Ver</a>
                       </div>
                     </div>
                   </div>
@@ -54,7 +54,7 @@
                       <div class="card-body">
                         <h4 class="card-title">Pendientes Formulario</h4>
                           <p class="card-text"><h1>{{ $pendientes_formulario }}</h1></p>
-                        <a href="{{ route('casos.pendientes-formulario') }}" class="btn btn-primary">Ver</a>
+                        <a href="{{ route('efector.listado.pendiente-formulario') }}" class="btn btn-primary">Ver</a>
                       </div>
                     </div>
                   </div>

@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Cambiar Contraseña') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('efectores.cambiarclave') }}" aria-label="{{ __('Cambiar Contraseña') }}">
+                    <form method="POST" action="{{ route('efector.cambiarclave.submit') }}" aria-label="{{ __('Cambiar Contraseña') }}">
                         @csrf
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña Actual') }}</label>

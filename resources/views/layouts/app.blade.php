@@ -121,7 +121,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar sesión') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('prodiaba.cambiarclave') }}" style="background-color: #051a30; color:white">
+                                    <a class="dropdown-item" href="{{ route('efector.cambiarclave') }}" style="background-color: #051a30; color:white">
                                         {{ __('Cambiar Contraseña') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('efector.logout') }}" method="POST" style="display: none;">
