@@ -202,15 +202,15 @@ class CasoController extends Controller
 
     public function updateOftalmologico($caso_id)
     {
-      if( Request()->hasfile('archivo')){
-        $caso = $this->casoRepository->subirArchivoOf($caso_id);
-        flash_success('Caso #'.$caso->id.' - Archivo Oftalmológico Subido'); 
-      }else{
-        $caso = $this->casoRepository->grabarFormularioOf($caso_id, Request()->input('oftalmologico') );
-        flash_success('Caso #'.$caso->id.' - Formulario Oftalmológico Actualizado'); 
-      }
-      Request()->session()->flash('tab-oftalmologico',true);
-      return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
+        if( Request()->hasfile('archivo')){
+          $caso = $this->casoRepository->subirArchivoOf($caso_id);
+          flash_success('Caso #'.$caso->id.' - Archivo Oftalmológico Subido'); 
+        }else{
+          $caso = $this->casoRepository->grabarFormularioOf($caso_id, Request()->input('oftalmologico') );
+          flash_success('Caso #'.$caso->id.' - Formulario Oftalmológico Actualizado'); 
+        }
+        Request()->session()->flash('tab-oftalmologico',true);
+        return redirect()->route($this->redirigirDespuesDe['update'],['id' => $caso->id]);
     }
 
     public function eliminarArchivoOf($caso_id,$file)
@@ -232,21 +232,18 @@ class CasoController extends Controller
 
     public function descargarArchivoDi($file)
     {
-      return \Storage::download('diabetologicos/'.$file);
+        return \Storage::download('diabetologicos/'.$file);
     }
 
     public function descargarArchivoOf($file)
     {
-      return \Storage::download('oftalmologicos/'.$file);
+        return \Storage::download('oftalmologicos/'.$file);
     }
 
-    public function cambiarEstado(Caso $caso, $estado)
+    public function pendienteAprobacion($caso_id)
     {
-         // TODO: pasara a repositorio
-        if ($estado == 'pendiente_formulario'){
-            $caso = $this->casoRepository->aPendienteAprobacion($caso);
-            Request()->session()->flash('success', 'Caso #'.$caso->id.' actualizado con éxito!');
-            return redirect()->route('casos.pendientes-aprobacion');
-        }
+        $caso = $this->casoRepository->aPendienteAprobacion($caso_id);
+        Request()->session()->flash('success', 'Caso #'.$caso->id.' actualizado a \'Pendiente Aprobación\' con éxito!');
+        return back();
     }
 }

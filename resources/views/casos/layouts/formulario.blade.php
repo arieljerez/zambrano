@@ -4,11 +4,15 @@
 
 <div class="container">
     <div class="row">
-        <span class="float-right">
-            @if ($caso->estado == 'pendiente_formulario')
-                @include('casos.parts.caso_aaprobacion_form')
-            @endif
-        </span>
+        <div class="col-12">
+                <span class="float-right">
+                    @Auth('web')      
+                        @if ($caso->estado == 'pendiente_formulario')
+                            @include('casos.parts.caso_aaprobacion_form')
+                        @endif
+                    @endauth
+                </span>
+        </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-12">

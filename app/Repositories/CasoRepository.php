@@ -101,8 +101,9 @@
     * Estados
     */
 
-   public function aPendienteAprobacion($caso)
+   public function aPendienteAprobacion($caso_id)
    {
+      $caso = Caso::find($caso_id);
       $caso->update(['estado' => 'pendiente_aprobacion']);
       Bitacora::grabar($caso->id,'Cambio estado','Pasa a Pendiente aprobación');
       return $caso;

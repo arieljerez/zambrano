@@ -54,13 +54,13 @@
         Prodiaba
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('prodiaba.pendientes')}}">Pendientes</a>
-        <a class="dropdown-item" href="{{ route('prodiaba.aprobados')}}">Aprobados</a>
+        <a class="dropdown-item" href="{{ route('prodiaba.listado.pendiente')}}">Pendientes</a>
+        <a class="dropdown-item" href="{{ route('prodiaba.listado.aprobado')}}">Aprobados</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('prodiaba.rechazados')}}">Rechazados</a>
-        <a class="dropdown-item" href="{{ route('prodiaba.vencidos')}}">Vencidos</a>
+        <a class="dropdown-item" href="{{ route('prodiaba.listado.rechazado')}}">Rechazados</a>
+        <a class="dropdown-item" href="{{ route('prodiaba.listado.vencido')}}">Vencidos</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('prodiaba.tratamientos_solicitados')}}">Tratamientos Solicitados</a>
+        <a class="dropdown-item" href="{{ route('prodiaba.listado.tratamientos-solicitados')}}">Tratamientos Solicitados</a>
 
     </div>
     </li>

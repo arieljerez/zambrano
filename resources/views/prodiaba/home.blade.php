@@ -18,7 +18,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Rechazados</h4>
                     <p class="card-text"><h1>{{ $rechazados }}</h1></p>
-                    <a href="{{ route('prodiaba.rechazados') }}" class="btn btn-primary">Ver</a>
+                    <a href="{{ route('prodiaba.listado.rechazado') }}" class="btn btn-primary">Ver</a>
                   </div>
                 </div>
               </div>
@@ -27,7 +27,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Vencidos</h4>
                       <p class="card-text"><h1>{{ $vencidos }}</h1></p>
-                    <a href="{{ route('prodiaba.vencidos') }}" class="btn btn-primary">Ver</a>
+                    <a href="{{ route('prodiaba.listado.vencido') }}" class="btn btn-primary">Ver</a>
                   </div>
                 </div>
               </div>
@@ -36,7 +36,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Aprobados</h4>
                     <p class="card-text"><h1>{{$aprobados}}</h1></p>
-                    <a href="{{ route('prodiaba.aprobados') }}" class="btn btn-primary">Ver</a>
+                    <a href="{{ route('prodiaba.listado.aprobado') }}" class="btn btn-primary">Ver</a>
                   </div>
                 </div>
               </div>
