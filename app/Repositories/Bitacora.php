@@ -22,7 +22,7 @@ class Bitacora
 
     public function porCaso($caso_id)
     {
-      return ModelBitacora::where('caso_id','=',$caso_id)->get();
+      return ModelBitacora::where('caso_id','=',$caso_id)->orderBy('created_at')->get();
     }
 
     public static function getLoginTabla()

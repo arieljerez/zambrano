@@ -77,7 +77,7 @@ class Caso extends Model
 
     public function bitacoras()
     {
-        return $this->hasMany('App\Models\Bitacora');
+        return $this->hasMany('App\Models\Bitacora')->orderBy('created_at','desc');
     }
 
     public function diabetologo()

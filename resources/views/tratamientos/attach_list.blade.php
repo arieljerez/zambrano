@@ -19,7 +19,7 @@
       <div class="modal-body">
           <div class="form-group row">
             <div class="table-responsive">
-              <table class="table table-sm">
+              <table class="table table-sm display" id="table_tratamientos_download" >
                   <thead>
                   <tr>
                       <th> Fecha </th>
