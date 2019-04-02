@@ -5,12 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\CasoRepository;
 use App\Repositories\PacienteRepository;
-/* use App\Models\Caso;
-use App\Models\Prodiaba;
-use App\Models\Tratamiento;
-use App\Serializables\Diabetologico;
-use App\Serializables\Oftalmologico; */
-/* use App\Repositories\Tratamiento as TratamientoRepository; */
+use App\Repositories\Tratamiento as TratamientoRepository; 
 use App\Http\Controllers\CasoController;
 
 class ProdiabaCasoController extends CasoController
@@ -43,6 +38,47 @@ class ProdiabaCasoController extends CasoController
   public function index($prefix_url='prodiaba')
   {
       return parent::index($prefix_url);
+  }
+
+  public function aprobar()
+  {
+      $caso_id = request()->input('caso_id');
+      $texto_aprobacion = request()->input('texto_aprobacion');
+      $fecha_aprobacion = request()->input('fecha_aprobacion');
+      $this->casoRepository->aprobar($caso_id,$fecha_aprobacion,$texto_aprobacion);
+
+      flash_success('Caso #'.$caso_id.' ha sido aprobado.');
+      return redirect()->route($this->redirigirDespuesDe['update'],$caso_id);
+  }
+
+  public function rechazar()
+  {
+      $caso_id = request()->input('caso_id');
+      $texto = request()->input('texto_aprobacion');
+      $fecha = request()->input('fecha_aprobacion');
+      $this->casoRepository->rechazar($caso_id,$fecha,$texto);
+
+      flash('warning', 'Caso #'.$caso_id.' ha sido rechazado.');
+      return redirect()->route($this->redirigirDespuesDe['update'],$caso_id);
+  }
+
+  public function aprobarTratamiento()
+  {
+      $tratamiento = TratamientoRepository::find(request()->input('id'));
+      $tratamiento->texto_aprobacion =  request()->input('texto_aprobacion');
+      TratamientoRepository::aprobar($tratamiento);
+
+      flash_success('Caso #'.$tratamiento->caso_id.' Tratamiento: "'. $tratamiento->descripcion.'" ha sido aprobado.');
+
+      Request()->session()->flash('tab-tratamientos',true);
+
+      return redirect()->back();
+  }
+
+  public function edit($id)
+  {
+      Request()->session()->flash('tab-tratamientos',true);
+      return parent::edit($id);
   }
 
 /*
@@ -103,16 +139,7 @@ class ProdiabaCasoController extends CasoController
         return view('prodiaba.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
     }
 
-    public function aprobar()
-    {
-      $caso_id = request()->input('caso_id');
-      $texto_aprobacion = request()->input('texto_aprobacion');
-      $fecha_aprobacion = request()->input('fecha_aprobacion');
-      $this->casoRepository->aprobar($caso_id,$fecha_aprobacion,$texto_aprobacion);
 
-      request()->session()->flash('status', 'Caso #'.$caso_id.' ha sido aprobado.');
-      return redirect()->route('prodiaba.pendientes');
-    }
 
     public function reaprobar()
     {
@@ -125,24 +152,8 @@ class ProdiabaCasoController extends CasoController
       return redirect()->route('prodiaba.vencidos');
     }
 
-    public function rechazar()
-    {
-      $id = request()->input('caso_id');
-      $texto = request()->input('texto_aprobacion');
-      $fecha = request()->input('fecha_aprobacion');
-      $this->casoRepository->rechazar($id,$fecha,$texto);
 
-      request()->session()->flash('wrongs', 'Caso #'.$id.' ha sido rechazado.');
-      return redirect()->route('prodiaba.pendientes');
-    }
 
-    public function aprobarTratamiento()
-    {
-        $tratamiento = Tratamiento::find(request()->input('id'));
-        $tratamiento->texto_aprobacion =  request()->input('texto_aprobacion');
-        TratamientoRepository::aprobar($tratamiento);
-        return redirect()->back();
-    }
     
     public function mostrarCambiarClaveForm()
     {

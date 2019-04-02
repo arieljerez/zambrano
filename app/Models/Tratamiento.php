@@ -16,4 +16,13 @@ class Tratamiento extends Model
       return $this->belongsToMany('App\Models\Adjunto','tratamiento_adjunto','tratamiento_id','adjunto_id');
   }
 
+  public function scopeSolicitado($query)
+  {
+      return $query->where('estado', 'solicitado');
+  }
+
+  public function scopeAprobado($query)
+  {
+      return $query->where('estado', 'aprobado');
+  }
 }

@@ -7,6 +7,16 @@
 
  class Tratamiento
  {
+    public function __construct(ModelTratamiento $model)
+    {
+        $this->model = $model;
+    }
+
+    public static function find($id)
+    {
+        return (\App\Models\Tratamiento::class)::find($id);
+    }
+    
     static public function attach($id)
     {
 

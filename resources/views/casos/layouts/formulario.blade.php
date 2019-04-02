@@ -37,11 +37,11 @@
                 @yield('pos-form-header')
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-2">
                             @include('casos.parts.edit_form_nav_pills')
                         </div>
 
-                        <div class="col-12 col-sm-12 col-md-10 col-lg-10">
+                        <div class="col-12 col-sm-12 col-md-9 col-lg-10">
                             <div class="tab-content" id="v-pills-tabContent">
 
                                 <div class="tab-pane fade show active" id="v-pills-paciente" role="tabpanel" aria-labelledby="v-pills-paciente-tab">

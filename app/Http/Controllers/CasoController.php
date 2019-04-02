@@ -50,7 +50,8 @@ class CasoController extends Controller
       $pendientes_aprobacion = Caso::where('estado','=','pendiente-aprobacion')->count();
       $pendientes_formulario = Caso::where('estado','=','pendiente-formulario')->count();
       $vencidos = Caso::where('estado','=','vencido')->count();
-      return view($this->vistas['home'],compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
+      $tratamientos_solicitados =  $this->casoRepository->tratamientosSolicitados()->count();
+      return view($this->vistas['home'],compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos','tratamientos_solicitados'));
     }
 
     /**
@@ -198,15 +199,8 @@ class CasoController extends Controller
     public function updateDiabetologico($caso_id)
     {
         if( Request()->hasfile('archivo')){
-
-          try {
             $caso = $this->casoRepository->subirArchivoDi($caso_id);
             flash_success('Caso #'.$caso->id.' - Archivo Diabetológico Subido');  
-          } catch (PostTooLargeException $e) {
-            flash('error','Caso #'.$caso->id.' - El archivo tiene un tamaño mayor al permitido');  
-          }
-
-
         }else{       
           $caso = $this->casoRepository->grabarFormularioDi($caso_id, Request()->input('diabetologico') );
           flash_success('Caso #'.$caso->id.' - Formulario Diabetológico Actualizado');  
