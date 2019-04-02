@@ -12,7 +12,7 @@ $factory->define(App\Models\Caso::class, function (Faker $faker) {
 		'oftalmologico_archivo' => null,
 		'diabetologico_archivo' => null,
 		'paciente' => $paciente_json,
-		'estado' => 'pendiente_formulario',
+		'estado' => 'pendiente-formulario',
 		'fecha_rechazo' => $faker->dateTimeBetween($startDate = '-12 days', $endDate = 'now') ,
     'created_at' => $faker->dateTimeBetween($startDate = '-3 month', $endDate = '-20 days') ,
 		'fecha_aprobacion' => $faker->dateTimeBetween($startDate = '-12 days', $endDate = 'now'),

@@ -10,6 +10,7 @@ use App\Serializables\Oftalmologico;
 use App\Repositories\CasoRepository;
 use App\Repositories\Bitacora;
 use App\Repositories\PacienteRepository;
+use PostTooLargeException;
 
 use Exception;
 
@@ -46,8 +47,8 @@ class CasoController extends Controller
     {
       $aprobados = Caso::where('estado','=','aprobado')->count();
       $rechazados = Caso::where('estado','=','rechazado')->count();
-      $pendientes_aprobacion = Caso::where('estado','=','pendiente_aprobacion')->count();
-      $pendientes_formulario = Caso::where('estado','=','pendiente_formulario')->count();
+      $pendientes_aprobacion = Caso::where('estado','=','pendiente-aprobacion')->count();
+      $pendientes_formulario = Caso::where('estado','=','pendiente-formulario')->count();
       $vencidos = Caso::where('estado','=','vencido')->count();
       return view($this->vistas['home'],compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
     }
@@ -76,14 +77,14 @@ class CasoController extends Controller
     public function pendientesFormulario()
     {
       $casos = $this->consultaBase(__FUNCTION__);
-      $estado = 'pendiente_formulario';
+      $estado = 'pendiente-formulario';
       return view($this->vistas['pendientes_formulario'],compact('casos','estado'));
     }
 
     public function pendientesAprobacion()
     {
       $casos = $this->consultaBase(__FUNCTION__);
-      $estado = 'pendiente_aprobacion';
+      $estado = 'pendiente-aprobacion';
       return view($this->vistas['pendientes_aprobacion'],compact('casos','estado'));
     }
 
@@ -115,6 +116,13 @@ class CasoController extends Controller
           return view($this->vistas['por_paciente'],compact('casos'));
     }
 
+    public function tratamientosSolicitados()
+    {
+        $filtro = request()->only(['dni','apellidos','nombres']);
+        $casos  = $this->casoRepository->tratamientosSolicitados($filtro);
+        return view('prodiaba.tratamientos_solicitados', compact('casos'));
+    }
+
     //---------------------------------------------------------
     //---------------------------------------------------------
     
@@ -130,7 +138,7 @@ class CasoController extends Controller
           $paciente = $this->pacienteRepository->storePorCaso($request->only('paciente'));
 
           $caso = $this->casoRepository->store([
-            'estado'=> 'pendiente_formulario',
+            'estado'=> 'pendiente-formulario',
             'paciente_id' => $paciente->id,
             'oftalmologico' => '[]' ,
             'diabetologico' => '[]',
@@ -190,8 +198,15 @@ class CasoController extends Controller
     public function updateDiabetologico($caso_id)
     {
         if( Request()->hasfile('archivo')){
-          $caso = $this->casoRepository->subirArchivoDi($caso_id);
-          flash_success('Caso #'.$caso->id.' - Archivo Diabetológico Subido');  
+
+          try {
+            $caso = $this->casoRepository->subirArchivoDi($caso_id);
+            flash_success('Caso #'.$caso->id.' - Archivo Diabetológico Subido');  
+          } catch (PostTooLargeException $e) {
+            flash('error','Caso #'.$caso->id.' - El archivo tiene un tamaño mayor al permitido');  
+          }
+
+
         }else{       
           $caso = $this->casoRepository->grabarFormularioDi($caso_id, Request()->input('diabetologico') );
           flash_success('Caso #'.$caso->id.' - Formulario Diabetológico Actualizado');  
@@ -203,8 +218,10 @@ class CasoController extends Controller
     public function updateOftalmologico($caso_id)
     {
         if( Request()->hasfile('archivo')){
-          $caso = $this->casoRepository->subirArchivoOf($caso_id);
-          flash_success('Caso #'.$caso->id.' - Archivo Oftalmológico Subido'); 
+
+            $caso = $this->casoRepository->subirArchivoOf($caso_id);
+            flash_success('Caso #'.$caso->id.' - Archivo Oftalmológico Subido'); 
+
         }else{
           $caso = $this->casoRepository->grabarFormularioOf($caso_id, Request()->input('oftalmologico') );
           flash_success('Caso #'.$caso->id.' - Formulario Oftalmológico Actualizado'); 

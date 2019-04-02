@@ -54,7 +54,7 @@
         Prodiaba
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('prodiaba.listado.pendiente')}}">Pendientes</a>
+        <a class="dropdown-item" href="{{ route('prodiaba.listado.pendiente-aprobacion')}}">Pendientes</a>
         <a class="dropdown-item" href="{{ route('prodiaba.listado.aprobado')}}">Aprobados</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{ route('prodiaba.listado.rechazado')}}">Rechazados</a>

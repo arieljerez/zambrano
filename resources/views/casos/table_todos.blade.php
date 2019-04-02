@@ -32,7 +32,7 @@
             </td>
 
             <td>
-              <a href="{{ route('casos.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-edit fa-2x"></i> </a>
+              <a href="{{ route($route_prefix.'.edit', $caso->id ) }}" class="btn btn-primary"> <i class="far fa-edit fa-2x"></i> </a>
             </td>
         </tr>
     @endforeach

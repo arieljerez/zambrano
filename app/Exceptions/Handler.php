@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use PostTooLargeException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 
@@ -52,6 +53,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Illuminate\Http\Exceptions\PostTooLargeException) {
+            flash("error","El tamaño del archivo debe ser inferior a ".ini_get("post_max_size")."B");
+            return redirect()->back();
+        }
         return parent::render($request, $exception);
     }
 

@@ -22,14 +22,14 @@
     public function pendientesFormulario($filtro = array(),$paginate = 25)
     {
         $query = $this->consultaBase($filtro)
-          ->where('casos.estado','=','pendiente_formulario');
+          ->where('casos.estado','=','pendiente-formulario');
         return $query->paginate($paginate);
     }
 
     public function pendientesAprobacion($filtro = array(),$paginate = 25)
     {
         $query =  $this->consultaBase($filtro)
-            ->where('casos.estado','=','pendiente_aprobacion');
+            ->where('casos.estado','=','pendiente-aprobacion');
         return $query->paginate($paginate);
     }
 
@@ -104,7 +104,7 @@
    public function aPendienteAprobacion($caso_id)
    {
       $caso = Caso::find($caso_id);
-      $caso->update(['estado' => 'pendiente_aprobacion']);
+      $caso->update(['estado' => 'pendiente-aprobacion']);
       Bitacora::grabar($caso->id,'Cambio estado','Pasa a Pendiente aprobación');
       return $caso;
    }
@@ -224,7 +224,7 @@
       $caso->update([
                       'oftalmologico'=> '[]', 
                       'oftalmologico_archivo' => $oftalmologico_archivo,
-                      'oftalmologico_id' => Auth()->User()->id
+                      'oftalmologo_id' => Auth()->User()->id
                     ]);
 
       Bitacora::grabar($caso->id,'Oftalmologico','Archivo Oftalmologico Subido');

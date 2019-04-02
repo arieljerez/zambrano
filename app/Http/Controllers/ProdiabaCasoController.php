@@ -4,31 +4,48 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\CasoRepository;
-use App\Models\Caso;
+use App\Repositories\PacienteRepository;
+/* use App\Models\Caso;
 use App\Models\Prodiaba;
 use App\Models\Tratamiento;
 use App\Serializables\Diabetologico;
-use App\Serializables\Oftalmologico;
-use App\Repositories\Tratamiento as TratamientoRepository;
+use App\Serializables\Oftalmologico; */
+/* use App\Repositories\Tratamiento as TratamientoRepository; */
+use App\Http\Controllers\CasoController;
 
-class ProdiabaController extends Controller
+class ProdiabaCasoController extends CasoController
 {
-    protected $casoRepository;
-    /**
-    * Create a new controller instance.
-    *
-    * @return void
-    */
-    public function __construct(CasoRepository $casoRepository)
-    {
-      $this->middleware('auth:prodiaba,efector');
-      $this->casoRepository = $casoRepository;
-    }
-    /**
-    * Show the application dashboard.
-    *
-    * @return \Illuminate\Http\Response
-    */
+  protected $vistas = [
+    'index' => 'casos.index',
+    'create' => 'prodiaba.create',
+    'edit' => 'prodiaba.edit',
+    'show' => 'prodiaba.show',
+    'pendientes_formulario' => 'prodiaba.listado',
+    'pendientes_aprobacion' => 'prodiaba.listado',
+    'aprobados' => 'prodiaba.listado',
+    'vencidos' => 'prodiaba.listado',
+    'rechazados' => 'prodiaba.listado',
+    'por_paciente' => 'prodiaba.por_paciente',
+    'home' => 'prodiaba.home'
+  ];
+
+  protected $redirigirDespuesDe = [
+      'store' => 'prodiaba.show', 
+      'update' => 'prodiaba.edit',
+  ];
+
+  public function __construct(CasoRepository $casoRepository,PacienteRepository $paciente)
+  {
+    parent::__construct($casoRepository,$paciente);
+    $this->middleware('auth:prodiaba');
+  }
+
+  public function index($prefix_url='prodiaba')
+  {
+      return parent::index($prefix_url);
+  }
+
+/*
     public function index()
     {
         $datos = Prodiaba::paginate(25);
@@ -63,19 +80,14 @@ class ProdiabaController extends Controller
         return view('prodiaba.vencidos', compact('casos'));
     }
 
-    public function tratamientosSolicitados()
-    {
-        $filtro = request()->only(['dni','apellidos','nombres']);
-        $casos  = $this->casoRepository->tratamientosSolicitados($filtro);
-        return view('prodiaba.tratamientos_solicitados', compact('casos'));
-    }
+
 
     public function home()
     {
       $aprobados = Caso::where('estado','=','aprobado')->count();
       $rechazados = Caso::where('estado','=','rechazado')->count();
-      $pendientes_aprobacion = Caso::where('estado','=','pendiente_aprobacion')->count();
-      $pendientes_formulario = Caso::where('estado','=','pendiente_formulario')->count();
+      $pendientes_aprobacion = Caso::where('estado','=','pendiente-aprobacion')->count();
+      $pendientes_formulario = Caso::where('estado','=','pendiente-formulario')->count();
       $vencidos = Caso::where('estado','=','vencido')->count();
       return view('prodiaba.home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
     }
@@ -149,5 +161,5 @@ class ProdiabaController extends Controller
       $data['password']= bcrypt($data['password']);
       $user->update($data);
       return redirect()->route('prodiaba.home')->with(['success' => 'Contraseña actualizada']);
-    }
+    }*/
 }

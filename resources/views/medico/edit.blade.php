@@ -22,7 +22,7 @@
 
 @section('diabetologico')
     
-    {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['medico.update-diabetologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+    {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'POST','route' => ['medico.update-diabetologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
 
         @include('casos.diabetologico.index')
 
@@ -43,7 +43,7 @@
 @endsection
 
 @section('oftalmologico')
-    {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'PUT','route' => ['medico.update-oftalmologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+    {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'POST','route' => ['medico.update-oftalmologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
     @include('casos.oftalmologico.index')
     <div class="row"><div class="col-md-12">&nbsp;</div></div>
         <div class="row">

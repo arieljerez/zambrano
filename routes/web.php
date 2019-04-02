@@ -36,26 +36,25 @@ Route::prefix ('prodiaba')->name('prodiaba.')->group( function() {
   Route::group(['middleware' => 'auth:prodiaba'], function () {
 
     Route::prefix ('prodiaba/listado')->name('prodiaba.listado.')->group( function() {
-      Route::get('pendientes', 'ProdiabaController@pendientes')->name('pendiente');
-      Route::get('aprobados', 'ProdiabaController@aprobados')->name('aprobado');
-      Route::get('rechazados', 'ProdiabaController@rechazados')->name('rechazado');
-      Route::get('vencidos', 'ProdiabaController@vencidos')->name('vencido');
-      Route::get('tratamientos-solicitados', 'ProdiabaController@tratamientosSolicitados')->name('tratamientos-solicitados');
-
+      Route::get('pendiente-aprobacion', 'ProdiabaCasoController@pendientesAprobacion')->name('pendiente-aprobacion');
+      Route::get('aprobado', 'ProdiabaCasoController@aprobados')->name('aprobado');
+      Route::get('rechazado', 'ProdiabaCasoController@rechazados')->name('rechazado');
+      Route::get('vencido', 'ProdiabaCasoController@vencidos')->name('vencido');
+      Route::get('tratamientos-solicitados', 'ProdiabaCasoController@tratamientosSolicitados')->name('tratamientos-solicitados');
     });
 
-  Route::prefix ('prodiaba')->name('prodiaba.')->group( function() {
-    Route::get('cambiarclave', 'ProdiabaController@mostrarCambiarClaveForm')->name('cambiarclave');
-    Route::post('cambiarclave', 'ProdiabaController@cambiarClave')->name('cambiarclave.submit');
-    Route::get('home', 'ProdiabaController@home')->name('home');
-    Route::post('aprobar-tratamiento', 'ProdiabaController@aprobarTratamiento')->name('aprobar-tratamiento');
+    Route::prefix ('prodiaba')->name('prodiaba.')->group( function() {
+      Route::get('cambiarclave', 'ProdiabaCasoController@mostrarCambiarClaveForm')->name('cambiarclave');
+      Route::post('cambiarclave', 'ProdiabaCasoController@cambiarClave')->name('cambiarclave.submit');
+      Route::get('home', 'ProdiabaCasoController@home')->name('home');
+      Route::post('aprobar-tratamiento', 'ProdiabaCasoController@aprobarTratamiento')->name('aprobar-tratamiento');
 
-    Route::post('aprobar', 'ProdiabaController@aprobar')->name('aprobar');
-    Route::post('rechazar', 'ProdiabaController@rechazar')->name('rechazar');
-    Route::post('reaprobar', 'ProdiabaController@reaprobar')->name('reaprobar');
-  });
+      Route::post('aprobar', 'ProdiabaCasoController@aprobar')->name('aprobar');
+      Route::post('rechazar', 'ProdiabaCasoController@rechazar')->name('rechazar');
+      Route::post('reaprobar', 'ProdiabaCasoController@reaprobar')->name('reaprobar');
+    });
 
-  Route::Resource('prodiaba', 'ProdiabaController');
+    Route::Resource('prodiaba', 'ProdiabaCasoController');
 });
 
 
@@ -64,34 +63,33 @@ Route::prefix ('prodiaba')->name('prodiaba.')->group( function() {
  *******************************************************************************************/
 Route::group(['middleware' => 'auth:web'], function () {
 
-  Route::prefix ('medico/listado')->name('medico.listado.')->group( function() {
-    Route::get('pendiente-formulario', 'MedicoCasoController@pendientesFormulario')->name('pendiente-formulario');
-    Route::get('pendiente-aprobacion', 'MedicoCasoController@pendientesAprobacion')->name('pendiente-aprobacion');
-    Route::get('aprobado', 'MedicoCasoController@aprobados')->name('aprobado');
-    Route::get('rechazado', 'MedicoCasoController@rechazados')->name('rechazado');
-    Route::get('vencido', 'MedicoCasoController@vencidos')->name('vencido');
-    Route::get('por-paciente/{id?}',['uses'=> 'MedicoCasoController@porPaciente'])->name('por-paciente');
-    Route::get('/',['uses'=> 'MedicoCasoController@index'])->name('index');
-  });
+    Route::prefix ('medico/listado')->name('medico.listado.')->group( function() {
+      Route::get('pendiente-formulario', 'MedicoCasoController@pendientesFormulario')->name('pendiente-formulario');
+      Route::get('pendiente-aprobacion', 'MedicoCasoController@pendientesAprobacion')->name('pendiente-aprobacion');
+      Route::get('aprobado', 'MedicoCasoController@aprobados')->name('aprobado');
+      Route::get('rechazado', 'MedicoCasoController@rechazados')->name('rechazado');
+      Route::get('vencido', 'MedicoCasoController@vencidos')->name('vencido');
+      Route::get('por-paciente/{id?}',['uses'=> 'MedicoCasoController@porPaciente'])->name('por-paciente');
+      Route::get('/',['uses'=> 'MedicoCasoController@index'])->name('index');
+    });
 
-  Route::prefix ('medico')->name('medico.')->group( function() {
-    Route::get('create/{id}', 'MedicoCasoController@createPacienteExistente');
-    Route::put('update-paciente/{id}', 'MedicoCasoController@updatePaciente')->name('update-paciente');
+    Route::prefix ('medico')->name('medico.')->group( function() {
+      Route::get('create/{id}', 'MedicoCasoController@createPacienteExistente');
+      Route::put('update-paciente/{id}', 'MedicoCasoController@updatePaciente')->name('update-paciente');
 
-    Route::put('update-diabetologico/{id}', 'MedicoCasoController@updateDiabetologico')->name('update-diabetologico');
-    Route::put('update-oftalmologico/{id}', 'MedicoCasoController@updateOftalmologico')->name('update-oftalmologico');
+      Route::post('update-diabetologico/{id}', 'MedicoCasoController@updateDiabetologico')->name('update-diabetologico');
+      Route::post('update-oftalmologico/{id}', 'MedicoCasoController@updateOftalmologico')->name('update-oftalmologico');
 
-    Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-    Route::post('login', 'Auth\LoginController@login')->name('submit');
-    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-    Route::get('home', 'MedicoCasoController@home')->name('home');
+      Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+      Route::post('login', 'Auth\LoginController@login')->name('submit');
+      Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+      Route::get('home', 'MedicoCasoController@home')->name('home');
 
-    route::put('cambiarestado/pendiente-aprobacion/{caso_id}','MedicoCasoController@pendienteAprobacion')
-          ->name('estado.pendiente-aprobacion');
-  });
+      route::put('cambiarestado/pendiente-aprobacion/{caso_id}','MedicoCasoController@pendienteAprobacion')
+            ->name('estado.pendiente-aprobacion');
+    });
 
   Route::Resource('medico', 'MedicoCasoController');
-
 });
 
 /*********************************************************************************************

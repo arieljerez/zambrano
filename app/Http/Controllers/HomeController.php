@@ -26,8 +26,8 @@ class HomeController extends Controller
     {
       $aprobados = Caso::where('estado','=','aprobado')->count();
       $rechazados = Caso::where('estado','=','rechazado')->count();
-      $pendientes_aprobacion = Caso::where('estado','=','pendiente_aprobacion')->count();
-      $pendientes_formulario = Caso::where('estado','=','pendiente_formulario')->count();
+      $pendientes_aprobacion = Caso::where('estado','=','pendiente-aprobacion')->count();
+      $pendientes_formulario = Caso::where('estado','=','pendiente-formulario')->count();
       $vencidos = Caso::where('estado','=','vencido')->count();
       return view('home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
     }

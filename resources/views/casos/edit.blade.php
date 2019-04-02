@@ -18,7 +18,7 @@
                     </p>
                         </span>
                 <span class="float-right">
-                    @if ($caso->estado == 'pendiente_formulario')
+                    @if ($caso->estado == 'pendiente-formulario')
                       @include('casos.parts.caso_aaprobacion_form')
                     @endif
                 </span>

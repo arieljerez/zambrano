@@ -7,7 +7,7 @@
         <div class="col-12">
                 <span class="float-right">
                     @Auth('web')      
-                        @if ($caso->estado == 'pendiente_formulario')
+                        @if ($caso->estado == 'pendiente-formulario')
                             @include('casos.parts.caso_aaprobacion_form')
                         @endif
                     @endauth
@@ -34,7 +34,7 @@
                 </div>
 
                 @include('flash-message')
-
+                @yield('pos-form-header')
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-2 col-lg-2">

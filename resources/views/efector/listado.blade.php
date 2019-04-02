@@ -4,7 +4,7 @@
 @section('titulo_estado', config('prodiaba.casos.estados.'.$estado) )
 
 @section('filtros')
-<form method="get" action="{{url('efector/'.$estado)}}">
+<form method="get" action="{{url('efector/listado/'.$estado)}}">
   @include('casos.parts.filtro_paciente')
 </form>       
 @endsection

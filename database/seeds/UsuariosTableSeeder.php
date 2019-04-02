@@ -12,7 +12,7 @@ class UsuariosTableSeeder extends Seeder
     public function run()
     {
         factory(App\Models\Usuario::class, 1)->create([
-            '9999999' => 'SYSTEM',
+            'dni' => '99999999',
             'email' => 'system@prodiaba',
             'apellidos' => 'SYSTEM',
             'nombres' => '.',
