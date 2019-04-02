@@ -20,16 +20,45 @@
                 <div class="card-header {{ config('prodiaba.casos.class.'.$caso->estado) }} ">
                     @section('form-header')
                         <span class="float-left"><h4><strong>Caso # </strong>{{ $caso->id }} </h4>
-                            <p><strong>Estado: </strong> {{ config('prodiaba.casos.estados.'.$caso->estado) }}<br/>
-                                @isset($caso->diabetologo)
-                                   <strong> Diabetologo: </strong> {{$caso->diabetologo->apellidos}}, {{$caso->diabetologo->nombres }} <br/>
-                                @endisset
-
-                                @isset($caso->oftalmologo)
-                                  <strong> Oftalmologo: </strong>   {{$caso->oftalmologo->apellidos}}, {{$caso->oftalmologo->nombres }}
-                                @endisset
-                            </p>
                         </span>
+                        <div class="row">
+                            <div class="col-4">
+
+                                    <strong>Estado: </strong> {{ config('prodiaba.casos.estados.'.$caso->estado) }}<br/>
+                                    @isset($caso->diabetologo)
+                                        <strong> Diabetologo: </strong> {{$caso->diabetologo->apellidos}}, {{$caso->diabetologo->nombres }} <br/>
+                                    @endisset
+    
+                                    @isset($caso->oftalmologo)
+                                        <strong> Oftalmologo: </strong>   {{$caso->oftalmologo->apellidos}}, {{$caso->oftalmologo->nombres }}
+                                    @endisset
+                            </div>
+                            <div class="col-4">
+                                    @isset($caso->fecha_aprobacion)
+                                       <strong> Fecha Aprobación: </strong> {{ fecha($caso->fecha_aprobacion) }} <br/>
+                                    @endisset
+    
+                                    @isset($caso->fecha_rechazo)
+                                      <strong> Fecha Aprobación: </strong>   {{ fecha($caso->fecha_rechazo) }}
+                                    @endisset
+
+                                    @isset($caso->fecha_reaprobacion)
+                                    <strong> Fecha Re-aprobación: </strong>   {{ fecha($caso->fecha_reaprobacion) }}
+                                  @endisset
+                            </div>
+
+                            <div class="col-4">
+                                    @isset($caso->created_at)
+                                       <strong> Fecha Inicio: </strong> {{ fecha($caso->created_at) }} <br/>
+                                    @endisset
+
+                                    @isset($caso->pacienters)
+                                        <strong> Paciente: </strong> {{ $caso->pacienters->nombre_completo }} <br/>
+                                        <strong> DNI: </strong> {{ $caso->pacienters->dni }} <br/>
+                                    @endisset
+                                    
+                            </div>
+                        </div>
                     @show 
                 </div>
 

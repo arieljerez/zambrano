@@ -15,4 +15,9 @@ class Paciente extends Model
             return edad($this->fecha_nacimiento);
         }
     }
+
+    public function getNombreCompletoAttribute()
+    {
+        return $this->apellidos. ", ". $this->nombres;
+    }
 }

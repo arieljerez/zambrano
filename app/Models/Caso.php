@@ -89,4 +89,9 @@ class Caso extends Model
     {
         return $this->hasOne('App\Models\Usuario','id','oftalmologo_id');
     }
+
+    public function pacienters()
+    {
+        return $this->hasOne('App\Models\Paciente','id','paciente_id');
+    }
 }
