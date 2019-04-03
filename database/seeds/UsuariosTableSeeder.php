@@ -19,7 +19,7 @@ class UsuariosTableSeeder extends Seeder
             'password' => '$2y$10$vW2Y/SWtyKUT1fhmeo026.CzQd8Tx8LrJuzwASQGosFVMG09QBq.K'
         ]);
       
-        factory(App\Models\Usuario::class, 15)->create();
+        factory(App\Models\Usuario::class, 5)->create();
         factory(App\Models\Usuario::class, 1)->create(['dni' => '1234']);
     }
 }

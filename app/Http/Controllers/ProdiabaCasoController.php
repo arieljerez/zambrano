@@ -21,7 +21,8 @@ class ProdiabaCasoController extends CasoController
     'vencidos' => 'prodiaba.listado',
     'rechazados' => 'prodiaba.listado',
     'por_paciente' => 'prodiaba.por_paciente',
-    'home' => 'prodiaba.home'
+    'home' => 'prodiaba.home',
+    'tratamientos_solicitados' => 'casos.tratamientos_solicitados'
   ];
 
   protected $redirigirDespuesDe = [

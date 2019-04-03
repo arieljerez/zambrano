@@ -28,7 +28,8 @@ class CasoController extends Controller
       'aprobados' => 'casos.aprobados',
       'vencidos' => 'casos.vencidos',
       'rechazados' => 'casos.rechazados',
-      'home' => 'casos.home'
+      'home' => 'casos.home',
+      'tratamientos_solicitados' => 'casos.tratamientos_solicitados'
     ];
 
     protected $redirigirDespuesDe = [
@@ -62,7 +63,7 @@ class CasoController extends Controller
     public function index($prefix_url='casos')
     {
         $filtro = request()->only(['dni','apellidos','nombres','id','fecha_desde','fecha_hasta']); 
-        $paginado = request()->input('paginacion') != null ? request()->input('paginacion'): 25;
+        $paginado = request()->input('paginacion') != null ? request()->input('paginacion'): 5;
         $casos = $this->casoRepository->consultaBase($filtro)
                 ->paginate($paginado);
         request()->flash();
@@ -124,7 +125,7 @@ class CasoController extends Controller
     {
         $filtro = request()->only(['dni','apellidos','nombres']);
         $casos  = $this->casoRepository->tratamientosSolicitados($filtro);
-        return view('prodiaba.tratamientos_solicitados', compact('casos'));
+        return view($this->vistas['tratamientos_solicitados'], compact('casos'));
     }
 
     //---------------------------------------------------------

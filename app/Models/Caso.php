@@ -98,4 +98,18 @@ class Caso extends Model
     {
         return $this->hasOne('App\Models\Paciente','id','paciente_id');
     }
+
+    /**
+     * scopes
+     *  */
+
+     public function scopePropios($query)
+     {
+        return $query->OrWhere(['diabetologo_id' => \Auth::user()->id, 'oftalmologo_id' => \Auth::user()->id] );
+     }
+
+     public function scopePendienteFormulario($query)
+     {
+        return $query->where('casos.estado','=','pendiente-formulario');
+     }
 }

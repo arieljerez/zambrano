@@ -11,7 +11,7 @@ class CasosTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Caso::class, 85)->create(['fecha_aprobacion'=> null,'texto_aprobacion' => null,'fecha_rechazo'=> null,'texto_rechazo' => null]);
+        factory(App\Models\Caso::class, 15)->create(['fecha_aprobacion'=> null,'texto_aprobacion' => null,'fecha_rechazo'=> null,'texto_rechazo' => null]);
 /*
         factory(App\Models\Caso::class, 55)->create(['estado' => 'pendiente-aprobacion','fecha_aprobacion'=> null,'texto_aprobacion' => null,'fecha_rechazo'=> null,'texto_rechazo' => null]);
 

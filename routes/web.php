@@ -106,6 +106,7 @@ Route::group(['middleware' => 'auth:efector'], function () {
     Route::get('vencido', 'EfectorCasoController@vencidos')->name('vencido');
     Route::get('por-paciente/{id?}',['uses'=> 'EfectorCasoController@porPaciente'])->name('por-paciente');
     Route::get('/',['uses'=> 'EfectorCasoController@index'])->name('index');
+    Route::get('tratamientos-solicitados', 'EfectorCasoController@tratamientosSolicitados')->name('tratamientos-solicitados');
   });
 
   Route::prefix ('efector')->name('efector.')->group( function() {

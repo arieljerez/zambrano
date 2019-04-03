@@ -19,7 +19,8 @@ class EfectorCasoController extends CasoController
         'vencidos' => 'efector.listado',
         'rechazados' => 'efector.listado',
         'por_paciente' => 'efector.por_paciente',
-        'home' => 'efector.home'
+        'home' => 'efector.home',
+        'tratamientos_solicitados' => 'efector.tratamientos_solicitados'
     ];
   
     protected $redirigirDespuesDe = [

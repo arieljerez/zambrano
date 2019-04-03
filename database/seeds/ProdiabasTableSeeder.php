@@ -11,7 +11,7 @@ class ProdiabasTableSeeder extends Seeder
      */
     public function run()
     {
-      factory(App\Models\Prodiaba::class, 15)->create();
+      factory(App\Models\Prodiaba::class, 5)->create();
       factory(App\Models\Prodiaba::class, 1)->create(['usuario' => '1234']);
     }
 }

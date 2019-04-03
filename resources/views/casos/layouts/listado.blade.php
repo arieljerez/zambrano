@@ -16,6 +16,13 @@
                             @yield('filtros')
                         </div>
                     </div>
+                    @if( $casos->count() > 0)
+                    <div class="row">
+                      <div class="col-md-4 mb-4">
+                        Encontrados: {{$casos->count()}} de {{$casos->total()}}
+                      </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-12">
                             @section('table')
@@ -27,9 +34,17 @@
                     
                     <div class="row">
                       <div class="col">
-                        {{ $casos->links() }}
+                        {{ $casos->onEachSide(1)->links() }}
                       </div>
                     </div>
+
+                    @else
+                    <div class="row">
+                      <div class="col-md-3 mb-3">
+                        No se encontraron resultados
+                      </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

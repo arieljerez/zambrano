@@ -47,8 +47,14 @@
                     </div>
                   </div>
                   <div class="col-sm-4">
-
-                  </div>
+                      <div class="card border-danger mb-3" style="max-width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">Tratamientos solicitados</h5>
+                            <p class="card-text"><h1>{{ $tratamientos_solicitados }}</h1></p>
+                          <a href="{{ route('efector.listado.tratamientos-solicitados') }}" class="btn btn-primary">Ver</a>
+                        </div>
+                      </div>
+                    </div>
                   <div class="col-sm-4">
                     <div class="card border-primary mb-3" style="max-width: 18rem;">
                       <div class="card-body">
