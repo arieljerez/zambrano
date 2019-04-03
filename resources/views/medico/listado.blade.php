@@ -6,9 +6,17 @@
 @section('filtros')
 <form method="get" action="{{url('medico/listado/'.$estado)}}">
   @include('casos.parts.filtro_paciente')
+  <div class="form-row">
+    <div class="col-3">
+      <div class="form-check">
+          {{ Form::checkbox('mis_casos', old('mis_caso',1), true, ['class' => 'form-check-input',"id"=>"defaultCheck1"]) }}
+          <label class="form-check-label" for="defaultCheck1"> Mis Casos </label>
+      </div>
+    </div>
+  </div>
 </form>       
 @endsection
 
 @section('table')
-  @include('casos.table',['route_prefix' => 'medico'])
+  @include('casos.table'.'-'.$estado,['route_prefix' => 'medico'])
 @endsection

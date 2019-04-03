@@ -41,7 +41,6 @@
         <a class="dropdown-item" href="{{ route('medico.listado.rechazado')}}">Rechazados</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{{ route('medico.listado.por-paciente')}}">Por Paciente</a>
-        <a class="dropdown-item" href="{{ route('medico.index')}}">Todos</a>
     </div>
     </li>
 @endauth

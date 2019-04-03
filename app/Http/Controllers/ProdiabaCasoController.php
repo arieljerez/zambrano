@@ -81,78 +81,16 @@ class ProdiabaCasoController extends CasoController
       return parent::edit($id);
   }
 
-/*
-    public function index()
-    {
-        $datos = Prodiaba::paginate(25);
-        return view('backend.prodiaba.index',compact('datos'));
-    }
+  public function reaprobar()
+  {
+    $caso_id = request()->input('caso_id');
+    $texto_aprobacion = request()->input('texto_aprobacion');
+    $fecha_aprobacion = request()->input('fecha_aprobacion');
+    $this->casoRepository->reaprobar($caso_id,$fecha_aprobacion,$texto_aprobacion);
 
-    public function pendientes()
-    {
-      $filtro = request()->only(['dni','apellidos','nombres']);
-      $casos  = $this->casoRepository->pendientesAprobacion($filtro);
-      return view('prodiaba.pendientes', compact('casos'));
-    }
-
-    public function aprobados()
-    {
-      $filtro = request()->only(['dni','apellidos','nombres']);
-      $casos  = $this->casoRepository->aprobados($filtro);
-      return view('prodiaba.aprobados', compact('casos'));
-    }
-
-    public function rechazados()
-    {
-      $filtro = request()->only(['dni','apellidos','nombres']);
-      $casos  = $this->casoRepository->rechazados($filtro);
-      return view('prodiaba.rechazados', compact('casos'));
-    }
-
-    public function vencidos()
-    {
-        $filtro = request()->only(['dni','apellidos','nombres']);
-        $casos  = $this->casoRepository->vencidos($filtro);
-        return view('prodiaba.vencidos', compact('casos'));
-    }
-
-
-
-    public function home()
-    {
-      $aprobados = Caso::where('estado','=','aprobado')->count();
-      $rechazados = Caso::where('estado','=','rechazado')->count();
-      $pendientes_aprobacion = Caso::where('estado','=','pendiente-aprobacion')->count();
-      $pendientes_formulario = Caso::where('estado','=','pendiente-formulario')->count();
-      $vencidos = Caso::where('estado','=','vencido')->count();
-      return view('prodiaba.home',compact('aprobados','rechazados','pendientes_aprobacion','pendientes_formulario','vencidos'));
-    }
-
-    public function edit($caso_id)
-    {
-        $solo_lectura = true;
-        $caso = Caso::find($caso_id);
-        $paciente =  json_decode($caso->paciente);
-        $diabetologico = new Diabetologico(json_decode($caso->diabetologico,true));
-        $oftalmologico = new Oftalmologico(json_decode($caso->oftalmologico,true));
-
-        return view('prodiaba.edit', compact('caso','paciente','diabetologico','oftalmologico','solo_lectura'));
-    }
-
-
-
-    public function reaprobar()
-    {
-      $caso_id = request()->input('caso_id');
-      $texto_aprobacion = request()->input('texto_aprobacion');
-      $fecha_aprobacion = request()->input('fecha_aprobacion');
-      $this->casoRepository->reaprobar($caso_id,$fecha_aprobacion,$texto_aprobacion);
-
-      request()->session()->flash('status', 'Caso #'.$caso_id.' ha sido re-aprobado.');
-      return redirect()->route('prodiaba.vencidos');
-    }
-
-
+    request()->session()->flash('success', 'Caso #'.$caso_id.' ha sido re-aprobado.');
+    return redirect()->back();
+  }
 
     
     public function mostrarCambiarClaveForm()
@@ -172,5 +110,5 @@ class ProdiabaCasoController extends CasoController
       $data['password']= bcrypt($data['password']);
       $user->update($data);
       return redirect()->route('prodiaba.home')->with(['success' => 'Contraseña actualizada']);
-    }*/
+    }
 }

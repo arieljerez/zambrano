@@ -22,37 +22,50 @@
 
 @section('diabetologico')
     
-    {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'POST','route' => ['medico.update-diabetologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+    @if($caso->estado == 'pendiente-formulario')
+        {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'POST','route' => ['medico.update-diabetologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
 
-        @include('casos.diabetologico.index')
+            @include('casos.diabetologico.index')
 
-        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+            <div class="row"><div class="col-md-12">&nbsp;</div></div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ __('Grabar') }}
-                </button>
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> {{ __('Grabar') }}
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <input  type="hidden" name="destino" value="diabetologico">
+            <input  type="hidden" name="destino" value="diabetologico">
 
-    {!! Form::Close() !!}
+        {!! Form::Close() !!}
+    @else
+        <fieldset disabled="disabled">
+            @include('casos.diabetologico.index')
+        </fieldset>
+    @endif
 
 @endsection
 
 @section('oftalmologico')
-    {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'POST','route' => ['medico.update-oftalmologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
-    @include('casos.oftalmologico.index')
-    <div class="row"><div class="col-md-12">&nbsp;</div></div>
-        <div class="row">
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ __('Grabar') }}
-                </button>
+    @if ($caso->estado == 'pendiente-formulario')
+        {!! Form::model($caso, ['enctype' =>"multipart/form-data", 'method' => 'POST','route' => ['medico.update-oftalmologico', $caso->id], 'aria-label' => __('Actualizar Caso')])  !!}
+        @include('casos.oftalmologico.index')
+        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> {{ __('Grabar') }}
+                    </button>
+                </div>
             </div>
-        </div>
-        <input  type="hidden" name="destino" value="oftalmologico">
-    {!! Form::Close() !!}
+            <input  type="hidden" name="destino" value="oftalmologico">
+        {!! Form::Close() !!}  
+    @else
+       <fieldset disabled="disabled">
+            @include('casos.oftalmologico.index')
+       </fieldset> 
+    @endif
+
 @endsection

@@ -71,8 +71,9 @@ class CasoController extends Controller
 
     public function consultaBase($estado)
     {
-      $filtro = request()->only(['dni','apellidos','nombres']);
-      $paginado = request()->input('paginacion') != null ? request()->input('paginacion'): 25;
+      $filtro = request()->only(['dni','apellidos','nombres','mis_casos']);
+      $paginado = request()->input('paginacion') != null ? request()->input('paginacion'): 5;
+      request()->flash();
       return $this->casoRepository->ObtenerCasos($estado,$filtro,$paginado);
     }
     public function pendientesFormulario()
@@ -112,8 +113,10 @@ class CasoController extends Controller
 
     public function porPaciente($id = 0)
     {
-          $filtro = array_merge(request()->only(['dni','apellidos','nombres']),['paciente_id' => $id]);
+          $filtro = array_merge(request()->only(['dni','apellidos','nombres','mis_casos']),['paciente_id' => $id]);
           $casos = $this->casoRepository->porPaciente($filtro);
+
+          request()->session()->flash('paciente_id', $id);
           return view($this->vistas['por_paciente'],compact('casos'));
     }
 

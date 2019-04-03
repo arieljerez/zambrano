@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth:web'], function () {
       Route::get('rechazado', 'MedicoCasoController@rechazados')->name('rechazado');
       Route::get('vencido', 'MedicoCasoController@vencidos')->name('vencido');
       Route::get('por-paciente/{id?}',['uses'=> 'MedicoCasoController@porPaciente'])->name('por-paciente');
+      Route::post('por-paciente/{id?}',['uses'=> 'MedicoCasoController@porPaciente'])->name('submit.por-paciente');
       Route::get('/',['uses'=> 'MedicoCasoController@index'])->name('index');
     });
 

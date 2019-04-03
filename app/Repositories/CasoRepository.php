@@ -53,6 +53,7 @@
          ->where('casos.estado','=','vencido');
      return $query->paginate($paginate);
    }
+   
    public function tratamientosSolicitados($filtro = array(),$paginate = 25)
    {
      $query =  $this->consultaBase($filtro)
@@ -62,25 +63,25 @@
    }
    public function consultaBase($filtro)
    {
-        $query =  \DB::Table('casos')
-             ->join('pacientes','pacientes.id','=','casos.paciente_id')
-             ->select('casos.id as id','casos.created_at as fecha',
-             \DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),
-             'pacientes.dni as dni','casos.estado as estado',
-             'casos.fecha_reaprobacion','casos.fecha_rechazo');
+       $query = Caso::join('pacientes','pacientes.id','=','casos.paciente_id')
+                  ->select( 'casos.*',
+                            'casos.created_at as fecha',
+                  \DB::Raw( 'concat(pacientes.apellidos , " ", pacientes.nombres) as paciente '),
+                  'pacientes.dni as dni','casos.estado as estado',
+                  'casos.fecha_reaprobacion','casos.fecha_rechazo');
 
         $query = $query->orderBy('casos.id', 'desc');
 
         if(isset($filtro['dni'])){
-          $query = $query->where('dni','like','%'.request()->input('dni').'%');
+          $query = $query->OrWhere('dni','like','%'.request()->input('dni').'%');
         }
 
         if(isset($filtro['apellidos'])){
-          $query = $query->where('apellidos','like','%'.request()->input('apellidos').'%');
+          $query = $query->OrWhere('apellidos','like','%'.request()->input('apellidos').'%');
         }
 
         if(isset($filtro['nombres'])){
-          $query = $query->where('nombres','like','%'.request()->input('nombres').'%');
+          $query = $query->OrWhere('nombres','like','%'.request()->input('nombres').'%');
         }
 
         if(isset($filtro['id'])){
@@ -93,6 +94,10 @@
 
         if(isset($filtro['fecha_hasta'])){
           $query = $query->where('casos.created_at','<=',request()->input('fecha_hasta'));
+        }
+
+        if(isset($filtro['mis_casos'])){
+          $query = $query->OrWhere(['diabetologo_id' => Auth::user()->id, 'oftalmologo_id' => Auth::user()->id] );
         }
     return $query;
    }

@@ -23,6 +23,12 @@ function fecha($fecha)
     return \Carbon\Carbon::parse($fecha)->format('d/m/Y');
 }
 
+function fecha_vencimiento($fecha)
+{
+    $fecha = \Carbon\Carbon::parse($fecha)->addDays(ENV('APP_DIAS_VENCIMIENTO'));
+    return fecha($fecha);
+}
+
 function estado($estado)
 {
     return config('prodiaba.casos.estados.'.$estado);

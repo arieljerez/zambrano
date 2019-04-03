@@ -28,7 +28,12 @@
                       @if($tratamiento->adjuntos->count() > 0)
                        @include('tratamientos.attach_list')
                       @endif
-                      @include('tratamientos.attach_field')
+                      @auth('efector')
+                        @include('tratamientos.attach_field')
+                      @endauth
+                      @auth('prodiaba')
+                       @include('tratamientos.attach_field')
+                      @endauth
                     </div>
                       
                     @endisset

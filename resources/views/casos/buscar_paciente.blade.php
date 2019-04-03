@@ -8,18 +8,6 @@
                 <div class="card-header">Pacientes</div>
                 <div class="card-body">
 
-                    @if (session('delete_ok'))
-                        <div class="alert alert-success">
-                            {{ session('delete_ok') }}
-                        </div>
-                    @endif
-
-                    @if (session('delete_fail'))
-                        <div class="alert alert-danger">
-                            {{ session('delete_fail') }}
-                        </div>
-                    @endif
-
                   <form method="get" action="{{url('casos/buscar_paciente/'.$url.'/')}}">
                     @include('casos.parts.filtro_paciente')
                   </form>

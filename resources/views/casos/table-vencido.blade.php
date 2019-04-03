@@ -1,0 +1,1 @@
+@include('casos.table-aprobado')

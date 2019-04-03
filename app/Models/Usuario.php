@@ -32,4 +32,9 @@ class Usuario extends Authenticatable
     {
         return $this->apellidos .', '. $this->nombres;
     }
+
+    public function getNombreCompletoAttribute()
+    {
+        return $this->apellidos .', '. $this->nombres;
+    }
 }

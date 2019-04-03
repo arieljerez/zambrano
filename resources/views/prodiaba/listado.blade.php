@@ -10,5 +10,5 @@
 @endsection
 
 @section('table')
-  @include('casos.table',['route_prefix' => 'prodiaba'])
+  @include('casos.table'.'-'.$estado,['route_prefix' => 'prodiaba'])
 @endsection

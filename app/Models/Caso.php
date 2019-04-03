@@ -29,7 +29,7 @@ class Caso extends Model
      */
     public function getDiabetologicoEstaCompletoAttribute()
     {
-        if( $this->diabetologico == '[]' && !isset($this->diabetologico_archivo)){
+        if( $this->diabetologico == '[]' && empty($this->diabetologico_archivo)){
             return false;
         }
         return true;
@@ -43,6 +43,10 @@ class Caso extends Model
         return true;
     }
 
+    public function getFechaVencimientoAttribute()
+    {
+        return fecha_vencimiento($this->fecha_aprobacion);
+    }
 
     /**
      *  accesos directos

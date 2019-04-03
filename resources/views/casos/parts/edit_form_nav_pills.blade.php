@@ -1,18 +1,10 @@
 <div class="nav flex-column nav-pills" id="casoTab" role="tablist" aria-orientation="vertical">
     <a class="nav-link active" id="v-pills-paciente-tab" data-toggle="pill" href="#v-pills-paciente" role="tab" aria-controls="v-pills-home" aria-selected="true">Paciente</a>
     <a class="nav-link" id="v-pills-diabetologico-tab" data-toggle="pill" href="#v-pills-diabetologico" role="tab" aria-controls="v-pills-diabetologico" aria-selected="false">Diabetológico
-        @if($caso->diabetologico_esta_completo)
-            <i class="fa fa-check" aria-hidden="true" style="color:green"></i>
-        @else
-            <i class="fa fa-times" aria-hidden="true" style="color:red"></i>
-        @endif
+        @include('casos.parts.check_diabetologico')
     </a>
     <a class="nav-link" id="v-pills-oftalmologico-tab" data-toggle="pill" href="#v-pills-oftalmologico" role="tab" aria-controls="v-pills-oftalmologico" aria-selected="false">Oftalmológico
-        @if($caso->oftalmologico_esta_completo)
-            <i class="fa fa-check" aria-hidden="true" style="color:green"></i>
-        @else
-            <i class="fa fa-times" aria-hidden="true" style="color:red"></i>
-        @endif
+        @include('casos.parts.check_oftalmologico')
     </a>
     <a class="nav-link" id="v-pills-bitacora-tab" data-toggle="pill" href="#v-pills-bitacora" role="tab" aria-controls="v-pills-bitacora" aria-selected="false">Bitácora</a>
     <a class="nav-link" id="v-pills-tratamientos-tab" data-toggle="pill" href="#v-pills-tratamientos" role="tab" aria-controls="v-pills-tratamientos" aria-selected="false">Tratamientos @if ($caso->tratamientos()->solicitado()->count())<span class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="Solicitados">{{ $caso->tratamientos()->solicitado()->count() }}</span>@endif<span class="badge badge-success" data-toggle="tooltip" data-placement="top" title="Aprobados">{{ $caso->tratamientos()->aprobado()->count() }}</span>
