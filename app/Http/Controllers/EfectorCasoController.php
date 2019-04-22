@@ -9,7 +9,7 @@ use App\Repositories\PacienteRepository;
 class EfectorCasoController extends CasoController
 {
     protected $vistas = [
-        'index' => 'casos.index',
+        'index' => 'efector.todos',
         'create' => 'efector.create',
         'edit' => 'efector.edit',
         'show' => 'efector.show',
