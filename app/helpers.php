@@ -49,5 +49,4 @@ function set_tab_caso($tab)
     if ($tab == 'adjuntos'){
         return Request()->session()->flash('tab_ajuntos','');
     }
-  
 }
