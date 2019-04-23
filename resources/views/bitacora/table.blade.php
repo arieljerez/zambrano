@@ -43,7 +43,7 @@
               <td>{{ $registro->descripcion }}</td>
               <td>
 
-                {{ $registro->usuario_tabla }} / {{ $registro->usuario->usuario }}
+                {{ $registro->usuario_tabla }} / {{ $registro->usuario->nombre_completo }}
               </td>
           </tr>
         @endforeach
