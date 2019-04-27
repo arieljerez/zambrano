@@ -39,11 +39,10 @@
                 <p class="h4">{{ $i-- }}</p>
                 <p><small>Registro: {{ $registro->created_at }}</small></p>
               </th>
-              <td>{{ $registro->evento}}</td>
+              <td>{{ $registro->evento }}</td>
               <td>{{ $registro->descripcion }}</td>
               <td>
-
-                {{ $registro->usuario_tabla }} / {{ $registro->usuario->nombre_completo }}
+                {{ $registro->usuario_tabla }} / {{ $registro->usuario->usuario }}
               </td>
           </tr>
         @endforeach

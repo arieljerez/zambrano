@@ -8,15 +8,14 @@ class Bitacora extends Model
 {
   public function usuario()
   {
-      $guardName = $this->nombre_tabla;
-      switch ($guardName) {
+      switch ($this->usuario_tabla) {
         case 'prodiabas':
           return $this->belongsTo('App\Models\Prodiaba');
           break;
         case 'efectores':
           return $this->belongsTo('App\Models\Efector');
           break;
-        default:
+        case 'usuarios':
           return $this->belongsTo('App\Models\Usuario');
           break;
       }
